@@ -1,1 +1,2 @@
-# BRIOgame-construction
+# BRIOgame construction howto
+
