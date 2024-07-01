@@ -1,0 +1,4 @@
+Sitemap: http://railedukit.github.io/BRIOgame-construction/sitemap.xml
+
+User-agent: *
+Disallow:
