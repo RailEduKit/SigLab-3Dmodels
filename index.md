@@ -4,8 +4,12 @@ title = "BRIOgame construction howto"
 
 * two version: paper prototype for fast iteration and wooden final version for durability
 
-\figenv{Overview Paper Version}{/assets/images/paper-version-set.jpeg}{width:50%}
-
+~~~<div class="grid-container">~~~
+\figenv{Overview paper version}{/assets/images/paper-version-set.jpeg}{width:100%}
+\figenv{Overview wooden version}{/assets/images/wood-version-set.jpeg}{width:92%}
+\figenv{Setup paper version}{/assets/images/paper-version-setup.jpeg}{width:50%}
+\figenv{Setup wooden version}{/assets/images/wood-version-setup.jpeg}{width:100%}
+~~~</div>~~~
 
 # Goal of this howto
 
