@@ -37,7 +37,7 @@ color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) union
         // blade cap notch
         translate([-1,pin_diameter,0]) cube([2+sqeeze_tolerance,pos_second_pin-2*pin_diameter+sqeeze_tolerance,blade_thickness/2+blade_cap_thickness+sqeeze_tolerance]); 
         // pin 1 hole
-        cylinder(d = pin_diameter - sqeeze_tolerance + printer_line_width/2, h = blade_thickness*2 + pin_height);
+        cylinder(d = pin_diameter - sqeeze_tolerance + printer_line_width/2, h = blade_thickness*2 + pin_height); // #frage: warum ein Loch? Warum Zylinder nicht einfach drauf stellen?
         // pin 2 hole
         translate([0,pos_second_pin,0]) cylinder(d = pin_diameter - sqeeze_tolerance + printer_line_width/2, h = blade_thickness*2 + pin_height);
         // lever anchor 1
@@ -46,7 +46,7 @@ color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) union
         translate([-lever_anchor_posX,lever_anchor_posY,0]) cylinder(d = lever_hole_size - move_tolerance + sqeeze_tolerance, h = blade_thickness*2 + pin_height);
     };
     // pin 1
-    cylinder(d = pin_diameter - sqeeze_tolerance, h = blade_thickness*2 + pin_height);
+    cylinder(d = pin_diameter - sqeeze_tolerance, h = blade_thickness*2 + pin_height); // #frage: warum zweimal Balde thickness? reicht nicht einmal für das Loch, dass du vorher konstruiert hast?
     // pin 2
     translate([0,pos_second_pin,0]) cylinder(d = pin_diameter - sqeeze_tolerance, h = blade_thickness*2 + pin_height);
 }
