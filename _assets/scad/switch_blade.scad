@@ -22,19 +22,6 @@ sqeeze_tolerance = 0.6;
 move_tolerance   = 0.7;
 printer_line_width = 0.1;
 
-module switch_blade(){
-    union(){
-        // blade
-        difference(){
-            intersection(){
-                cylinder(r = 40, h = blade_thickness);
-                translate([-blade_width/2,-pin_diameter,0]) cube([blade_width,blade_length,blade_thickness]);
-            };
-    };
-};
-
-
-
 
 // switch blade male
 module male(){ union(){
@@ -108,7 +95,7 @@ module cap(){ union(){
                 translate([-blade_width/2,-pin_diameter,0]) cube([blade_width,blade_length,blade_thickness]);
             };
             // notch
-            translate([-1,pin_diameter,0]) cube([2,pos_second_pin-2*pin_diameter,blade_thickness/2+blade_cap_thickness]);
+            #translate([-1,pin_diameter,0]) cube([2,pos_second_pin-2*pin_diameter,blade_thickness/2+blade_cap_thickness]);
         };
         // flank left
         translate([-blade_width/2,-9,-1]) rotate(a=[0,0,6]) cube([3,blade_length,blade_thickness*2]);
@@ -118,11 +105,8 @@ module cap(){ union(){
 };
 };
 
-
-
-male();
 //display objects
-//color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) male();
-//color("LightGreen") translate([-(blade_width+2)/2,0,0]) female();
-//color("blue") translate([(blade_width+2)*1.5,0,0]) cap();
-//color("green") translate([-(blade_width+2)*1.5,15,0]) rotate(a=[0,0,180]) cap();
+color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) male();
+color("LightGreen") translate([-(blade_width+2)/2,0,0]) female();
+color("blue") translate([(blade_width+2)*1.5,0,0]) cap();
+color("green") translate([-(blade_width+2)*1.5,15,0]) rotate(a=[0,0,180]) cap();
