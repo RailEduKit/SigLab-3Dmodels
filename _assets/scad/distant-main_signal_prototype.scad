@@ -86,8 +86,7 @@ module control(){
     translate([0,0,bottom_h+groove_h]) cylinder(h=top_h, d=signal_width);
 };
 
-
-
+//display objects
 translate([50, 0, cover_height/2]) cover();
 translate([0, 0, body_height/2]) body();
 translate([-50,0,bottom_h+groove_h+top_h]) rotate([180,0,0]) control();
