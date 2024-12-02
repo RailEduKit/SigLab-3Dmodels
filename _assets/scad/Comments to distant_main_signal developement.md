@@ -6,7 +6,7 @@
 
 **id:** 86ad868b4a1d5f8c6394f25796be168684d56a8c
 
-![](C:\Users\wecjul\AppData\Roaming\marktext\images\2024-12-02-10-51-59-image.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_1.png)
 
 **pro**
 
@@ -18,15 +18,13 @@ cover to height -> it was difficult to get the cotrol in the cover
 
 conecting pins broke instantly, connecting hole was not closed at the outer wall
 
-
-
 ## 26.11.2024
 
 **message:** new pins and first barrier try to lock the signal
 
 **id:** 46c05107ef40ff97ae60b89e25f5d0254835667b
 
-![](C:\Users\wecjul\AppData\Roaming\marktext\images\2024-12-02-11-37-46-image.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_2.png)
 
 **pro**
 
@@ -50,8 +48,6 @@ To print the overhang of the control it has to be supported. The support wasn't 
 
 it is difficult to turn the control to lock it
 
-
-
 ## 28.11.2024
 
 **message:** connecting parts on all four sites
@@ -59,7 +55,7 @@ handle for easier use
 
 **id:** 287bfa23482bfc98d279bebb17a10f50b9ac8a16
 
-![](C:\Users\wecjul\AppData\Roaming\marktext\images\2024-12-02-12-50-57-image.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-28_11_24.png)
 
 **pro**
 
@@ -76,5 +72,3 @@ thicker wall to have holes for the pins and later the magnets
 > > it is dificult to get the control in the cover
 > > 
 > > smaller window to see in the signal
-
-
