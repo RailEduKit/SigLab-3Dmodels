@@ -7,14 +7,8 @@ signal_height = 15;
 
 //cover specifications
 cover_height = 1.5;
-frame_width = 6.5; //thicker, to have the pins on all 4 sides, also needed for magnets later on
-frame_overhang = 3;
-
-//control specifications
-move_tolerance = 0.5;
-bottom_h = 3;
-groove_h = cover_height+1; //higher, because the print support remains a bit
-top_h = 2;
+frame_width = 4.5;
+frame_overhang = 1;
 
 //body specification
 body_height = signal_height-cover_height;
@@ -23,14 +17,24 @@ cavity_width = signal_width-2*wall_thickness;
 cavity_depth = signal_depth-2*wall_thickness;
 cavity_height = body_height-wall_thickness;
 
+//control specifications
+move_tolerance = 0.5;
+bottom_h = 3;
+groove_h = cover_height+1; //higher, because the print support remains a bit
+top_h = 2;
+lock_width = 6;
+lock_depth = wall_thickness+5;
+lock_heigth = 2;
+
 //connecting pins specification
 pin_width = 1;
 pin_depth = 4;
 pin_height = 2;
 hole_tolerance = 0.2;
 
-pin_x = (signal_width-wall_thickness)/2; //wall_thicknes has to be >= 3.5mm
-pin_y = (signal_depth-wall_thickness)/2;
+pinA_x = (signal_width-wall_thickness)/2; //wall_thicknes has to be >= 3.5mm
+pinA_y = (signal_depth/4);
+pinB_y = (signal_depth-wall_thickness)/2;
 pin_z = (cover_height/2);
 pin_hole_z = (body_height-pin_height)/2;
 
@@ -52,10 +56,10 @@ module cover(){
             cube([signal_width, signal_depth, cover_height], center = true);
             cube([signal_width-2*frame_width, signal_depth-2*frame_width, cover_height], center = true);
         };
-        translate([pin_x,0,pin_z]) pin();
-        translate([-pin_x,0,pin_z]) pin();
-        translate([0,pin_y,pin_z]) rotate([0,0,90]) pin(hole = false);
-        translate([0,-pin_y,pin_z]) rotate([0,0,90]) pin(hole = false);
+        translate([pinA_x,pinA_y,pin_z]) pin();
+        translate([-pinA_x,pinA_y,pin_z]) pin();
+        //translate([0,pinB_y,pin_z]) rotate([0,0,90]) pin(hole = false);
+        translate([0,-pinB_y,pin_z]) rotate([0,0,90]) pin(hole = false);
     };
     
 };
@@ -67,29 +71,26 @@ module body(){
                 cube([signal_width, signal_depth, body_height], center=true);
                 translate([0,0,wall_thickness]) cube([cavity_width, cavity_depth, cavity_height], center    =true);
             };
-            //barrier
-            difference(){
-                cube([signal_width, cavity_depth/4, body_height], center=true);
-                cube([cavity_width-2*(frame_overhang-(1+move_tolerance)), cavity_depth/3, body_height],     center=true);
-            }; //"frame_overhang-1" creates a groove of 1mm in the middle part
         };
-        translate([pin_x,0,pin_hole_z]) pin(hole = false);
-        translate([-pin_x,0,pin_hole_z]) pin(hole = false);
-        translate([0,pin_y,pin_hole_z]) rotate([0,0,90]) pin(hole = false);
-        translate([0,-pin_y,pin_hole_z]) rotate([0,0,90]) pin(hole = false);
+        translate([pinA_x,pinA_y,pin_hole_z]) pin(hole = false);
+        translate([-pinA_x,pinA_y,pin_hole_z]) pin(hole = false);
+        //translate([0,pinB_y,pin_hole_z]) rotate([0,0,90]) pin(hole = false);
+        translate([0,-pinB_y,pin_hole_z]) rotate([0,0,90]) pin(hole = false);
+        //lock hole
+        translate([0,pinB_y,(body_height-(bottom_h+move_tolerance))/2]) cube([lock_width+move_tolerance,wall_thickness,bottom_h+move_tolerance], center=true);
     };
 };
 //control
 module control(){
     //bottom
-    scaling_factor_x = (cavity_width-2*(frame_overhang-1))/(cavity_width-move_tolerance);
-    scale([scaling_factor_x,1,1]) cylinder(h=bottom_h, d=cavity_width-move_tolerance);
-    //cylinder(h=bottom_h, d=signal_width-(2*frame_width)+1);
+    translate([0,0,bottom_h/2]) cube([cavity_width-move_tolerance, cavity_depth/2, bottom_h], center=true);
+    //lock
+    translate([0,(cavity_depth/2+lock_depth)/2,lock_heigth/2]) cube([lock_width, lock_depth, lock_heigth],center=true);
     //groove
-    translate([0,0,bottom_h]) cylinder(h=groove_h, d=signal_width-(2*frame_width+move_tolerance));
+    translate([0,0,bottom_h+(groove_h/2)]) cube([signal_width-2*frame_width-move_tolerance, (signal_depth/2)-2*frame_width-move_tolerance, groove_h], center=true);
     //top
-    translate([0,0,bottom_h+groove_h]) cylinder(h=top_h, d=signal_width);
-    translate([0,0,bottom_h+groove_h+top_h+5]) rotate([0,0,90]) cube([signal_width-8, 3, 10], center=true);
+    translate([0,0,bottom_h+groove_h+(top_h/2)]) cube([signal_width, (signal_depth/2), top_h], center=true);
+    translate([0,0,bottom_h+groove_h+top_h+5]) cube([signal_width-8, 3, 10], center=true);
 };
 
 //display objects
