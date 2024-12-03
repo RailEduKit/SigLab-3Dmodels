@@ -6,7 +6,7 @@
 
 **id:** 86ad868b4a1d5f8c6394f25796be168684d56a8c
 
-![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_1.png)
+![](pictures_distant_main_signal_developement/signal-26_11_24_1.png)
 
 **pro**
 
@@ -24,7 +24,7 @@ conecting pins broke instantly, connecting hole was not closed at the outer wall
 
 **id:** 46c05107ef40ff97ae60b89e25f5d0254835667b
 
-![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_2.png)
+![](pictures_distant_main_signal_developement/signal-26_11_24_2.png)
 
 **pro**
 
@@ -55,7 +55,7 @@ handle for easier use
 
 **id:** 287bfa23482bfc98d279bebb17a10f50b9ac8a16
 
-![](_assets\scad\pictures_distant_main_signal_developement\signal-28_11_24.png)
+![](pictures_distant_main_signal_developement/signal-28_11_24.png)
 
 **pro**
 
