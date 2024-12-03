@@ -6,7 +6,7 @@
 
 **id:** 86ad868b4a1d5f8c6394f25796be168684d56a8c
 
-![](pictures_distant_main_signal_developement/signal-26_11_24_1.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_1.png)
 
 **pro**
 
@@ -24,7 +24,7 @@ conecting pins broke instantly, connecting hole was not closed at the outer wall
 
 **id:** 46c05107ef40ff97ae60b89e25f5d0254835667b
 
-![](pictures_distant_main_signal_developement/signal-26_11_24_2.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_2.png)
 
 **pro**
 
@@ -55,7 +55,7 @@ handle for easier use
 
 **id:** 287bfa23482bfc98d279bebb17a10f50b9ac8a16
 
-![](pictures_distant_main_signal_developement/signal-28_11_24.png)
+![](_assets\scad\pictures_distant_main_signal_developement\signal-28_11_24.png)
 
 **pro**
 
@@ -94,6 +94,31 @@ get control in cover is easy
 
 control doesn't end with the cover at the small side
 
-**the overhang of the control needs support during the print -> it is timeconsuming to  remove this support for every control**
+the overhang of the control needs support during the print -> it is timeconsuming to  remove this support for every control -> **choose tree support in slim or strong** 
 
 the cover doesn't close completly with the body, because of the new positions of the pins
+
+
+
+## 03.12.2024
+
+**message:** new connecting pin arrangement
+stopper to lock signal
+
+**id:** ef44d4da6de4a39fd91604b97119a3d5eb68b354
+
+![](_assets/scad/pictures_distant_main_signal_developement/signal-28_11_24.png)
+
+**pro**
+
+good connection between cover and body
+
+**con**
+
+thick bottom of body
+
+stopper to short
+
+locker pin hole need more tolerance
+
+locker passage should be a bit higher, in cas the support isn't removed completly
