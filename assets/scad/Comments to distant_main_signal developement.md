@@ -72,3 +72,28 @@ thicker wall to have holes for the pins and later the magnets
 > > it is dificult to get the control in the cover
 > > 
 > > smaller window to see in the signal
+
+## 02.12.2024
+
+**message:** changed cylinder cotrol in cube control
+changed screwcap in plugcap
+
+**id:** 1de874341730003b708cb8dd33249337fa088960
+
+![](_assets\scad\pictures_distant_main_signal_developement\signal-02_12_24.png)
+
+**pro**
+
+nice movement of the control
+
+lock pin works
+
+get control in cover is easy
+
+**con**
+
+control doesn't end with the cover at the small side
+
+**the overhang of the control needs support during the print -> it is timeconsuming to  remove this support for every control**
+
+the cover doesn't close completly with the body, because of the new positions of the pins
