@@ -6,7 +6,7 @@
 
 **id:** 86ad868b4a1d5f8c6394f25796be168684d56a8c
 
-![test](_assets\scad\pictures_distant_main_signal_developement\signal-26_11_24_1.png)
+![test](pictures_distant_main_signal_developement\signal-26_11_24_1.png)
 
 **pro**
 
