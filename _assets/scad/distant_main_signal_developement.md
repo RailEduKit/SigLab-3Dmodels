@@ -98,8 +98,6 @@ the overhang of the control needs support during the print -> it is timeconsumin
 
 the cover doesn't close completly with the body, because of the new positions of the pins
 
-
-
 ## 03.12.2024
 
 **message:** new connecting pin arrangement
@@ -122,3 +120,31 @@ stopper to short
 locker pin hole need more tolerance
 
 locker passage should be a bit higher, in cas the support isn't removed completly
+
+## 03.12.2024
+
+**message:** stopper bugfix and add color_blocks
+
+**id:** e0ca36c64b771dc1bb573b2d670455153cdbacb2
+
+![](_assets/scad/pictures_distant_main_signal_developement/signal-28_11_24.png)
+
+**pro**
+
+first time that the signal has colors
+
+stopper is long enough and fits in the hole
+
+**con**
+
+shadow from frame overhang (cover) on signal color
+
+> solution: no overhang on the small side
+> 
+> thus, the lock can be placed higher, the control bottom can be thinner, the signal color is closer to the top and better visible
+
+locker sits too losse
+
+absence of the main and distant signal symbol 
+
+it is difficult to set the stopper at its place
