@@ -148,3 +148,31 @@ locker sits too losse
 absence of the main and distant signal symbol 
 
 it is difficult to set the stopper at its place
+
+## 05.12.2024
+
+**message:** signal colors closer to the top, less covered
+stopper higher, handle, square pin
+main, distant signal symbol
+
+**id:** 2522d5dc80fd64cf86d9c238494ddce42f65e868
+
+![]()
+
+**pro**
+
+more view on the colors, no overhang on the short sites
+
+main/ distant symbol
+
+stable stopper
+
+**con**
+
+the connecting pins of the colors break to often -> two connecting pins prevent wobble
+
+handle of stopper to thick -> really helpful? -> turn 90°
+
+control bottom h thinner -> colors nearer to the top, but locker has to be higher -> it needs also space in the cover -> the cover is less stable
+
+the connecting pins doesn't fit perfect sometimes -> hole tolerance
