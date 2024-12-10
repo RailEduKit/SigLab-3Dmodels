@@ -13,7 +13,7 @@ sqeeze_tolerance = 0.6;
 
 //blade specification
 blade_thickness = 2.5;
-blade_cover_thicknes = 0.4;
+blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
 blade_length = 45;
 blade_width  = 19;
 
@@ -24,9 +24,10 @@ lever_anchor_posY = blade_length*0.8111;
 
 //pin specification
 pin_diameter = 5;
-pin_height = wood_thickness;
+pin_height = wood_thickness+2; //2mm move tolerance
 y_pos_first_pin = pin_diameter;
 y_pos_second_pin = (blade_length*2/3)+1;
+overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
 
 
 
@@ -52,20 +53,20 @@ module lever_anchor(){
 
 module cap_notch(male=true){
     if(male==true){
-        cube([2,y_pos_second_pin-2*pin_diameter,(blade_thickness-blade_cover_thicknes)/2]);
+        cube([2,y_pos_second_pin-3*pin_diameter,blade_thickness/2+blade_cover_thicknes]);
     };
     if(male==false){
-        cube([2+sqeeze_tolerance,y_pos_second_pin-2*pin_diameter+sqeeze_tolerance,(blade_thickness-blade_cover_thicknes)/2+sqeeze_tolerance]);
+        cube([2+sqeeze_tolerance,y_pos_second_pin-3*pin_diameter+sqeeze_tolerance,blade_thickness]);
     };
 };
 module pin(){
-    cylinder(d = pin_diameter, h = pin_height);
+    cylinder(d = pin_diameter-sqeeze_tolerance, h = pin_height);
 };
 
 module pin_hole(){ union(){
     difference(){
-        cylinder(d = pin_diameter*1.3, h = pin_height); //pin_diameter*1.3
-        cylinder(d = pin_diameter + sqeeze_tolerance, h = pin_height);
+        cylinder(d = pin_diameter*1.3, h = pin_height+overlap); //pin_diameter*1.3
+        cylinder(d = pin_diameter, h = pin_height+overlap);
     };
 };
 };
@@ -92,8 +93,8 @@ module switch_female(){ union(){
         translate([lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
         translate([-lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
     };
-    translate([0,y_pos_first_pin,blade_thickness-blade_cover_thicknes]) pin_hole();
-    translate([0,y_pos_second_pin,blade_thickness-blade_cover_thicknes]) pin_hole();
+    translate([0,y_pos_first_pin,0]) pin_hole(); //Theoretically, the hole should be seen at the bottom
+    translate([0,y_pos_second_pin,0]) pin_hole(); 
 };
 };
 

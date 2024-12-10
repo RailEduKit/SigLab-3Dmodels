@@ -72,11 +72,13 @@ module equ_triangle(side_length,corner_radius,triangle_height){
 };
 };
 
-module pin(){
-    cube([pin_width, pin_depth, pin_height], center = true);
-//    if (hole==true){
-//        cube([pin_width+hole_tolerance, pin_depth+hole_tolerance, pin_height+hole_tolerance],center = true);
-//    };
+module pin(hole = false){
+    if (hole==false){
+        cube([pin_width, pin_depth, pin_height], center = true);
+    };
+    if (hole==true){
+        cube([pin_width+hole_tolerance, pin_depth+hole_tolerance, pin_height+hole_tolerance],center = true);
+    };
 };
 
 
@@ -106,13 +108,15 @@ module body(){
                 translate([0,0,ground_thickness/2]) cube([cavity_width, cavity_depth, cavity_height], center    =true);
             };
         };
-        translate([pinA_x,pinA_y,pin_hole_z]) pin();
-        translate([-pinA_x,pinA_y,pin_hole_z]) pin();
-        translate([pinA_x,-pinA_y,pin_hole_z]) pin();
-        translate([-pinA_x,-pinA_y,pin_hole_z]) pin();
+        translate([pinA_x,pinA_y,pin_hole_z]) pin(hole=true);
+        translate([-pinA_x,pinA_y,pin_hole_z]) pin(hole=true);
+        translate([pinA_x,-pinA_y,pin_hole_z]) pin(hole=true);
+        translate([-pinA_x,-pinA_y,pin_hole_z]) pin(hole=true);
         // color block pin
-        translate([0,(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin();
-        translate([0,-(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin();
+        translate([(cavity_width-move_tolerance/2)/4,(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin(hole=true);
+        translate([-(cavity_width-move_tolerance/2)/4,-(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin(hole=true);
+        translate([(cavity_width-move_tolerance/2)/4,-(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin(hole=true);
+        translate([-(cavity_width-move_tolerance/2)/4,(cavity_depth-move_tolerance/2)/4, -pin_hole_z]) pin(hole=true);
         //lock passage
         translate([0,lock_passage_y,(body_height-(bottom_h+move_tolerance))/2]) cube([lock_width+move_tolerance,wall_thickness,bottom_h+2*move_tolerance], center=true);
     };
@@ -158,23 +162,25 @@ module stopper(){
     //pin
     translate([stopper_width/2, stopper_depth-lockpin_d/2, (lock_heigth+stopper_overhang)/2]) cube([lockpin_d, lockpin_d, lock_heigth+stopper_overhang], center=true);
     //handle
-    translate([2,(stopper_depth-3)/2,stopper_height]) cube([stopper_width-4, 3, 5]);
+    //translate([(stopper_width-3)/2,0,stopper_height]) cube([3, stopper_depth, 5]);
 };
 
 
 module color_block(){
     cube([c_block_width, c_block_depth, c_block_height], center=true);
-    translate([0,0,(c_block_height+pin_height)/2]) pin();
+    translate([(cavity_width-move_tolerance/2)/4,0,(c_block_height+pin_height)/2]) pin();
+    translate([-(cavity_width-move_tolerance/2)/4,0,(c_block_height+pin_height)/2]) pin();
     
 };
 //color_block();
 //control("distant");
 //cover();
+
 //display objects
 position = 25;
 translate([position, position, cover_height/2]) cover();
 translate([-position, position, body_height/2]) body();
-translate([-position,-position-5,0]) control("distant"); //translate Z=bottom_h+groove_h+top_h
+translate([-position,-position-5,0]) control("main"); //translate Z=bottom_h+groove_h+top_h
 translate([position/2, -position,stopper_depth]) rotate([-90,0,0]) stopper();
 translate([-position, -2*position-10,c_block_height/2]) color_block();
 translate([position, -2*position,c_block_height/2]) color_block();

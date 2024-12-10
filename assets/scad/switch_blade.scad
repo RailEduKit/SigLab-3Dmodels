@@ -36,7 +36,7 @@ module male(){ union(){
         // flank right
         translate([blade_width/3,-9,-1]) rotate(a=[0,0,-6]) cube([3,blade_length,blade_thickness*2]);
         // blade cap notch
-        translate([-1,pin_diameter,0]) cube([2+sqeeze_tolerance,pos_second_pin-2*pin_diameter+sqeeze_tolerance,blade_thickness/2+blade_cap_thickness+sqeeze_tolerance]); 
+        #translate([-1,pin_diameter,0]) cube([2+sqeeze_tolerance,pos_second_pin-2*pin_diameter+sqeeze_tolerance,blade_thickness/2+blade_cap_thickness+sqeeze_tolerance]); 
         // pin 1 hole
         cylinder(d = pin_diameter - sqeeze_tolerance + printer_line_width/2, h = blade_thickness*2 + pin_height); // #frage: warum ein Loch? Warum Zylinder nicht einfach drauf stellen?
         // pin 2 hole
