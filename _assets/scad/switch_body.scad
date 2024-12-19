@@ -46,7 +46,7 @@ radius = 182; // [87.5:small, 180:large]
 angle = 45; // [1:360]
 
 // Wheel wells on both sides of the track?
-double_sided_rails = true;
+double_sided_rails = false;
 
 /* [parameters for the switch_blade] */
 // coppy values from switch_blade
@@ -71,7 +71,8 @@ $fn=120;
  * ****************************************************************************** */
 
 // Import tracklib from globally-installed copy
-use <trains/tracklib.scad>;
+//use <trains/tracklib.scad>;
+use <trains/tracklib-3Dprint.scad>;
 
 /*
  * @param string base              Connector to place on the base end of the piece.
@@ -256,7 +257,9 @@ modified_switch();
 module modified_switch(){
     difference(){
         render_track(base, left, straight, right, straight_size, radius, angle, double_sided_rails);
-        subtract_rail(blade_length);
+        if (double_sided_rails==true){
+            subtract_rail(blade_length);
+        }
         translate([0,0,wood_well_height()])subtract_rail(blade_length);
         pivot_hole(pin_female_diameter);
         moving_area(pin_diameter,pin_female_diameter,lever_anchor_posY, y_pos_second_pin);
