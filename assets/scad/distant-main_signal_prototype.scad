@@ -162,7 +162,7 @@ module stopper(){
     //pin
     translate([stopper_width/2, stopper_depth-lockpin_d/2, (lock_heigth+stopper_overhang)/2]) cube([lockpin_d, lockpin_d, lock_heigth+stopper_overhang], center=true);
     //handle
-    //translate([(stopper_width-3)/2,0,stopper_height]) cube([3, stopper_depth, 5]);
+    translate([(stopper_width-3)/2,0,stopper_height]) cube([3, stopper_depth, 5]);
 };
 
 
