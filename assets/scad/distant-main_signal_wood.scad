@@ -8,7 +8,7 @@
 
 $fn = 200;
 // body specifications
-axis_diameter = 2.5; //maybe use the same material as lever anchor
+axis_diameter = 2.7; //maybe use the same material as lever anchor
 body_width = 30; // material constraint
 body_depth = 50;
 body_height = 13.5; // material constraint
@@ -16,6 +16,7 @@ wall_thickness_x = 5;
 wall_thickness_y = 2;
 wall_thickness_z = 2;
 track_arc_inner_radius = 182;
+sagitta = 0.43; //DE: Pfeilhöhe -> Straighten round edge in the middle
 
 // color_block specifications
 move_tolerance = 1;
@@ -26,7 +27,7 @@ overhang = block_height/2-move_tolerance; //the circle has to be flattend at one
 handle_depth = 10+wall_thickness_y;
 handle_height = 3;
 
-
+body();
 module body(){
     module box(){
         difference(){
@@ -41,11 +42,11 @@ module body(){
         intersection(){
             intersection(){
                 translate([0,0,0])box();
-                translate([track_arc_inner_radius,body_depth/2,0])round_edge();
+                translate([track_arc_inner_radius-sagitta,body_depth/2,0])round_edge();
             }
             intersection(){
                 translate([0,0,0])box();
-                translate([body_width-track_arc_inner_radius,body_depth/2,0])round_edge();
+                translate([body_width-track_arc_inner_radius+sagitta,body_depth/2,0])round_edge();
             }
         }
         //axis
@@ -84,5 +85,12 @@ module prove_moveability(){
     //middle position
     #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block();
 }
-visualize_colorBlock_in_body();
+
+module print_components(){
+    body();
+    translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block();
+}
+//visualize_colorBlock_in_body();
+print_components();
+
 
