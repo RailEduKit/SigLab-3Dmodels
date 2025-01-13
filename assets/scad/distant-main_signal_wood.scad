@@ -6,28 +6,37 @@
 // You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 // No warranties are given.
 
+/* **TODO**
+1. Symbol auf den Hebel
+*/
+
 $fn = 200;
+block_width=undef;
+move_tolerance=undef;
 // body specifications
-axis_diameter = 2.7; //maybe use the same material as lever anchor
+axis_diameter = 2.5; //maybe use the same material as lever anchor
 body_width = 30; // material constraint
 body_depth = 50;
 body_height = 13.5; // material constraint
-wall_thickness_x = 5;
+wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
 wall_thickness_y = 2;
 wall_thickness_z = 2;
 track_arc_inner_radius = 182;
-sagitta = 0.43; //DE: Pfeilhöhe -> Straighten round edge in the middle
+sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
+z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
 
 // color_block specifications
 move_tolerance = 1;
-block_width = body_width-2*wall_thickness_x-move_tolerance;
-block_depth = (body_depth-2*wall_thickness_y)/2-move_tolerance;
-block_height = (body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
+block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
+block_depth = (body_depth-2*wall_thickness_y)/2-1.5*move_tolerance;
+block_height = 13.5; // material constraint
+//block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
 overhang = block_height/2-move_tolerance; //the circle has to be flattend at one side with move_tolerance
 handle_depth = 10+wall_thickness_y;
 handle_height = 3;
 
-body();
+
+//body();
 module body(){
     module box(){
         difference(){
@@ -50,10 +59,10 @@ module body(){
             }
         }
         //axis
-        translate([0,body_depth/2,block_height/2+wall_thickness_z]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
+        translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
         //handle space
-        translate([wall_thickness_x,0,wall_thickness_z+(block_height-handle_height)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
-        translate([wall_thickness_x,body_depth-wall_thickness_y,wall_thickness_z+(block_height-handle_height)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+        translate([wall_thickness_x,0,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
+        translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
     }
 }
 
@@ -72,7 +81,7 @@ module color_block(){
 
 
 module visualize_colorBlock_in_body(){
-    translate([0,-body_depth/2,-block_height/2-wall_thickness_z]) body();
+    translate([0,-body_depth/2,-z_pos_axis]) body(); //z=-block_height/2-wall_thickness_z
     //side -y
     rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block();
     //side y
@@ -90,7 +99,15 @@ module print_components(){
     body();
     translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block();
 }
-//visualize_colorBlock_in_body();
-print_components();
+module values_to_console(){
+    echo("handle space: ", (block_height-handle_height)/2);
+    echo("axis height: ", block_height/2+wall_thickness_z);
+    echo("wall_thickness_x: ", wall_thickness_x);
+}
+
+
+visualize_colorBlock_in_body();
+//print_components();
+values_to_console();
 
 

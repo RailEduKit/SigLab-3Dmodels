@@ -182,6 +182,14 @@ module render_track(base,left,straight,right,double_sided_rails) {
     }
 }
 
+/* **TODO**
+1. beschränkendes element links/rechts sind die lever_anchors, nicht die verbindungen der switchblade -> abzweigender STrang muss mehr platz bekommen, bei dem geraden passt es durch Zufall
+2. inner_r kann größer gewählt werden
+3. outer_r kann kleiner gewählt werden
+4. switchblade space kann kleiner gemacht werden
+5. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
+*/
+
 module switchblade_space(left,straight,right){ //previous name: subtract_rail
     //the values are mostly trial and error
     //mybe it's not a good idea to use the global variable "angle" instead use 45
