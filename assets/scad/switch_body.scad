@@ -18,6 +18,7 @@
 
 
 /* [parameters for the switch_body] used as global variables in the modules */
+// ATTENTION: The TRack wisth has to be 38.5, not 40 (in tracklib.scad)
 
 //// Connector to place on the base end of the piece.
 //base_end = "male"; // [male,female]
@@ -34,7 +35,7 @@
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
 straight_size = 145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
 
-// Curve radius.  Sizes provided are standard.
+// Curve radius -> inner radius.  Sizes provided are standard.
 radius = 182; // [87.5:small, 180:large]
 
 /* [Hidden] */
@@ -52,6 +53,8 @@ blade_width  = 19;
 pin_diameter = 5;
 pin_female_diameter = pin_diameter*1.3;
 lever_anchor_posY = blade_length*0.8111;
+lever_anchor_posX = blade_width*(1/5);
+lever_hole_size = 2.7;
 y_pos_second_pin = (blade_length*2/3)+1;
 
 
@@ -183,13 +186,9 @@ module render_track(base,left,straight,right,double_sided_rails) {
 }
 
 /* **TODO**
-1. beschränkendes element links/rechts sind die lever_anchors, nicht die verbindungen der switchblade -> abzweigender STrang muss mehr platz bekommen, bei dem geraden passt es durch Zufall
-2. inner_r kann größer gewählt werden
-3. outer_r kann kleiner gewählt werden
-4. switchblade space kann kleiner gemacht werden
 5. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
 */
-
+//switchblade_space("female","female","none");
 module switchblade_space(left,straight,right){ //previous name: subtract_rail
     //the values are mostly trial and error
     //mybe it's not a good idea to use the global variable "angle" instead use 45
@@ -198,18 +197,18 @@ module switchblade_space(left,straight,right){ //previous name: subtract_rail
     mill_length = blade_length+7; //this shouldn't be changed
     mill_start = 20; // this shouldn't be changed
     outer_r = blade_length;
-    y_outer_r = (mill_length+mill_start)-outer_r;
+    y_outer_r = (mill_length+mill_start)-outer_r-1.5;
     middle_r = 150; // the outer_r doesn't take the hole track away
     y_middle_r = (mill_length+mill_start)-6-middle_r;
     inner_r = 150;
-    y_inner_r = mill_start-inner_r;
+    y_inner_r = mill_start-inner_r+2;
 
     if(left != "none" && straight != "none" && right == "none"){
         union(){
             translate([x,y_outer_r,0]) rotate([0,0,90-angle/2+5])rotate_extrude(angle=50) square([outer_r,h]); //same radius as the switch_blade
             difference(){
                 translate([x,y_middle_r,0]) rotate([0,0,90-angle/2+17])rotate_extrude(angle=13) square([middle_r,h]); //take away a few remains
-                translate([x,y_inner_r,0]) rotate([0,0,90-angle/2+18])rotate_extrude(angle=10) square([inner_r,h]); //clear cut at the bottom
+                #translate([x,y_inner_r,0]) rotate([0,0,90-angle/2+18])rotate_extrude(angle=10) square([inner_r,h]); //clear cut at the bottom
             }
         }
     }
@@ -233,7 +232,7 @@ module switchblade_space(left,straight,right){ //previous name: subtract_rail
     }
 }
 //holes_for_blade("female","female","none");
-//holes_for_blade("none","female","female");
+//holes_for_blade("female","female","female");
 module holes_for_blade(left,straight,right){
     h = wood_height();
     pivot_center_x = wood_width()/2;
@@ -245,35 +244,35 @@ module holes_for_blade(left,straight,right){
     
     //pivot_area
     module area_length(){
-        a=50;
-        outer_r = lever_anchor_posY+5;// has to be adjusted, when I have acces to modified switch without blade
-        inner_r = y_pos_second_pin-pin_female_diameter;
+        a=70;
+        outer_r = lever_anchor_posY+3;
+        inner_r = y_pos_second_pin-(pin_female_diameter-2);
         difference(){ 
-            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-25]) rotate_extrude(angle=a) square([outer_r,h]);
-            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-25]) rotate_extrude(angle=a) square([inner_r,h]);
+            #translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([outer_r,h]);
+            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([inner_r,h]);
         }
     }
     module curved_boundery(){
         radius1 = 182+5+wood_well_spacing(); // to get a 3D object
-        radius2 = 182+16; //the blade shouldn't go more to the side as: 16= wood_well_rim()+wood_well_width()+(blade_width-pin_female_diameter)/2 
+        radius2 = 182+wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
         difference(){
             rotate_extrude(angle=360) square([radius1,h]);
             rotate_extrude(angle=360) square([radius2,h]);
         }
     }
     module straight_boundery(left,right){
-        x_size=12;
+        x_size=14;
         y_size=140;
         if(left!="none"){
-            xpos = (wood_width()+pin_female_diameter)/2 -x_size+1;// +1 -> the boundery should be slightly rigth of the pivot hole.
+            xpos = wood_width()-wood_well_width()-wood_well_rim()-lever_anchor_posX+lever_hole_size/2 -x_size;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(right != "none"){
-            xpos = (wood_width()-pin_female_diameter)/2-1;// -1 -> the boundery should be slightly left of the pivot hole.
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(left != "none" && right != "none"){
-            xpos = (wood_width()-pin_female_diameter)/2-1;// -1 -> the boundery should be slightly left of the pivot hole.
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
     }
@@ -339,7 +338,8 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){ //this
     }
 }
 
+echo(pin_female_diameter);
 //modified_switch("male","female","female","none",true,true);
 //translate([100,0,0]) modified_switch("male","female","female","none",false,true);
 //translate([150,0,0]) modified_switch("male","none","female","female",false,false);
-//modified_switch("male","female","female","female",false);
+//modified_switch("male","female","female","female",true,true);
