@@ -35,6 +35,40 @@ overhang = block_height/2-move_tolerance; //the circle has to be flattend at one
 handle_depth = 10+wall_thickness_y;
 handle_height = 3;
 
+// main Symbol Specifications
+symbol_side_space = 4;
+symbol_height = 1;
+symbol_thickness = 1;
+symbol_size = block_width-2*symbol_side_space;
+triangle_height = (sqrt(3)*symbol_size)/2;
+
+
+module equ_triangle(side_length,corner_radius,triangle_height){
+    // copy from https://www.youtube.com/watch?v=5hDB8Nsd688
+    translate([0,corner_radius]){
+    hull(){
+        cylinder(r=corner_radius,h=triangle_height);
+     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);   
+         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);
+        };
+};
+};
+
+
+//symbol_main();
+module symbol_main(){
+    difference(){
+        cube([symbol_size, symbol_size, symbol_height]);
+        translate([symbol_thickness,symbol_thickness,0]) cube([symbol_size-2*symbol_thickness, symbol_size-2*symbol_thickness, symbol_height]);
+    }
+}
+//symbol_distant();
+module symbol_distant(){
+    difference(){
+        equ_triangle(symbol_size, symbol_thickness, symbol_height);
+        translate([0,symbol_thickness,0]) equ_triangle(symbol_size-2*symbol_thickness, symbol_thickness, symbol_height);
+    }
+}
 
 //body();
 module body(){
@@ -66,7 +100,8 @@ module body(){
     }
 }
 
-module color_block(){
+//color_block(("distant"));
+module color_block(symbol_type){
     difference(){
         union(){
             cube([block_width, block_depth, block_height]);
@@ -76,28 +111,40 @@ module color_block(){
         }
         //axis
         translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter);
+        //symbol
+        if(symbol_type == "main"){
+            translate([symbol_side_space,(block_depth-symbol_size)/2,0]) symbol_main();
+            translate([symbol_side_space,(block_depth-symbol_size)/2,block_height-symbol_height]) symbol_main();
+        }
+        if (symbol_type == "distant"){
+            #translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
+            translate([block_width/2,(block_depth-triangle_height)/2,block_height-symbol_height]) symbol_distant();
+        }
+        
     }
 }
 
 
-module visualize_colorBlock_in_body(){
+module visualize_colorBlock_in_body(symbol_type, state){
     translate([0,-body_depth/2,-z_pos_axis]) body(); //z=-block_height/2-wall_thickness_z
-    //side -y
-    rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block();
-    //side y
-    //rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block();
+    if(state== "-y"){
+        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+    }
+    if(state== "y"){
+        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+    }
 }
 
 module prove_moveability(){
     //move_tolerance space between bottom and color_block
     translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,move_tolerance]);
     //middle position
-    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block();
+    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
 }
 
-module print_components(){
+module print_components(symbol_type){
     body();
-    translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block();
+    translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block(symbol_type=symbol_type);
 }
 module values_to_console(){
     echo("handle space: ", (block_height-handle_height)/2);
@@ -106,7 +153,7 @@ module values_to_console(){
 }
 
 
-visualize_colorBlock_in_body();
+visualize_colorBlock_in_body("distant", "y");
 //print_components();
 values_to_console();
 
