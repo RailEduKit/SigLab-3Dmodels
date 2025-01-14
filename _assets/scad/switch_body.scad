@@ -188,7 +188,30 @@ module render_track(base,left,straight,right,double_sided_rails) {
 /* **TODO**
 5. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
 */
+switchblade_space_new("female","female","none");
+module switchblade_space_new(left,straight,right){ 
+    //TODO weitermachen mit oberem RAdius. AUßerdem muss links/ rechts noch implementiert werden. dAnn an oliver schicken
+    width = 40;
+    depth = blade_length+7;
+    height = wood_height()-wood_well_height();
+    xpos = wood_width()-width-wood_well_width();
+    ypos = 22;
+    
+    module curved_boundery(){
+        radius2 = 182+wood_well_width()+wood_well_rim()/2;
+        rotate_extrude(angle=360) square([radius2,height]);
+    }
+    if(left != "none" && straight != "none" && right == "none"){
+        difference(){
+            translate([xpos,ypos,0]) cube([width,depth,heigth]);
+            translate([-radius,0,0]) curved_boundery();
+        }
+    }
+    
+}
+
 //switchblade_space("female","female","none");
+
 module switchblade_space(left,straight,right){ //previous name: subtract_rail
     //the values are mostly trial and error
     //mybe it's not a good idea to use the global variable "angle" instead use 45
@@ -208,7 +231,7 @@ module switchblade_space(left,straight,right){ //previous name: subtract_rail
             translate([x,y_outer_r,0]) rotate([0,0,90-angle/2+5])rotate_extrude(angle=50) square([outer_r,h]); //same radius as the switch_blade
             difference(){
                 translate([x,y_middle_r,0]) rotate([0,0,90-angle/2+17])rotate_extrude(angle=13) square([middle_r,h]); //take away a few remains
-                #translate([x,y_inner_r,0]) rotate([0,0,90-angle/2+18])rotate_extrude(angle=10) square([inner_r,h]); //clear cut at the bottom
+                translate([x,y_inner_r,0]) rotate([0,0,90-angle/2+18])rotate_extrude(angle=10) square([inner_r,h]); //clear cut at the bottom
             }
         }
     }
@@ -248,7 +271,7 @@ module holes_for_blade(left,straight,right){
         outer_r = lever_anchor_posY+3;
         inner_r = y_pos_second_pin-(pin_female_diameter-2);
         difference(){ 
-            #translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([outer_r,h]);
+            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([outer_r,h]);
             translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([inner_r,h]);
         }
     }
@@ -324,8 +347,7 @@ module holes_for_blade(left,straight,right){
 
 
 
-module modified_switch(base,left,straight,right,double_sided_rails,hole){ //this works only for the configuration left=true, straight=true, right=none
-    
+module modified_switch(base,left,straight,right,double_sided_rails,hole){    
     difference(){
         render_track(base,left,straight,right,double_sided_rails);
         if (double_sided_rails==true){
@@ -338,8 +360,30 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){ //this
     }
 }
 
+module blade_hole_switch(base,left,straight,right){
+    difference(){
+        render_track(base,left,straight,right,double_sided_rails);
+        holes_for_blade(left,straight,right);
+    }
+}
+ module blade_space_switch(base,left,straight,right){    
+    difference(){
+        render_track(base,left,straight,right,double_sided_rails);
+        translate([0,0,0])switchblade_space(left,straight,right);
+    }
+}
+
 echo(pin_female_diameter);
 //modified_switch("male","female","female","none",true,true);
 //translate([100,0,0]) modified_switch("male","female","female","none",false,true);
 //translate([150,0,0]) modified_switch("male","none","female","female",false,false);
 //modified_switch("male","female","female","female",true,true);
+
+//projection() blade_hole_switch("male","female","female","none");
+//projection(cut=true) blade_space_switch("male","female","female","none");
+//projection(cut=true) blade_space_switch("male","none","female","female");
+
+
+//projection() modified_switch("male","female","female","none",false,true);
+//projection(cut=true) translate([0,0,-9])modified_switch("male","female","female","none",false,true);
+//projection(cut=true) translate([0,0,-9]) modified_switch("male","none","female","female",false,false);
