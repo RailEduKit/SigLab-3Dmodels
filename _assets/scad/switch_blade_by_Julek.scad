@@ -36,7 +36,7 @@ overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise
 module switch_blade(thickness){ union(){
     difference(){
         intersection(){
-            cylinder(r = blade_length, h = thickness);
+            #cylinder(r = blade_length, h = thickness);
             translate([-blade_width/2,0,0]) cube([blade_width,blade_length,thickness]); //why pin diameter in translate?
         };
         // flank left

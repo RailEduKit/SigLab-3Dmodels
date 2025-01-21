@@ -6,7 +6,7 @@
 
 /*[Track Settings]*/
 //length of track piece, in mm
-length = 145; //[30:10:400]
+length = 161; //[30:10:400] //inklusive the male pin
 
 //only one preset... for now
 //track_type = 0; //[1:brio,0:custom]
