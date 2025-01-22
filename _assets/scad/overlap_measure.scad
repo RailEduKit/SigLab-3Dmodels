@@ -2,11 +2,13 @@
 // by atartanian (www.thingiverse.com/atartanian)
 // license CC-BY-SA
 
+$fn = 50;
+
 // preview[view:west, tilt:top]
 
 /*[Track Settings]*/
 //length of track piece, in mm
-length = 161; //[30:10:400] //inklusive the male pin
+length = 170; //[30:10:400] //inklusive the male pin
 
 //only one preset... for now
 //track_type = 0; //[1:brio,0:custom]
@@ -20,10 +22,14 @@ line_thickness = 4; //[2:2:10]
 //spacing between male and female connectors, in mm
 connector_tolerance = .3; //[.1:.05:1]
 
+pin_height = 5;
+pin_diameter = 4.5;
+echo("pin_diameter: ", pin_diameter);
+
 /*[Custom Dimensions]*/
 use_custom_settings = 1; //[0:No,1:Yes]
 custom_width_base = 19.25;
-custom_width_middle = 10;
+custom_width_middle = 19.25;
 custom_height_base = 2;
 custom_height_middle = 2;
 custom_connector_length = 17.5;
@@ -35,7 +41,7 @@ track_type = use_custom_settings ? 0 : 1;
 /***************/
 /*     CODE    */
 /***************/
-translate([-track_type_params()[track_type][1] / 2, -length / 2])
+translate([-track_type_params()[track_type][1] / 2,0])
 intersection(convexity = 20) {
     rotate([-90,0,0])
         linear_extrude(height = length, convexity = 20)
@@ -60,7 +66,7 @@ intersection(convexity = 20) {
                     track_type_params()[track_type][2],
                     line_thickness * extrusion_width,
                     line_thickness * extrusion_width,
-                    line_thickness * extrusion_width
+                    line_thickness * extrusion_width //this defines the gap_thickness
                 );
             }
             translate([track_type_params()[track_type][1] / 2, track_type_params()[track_type][5] + line_thickness * extrusion_width])
@@ -68,6 +74,9 @@ intersection(convexity = 20) {
                     brio_female_2D();
         }
 }
+translate([0,(length-track_type_params()[track_type][5])/2-0.1,0])pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
+    4*line_thickness * extrusion_width,
+    track_type_params()[track_type][3]);
 
 /***************/
 /*  FUNCTIONS  */
@@ -130,7 +139,6 @@ module track_profile_2D(
             square(width_base * 2);
     }   
 }
-
 module flex_track_pattern_2D(
     length = 100,
     width_base = 40,
@@ -251,5 +259,10 @@ module brio_female_2D() {
             circle(r = post_radius, $fn = 32);        
     }
 
+}
+
+module pin(base_width, base_depth, base_height){
+    translate([0,0,base_height/2])cube([base_width, base_depth, base_height], center=true);
+    translate([0,0,-pin_height])cylinder(h=pin_height, d=pin_diameter);
 }
 
