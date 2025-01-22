@@ -153,8 +153,8 @@ module values_to_console(){
 }
 
 
-visualize_colorBlock_in_body("distant", "y");
-//print_components();
+//visualize_colorBlock_in_body("distant", "y");
+print_components();
 values_to_console();
 
 
