@@ -70,12 +70,19 @@ module symbol_distant(){
     }
 }
 
-//body();
+module cavity_cube(){
+    translate([wall_thickness_x,wall_thickness_y,wall_thickness_z]) cube([body_width-2*wall_thickness_x, body_depth-2*wall_thickness_y, body_height-wall_thickness_z]);
+}
+module handle_space_cubes(){
+    translate([wall_thickness_x,0,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
+    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+}
+
 module body(){
     module box(){
         difference(){
             cube([body_width, body_depth, body_height]);
-            translate([wall_thickness_x,wall_thickness_y,wall_thickness_z]) cube([body_width-2*wall_thickness_x, body_depth-2*wall_thickness_y, body_height-wall_thickness_z]);
+            cavity_cube();
         }
     }
     module round_edge(){
@@ -94,9 +101,7 @@ module body(){
         }
         //axis
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
-        //handle space
-        translate([wall_thickness_x,0,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
-        translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+        handle_space_cubes();
     }
 }
 
@@ -117,7 +122,7 @@ module color_block(symbol_type){
             translate([symbol_side_space,(block_depth-symbol_size)/2,block_height-symbol_height]) symbol_main();
         }
         if (symbol_type == "distant"){
-            #translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
+            translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
             translate([block_width/2,(block_depth-triangle_height)/2,block_height-symbol_height]) symbol_distant();
         }
         
@@ -146,15 +151,58 @@ module print_components(symbol_type){
     body();
     translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block(symbol_type=symbol_type);
 }
+
+module mill_color_block() {
+    module unworked_block(){
+        height = block_height;
+        width = block_width;
+        depth = block_depth+handle_depth+height/2;
+        cube([width, depth, height]);
+        
+    }
+    projection(cut = true) rotate([0,90,0]) difference(){
+        unworked_block(); 
+        translate([0,handle_depth,0]) color_block("distant");
+        
+    }
+//    %unworked_block();
+//    translate([0,handle_depth,0]) color_block(symbol_type);
+}
+
+module mill_signal_symbol(symbol_type){
+    //where does the production need the coordinate origin?
+    projection(cut=true) color_block(symbol_type);    
+}
+
+
+module mill_handlespace_and_rounding(){
+    projection(cut=true) difference(){
+            cube([body_width, body_depth, body_height]);
+            body();
+        }
+        projection() handle_space_cubes();
+    }
+module mill_cavity_box(){
+    projection(cut=true) difference(){
+            cube([body_width, body_depth, body_height]);
+            translate([0,0,-wall_thickness_z])cavity_cube();
+        }
+    }
+    
 module values_to_console(){
     echo("handle space: ", (block_height-handle_height)/2);
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
+    echo("block_depth: ", block_depth);
 }
 
 
 //visualize_colorBlock_in_body("distant", "y");
-print_components();
+//print_components();
+//mill_color_block();
+//mill_handlespace_and_rounding();
+//mill_cavity_box();
+//mill_signal_symbol("distant");
 values_to_console();
 
 
