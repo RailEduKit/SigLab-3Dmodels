@@ -25,6 +25,18 @@ track_arc_inner_radius = 182;
 sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
 z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
 
+// Locking Part specifications
+lock_pin_diameter = 9.5;
+lock_lever_thickness = 3;
+lock_lever_height = 10;
+
+// magnet specification
+magnet_thickness = 3;
+magnet_diameter = 5;
+magnet_distance_to_middle_y = 7.5;
+magnet_z = 6;
+
+
 // color_block specifications
 move_tolerance = 1;
 block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
@@ -54,6 +66,9 @@ module equ_triangle(side_length,corner_radius,triangle_height){
 };
 };
 
+module magnet_hole(){
+    cylinder(h=magnet_thickness+0.5, d=magnet_diameter+0.5);
+}
 
 //symbol_main();
 module symbol_main(){
@@ -78,7 +93,11 @@ module handle_space_cubes(){
     translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
 }
 
-module body(){
+module space_locking_pin(){
+    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_pin_diameter, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness+move_tolerance/2, lock_pin_diameter+move_tolerance, lock_lever_height]);
+}
+//body("main");
+module body(symbol_type){
     module box(){
         difference(){
             cube([body_width, body_depth, body_height]);
@@ -99,6 +118,15 @@ module body(){
                 translate([body_width-track_arc_inner_radius+sagitta,body_depth/2,0])round_edge();
             }
         }
+        if(symbol_type == "main"){
+            space_locking_pin();
+            translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance/2),0,0])space_locking_pin();
+        }
+        //magnet holes
+        translate([0,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([0,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([body_width-magnet_thickness-0.5,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([body_width-magnet_thickness-0.5,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
         //axis
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
         handle_space_cubes();
@@ -131,7 +159,7 @@ module color_block(symbol_type){
 
 
 module visualize_colorBlock_in_body(symbol_type, state){
-    translate([0,-body_depth/2,-z_pos_axis]) body(); //z=-block_height/2-wall_thickness_z
+    translate([0,-body_depth/2,-z_pos_axis]) body(symbol_type); //z=-block_height/2-wall_thickness_z
     if(state== "-y"){
         rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
@@ -148,61 +176,131 @@ module prove_moveability(){
 }
 
 module print_components(symbol_type){
-    body();
+    body(symbol_type);
     translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block(symbol_type=symbol_type);
 }
 
-module mill_color_block() {
-    module unworked_block(){
-        height = block_height;
-        width = block_width;
-        depth = block_depth+handle_depth+height/2;
-        cube([width, depth, height]);
-        
-    }
+module unworked_color_block(){
+    height = block_height;
+    width = block_width;
+    depth = block_depth+handle_depth+height/2;
+    cube([width, depth, height]);
+    
+}
+
+
+module mill_color_block_side() {
     projection(cut = true) rotate([0,90,0]) difference(){
-        unworked_block(); 
+        unworked_color_block(); 
         translate([0,handle_depth,0]) color_block("distant");
         
     }
-//    %unworked_block();
+//    %unworked_color_block();
 //    translate([0,handle_depth,0]) color_block(symbol_type);
 }
 
-module mill_signal_symbol(symbol_type){
-    //where does the production need the coordinate origin?
-    projection(cut=true) color_block(symbol_type);    
-}
-
-
-module mill_handlespace_and_rounding(){
-    projection(cut=true) difference(){
-            cube([body_width, body_depth, body_height]);
-            body();
+module mill_color_block_top(symbol_type){
+    projection(cut=true)difference(){
+        unworked_color_block();
+        if(symbol_type == "main"){
+            translate([symbol_side_space,(block_depth-symbol_size)/2 + handle_depth,0]) symbol_main();
         }
-        projection() handle_space_cubes();
-    }
-module mill_cavity_box(){
-    projection(cut=true) difference(){
-            cube([body_width, body_depth, body_height]);
-            translate([0,0,-wall_thickness_z])cavity_cube();
+        if (symbol_type == "distant"){
+            translate([block_width/2,(block_depth-triangle_height)/2 + handle_depth,0]) symbol_distant();
         }
     }
     
+}
+module mill_color_block_bottom_distant() {
+    projection(cut=true)difference(){
+        unworked_color_block();
+        translate([block_width/2,triangle_height+(block_depth-triangle_height)/2 + handle_depth,0]) rotate([0,0,180]) symbol_distant();
+    }
+}
+
+
+module mill_signal_body_top_2(symbol_type){
+    projection(cut=true) difference(){
+            cube([body_width, body_depth, body_height]);
+            body(symbol_type);
+        }
+        projection() handle_space_cubes();
+    }
+module mill_signal_body_top_1(symbol_type){
+    projection(cut=true) difference(){
+            cube([body_width, body_depth, body_height]);
+            translate([0,0,-wall_thickness_z]) cavity_cube(); //has to be moved to the ground
+            if (symbol_type == "main"){
+                translate([0,0, -(body_height - lock_lever_height)]) space_locking_pin(); //has to be moved to the ground
+                translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance/2),0,-(body_height - lock_lever_height)])space_locking_pin(); //has to be moved to the ground
+                
+            }
+    }
+}
+
+module mill_signal_body_side(){
+    // its always "distant" because the locking part shouldn't be visible at the side projection.
+     projection(cut=true) translate([body_height,0,-(body_width-2)])rotate([0,-90,0])body("distant");
+}
+  
 module values_to_console(){
     echo("handle space: ", (block_height-handle_height)/2);
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
+    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_pin_diameter);
 }
 
+module 2D_drawing_signal_body(symbol_type){
+    translate([50, 50, 0]) union(){
+        projection(cut = true) translate([0,0,-7])body(symbol_type);
+        projection(cut = true) translate([50, 0, -body_width+1.5])rotate([0,-90,0]) body(symbol_type);
+        projection(cut = true) translate([-20,0,1.5]) rotate([0,90,0]) body(symbol_type);
+        projection(cut = true) translate([0,70,0]) rotate([90,0,0])body(symbol_type);
+        projection(cut = true) translate([0,-20,0]) rotate([-90,0,0])body(symbol_type);
+        projection(cut = true) translate([0,90,-body_depth/2]) rotate([90,0,0])body(symbol_type);
+    }
+}
 
-//visualize_colorBlock_in_body("distant", "y");
-//print_components();
-//mill_color_block();
-//mill_handlespace_and_rounding();
-//mill_cavity_box();
-//mill_signal_symbol("distant");
+module 2D_drawing_color_block(symbol_type){
+     translate([50, 50, 0]) union(){
+        mill_color_block_top(symbol_type);
+        projection(cut=true) translate([30,handle_depth,block_width/2]) rotate([0,90,0]) color_block(symbol_type);
+        projection(cut = true) translate([-20,handle_depth,0]) rotate([0,90,0]) color_block(symbol_type);
+        projection(cut = true) translate([0, 60, -block_width-axis_diameter/2]) rotate([90,0,0]) color_block(symbol_type);
+        if(symbol_type == "distant"){
+           translate([50,0,0]) mill_color_block_bottom_distant();
+        } 
+    }
+}
+//visualize_colorBlock_in_body("main", "y");
+//print_components("main");
+
+/********************************
+drawing
+********************************/
+//2D_drawing_signal_body("main");
+body("main");
+
+//2D_drawing_signal_body("distant");
+//body("distant");
+
+//2D_drawing_color_block("main");
+//color_block("main");
+
+//2D_drawing_color_block("distant");
+//color_block("distant");
+
+/********************************
+mill
+**********************************/
+//mill_color_block_side();
+//mill_color_block_top("main");
+//mill_color_block_bottom_distant();
+//mill_signal_body_top_1("main");
+//mill_signal_body_top_2("main");
+//mill_signal_body_side();
+
 values_to_console();
 
 
