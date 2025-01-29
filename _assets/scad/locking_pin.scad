@@ -10,13 +10,16 @@ $fn = 50;// number of fragments
 width = 14;
 height = 20;
 lever_height = 10;
-lever_thickness = 4;
+lever_thickness_switch = 4;
+lever_thickness_signal = 2;
 rounding = 0.5;
 
 minkowski() {
     difference(){
         cylinder(d = width-2*rounding, h = height-2*rounding);
-        translate([(-width/2-rounding),(-lever_thickness/2-rounding),(height-(lever_height+rounding))]) cube([(width+2*rounding),(lever_thickness+2*rounding),(lever_height+rounding)]);
+        translate([(-width/2-rounding),(-lever_thickness_switch/2-rounding),(height-(lever_height+rounding))]) cube([(width+2*rounding),(lever_thickness_switch+2*rounding),(lever_height+rounding)]);
+        // signal lock
+        
     };
     sphere(rounding);
 }
