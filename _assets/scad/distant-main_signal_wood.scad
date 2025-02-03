@@ -16,7 +16,7 @@ move_tolerance=undef;
 // body specifications
 axis_diameter = 2.5; //maybe use the same material as lever anchor
 body_width = 30; // material constraint
-body_depth = 50;
+body_depth = 60; // minimum, because of the lockpin diameter
 body_height = 13.5; // material constraint
 wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
 wall_thickness_y = 2;
@@ -26,9 +26,10 @@ sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
 z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
 
 // Locking Part specifications
-lock_pin_diameter = 9.5;
-lock_lever_thickness = 3;
+lock_lever_depth = 9.5;
+lock_lever_thickness = 2.5;
 lock_lever_height = 10;
+foot_width = 2.5;
 
 // magnet specification
 magnet_thickness = 3;
@@ -49,8 +50,8 @@ handle_height = 3;
 
 // main Symbol Specifications
 symbol_side_space = 4;
-symbol_height = 1;
-symbol_thickness = 1;
+symbol_height = 1.5;//(block_height-handle_height)/2;
+symbol_thickness = 1.5;
 symbol_size = block_width-2*symbol_side_space;
 triangle_height = (sqrt(3)*symbol_size)/2;
 
@@ -94,9 +95,9 @@ module handle_space_cubes(){
 }
 
 module space_locking_pin(){
-    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_pin_diameter, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness+move_tolerance/2, lock_pin_diameter+move_tolerance, lock_lever_height]);
+    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance/2, lock_lever_height]);
 }
-//body("main");
+body("main");
 module body(symbol_type){
     module box(){
         difference(){
@@ -120,7 +121,6 @@ module body(symbol_type){
         }
         if(symbol_type == "main"){
             space_locking_pin();
-            translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance/2),0,0])space_locking_pin();
         }
         //magnet holes
         translate([0,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
@@ -138,7 +138,7 @@ module color_block(symbol_type){
     difference(){
         union(){
             cube([block_width, block_depth, block_height]);
-            translate([0,block_depth,block_height/2]) scale([1,(overhang)/(block_height/2),1]) rotate([0,90,0]) cylinder(h=block_width, r=block_height/2);
+            translate([0,block_depth,block_height/2]) scale([1,0.5,1]) rotate([0,90,0]) cylinder(h=block_width, r=block_height/2); // scale y: (overhang)/(block_height/2) // curve is flat, because the printer can't make that much overhang
             //handle
             translate([0,-handle_depth, (block_height-handle_height)/2]) cube([block_width, handle_depth, handle_height]);
         }
@@ -177,7 +177,7 @@ module prove_moveability(){
 
 module print_components(symbol_type){
     body(symbol_type);
-    translate([-block_height-10,0,block_width]) rotate([0,90,0]) color_block(symbol_type=symbol_type);
+    translate([-30,handle_depth,0]) color_block(symbol_type=symbol_type);
 }
 
 module unworked_color_block(){
@@ -248,7 +248,7 @@ module values_to_console(){
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
-    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_pin_diameter);
+    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth);
 }
 
 module 2D_drawing_signal_body(symbol_type){
@@ -275,12 +275,13 @@ module 2D_drawing_color_block(symbol_type){
 }
 //visualize_colorBlock_in_body("main", "y");
 //print_components("main");
+//color_block("main");
 
 /********************************
 drawing
 ********************************/
 //2D_drawing_signal_body("main");
-body("main");
+//body("main");
 
 //2D_drawing_signal_body("distant");
 //body("distant");
