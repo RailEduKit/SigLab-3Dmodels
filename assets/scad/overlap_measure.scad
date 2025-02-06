@@ -2,13 +2,25 @@
 // by atartanian (www.thingiverse.com/atartanian)
 // license CC-BY-SA
 
+/****************
+NOTE:
+For the connector (joiner) you have to include the library BOSL2
+Installation: https://github.com/BelfrySCAD/BOSL2/wiki#installation
+Joiners wiki: https://github.com/BelfrySCAD/BOSL2/wiki/joiners.scad
+
+****************/
+include <BOSL2/std.scad>
+include <BOSL2/joiners.scad>
+
+
 $fn = 50;
 
 // preview[view:west, tilt:top]
 
 /*[Track Settings]*/
 //length of track piece, in mm
-length = 170; //[30:10:400] //inklusive the male pin
+length = 147; //[30:10:400] //inklusive the male pin
+
 
 //only one preset... for now
 //track_type = 0; //[1:brio,0:custom]
@@ -22,9 +34,16 @@ line_thickness = 4; //[2:2:10]
 //spacing between male and female connectors, in mm
 connector_tolerance = .3; //[.1:.05:1]
 
+// pin specifications
 pin_height = 5;
 pin_diameter = 4.5;
+pin_y_pos = 25;
 echo("pin_diameter: ", pin_diameter);
+
+//dovetail connector specifications
+dovetail_width = 10;
+dovetail_depth = 5;
+
 
 /*[Custom Dimensions]*/
 use_custom_settings = 1; //[0:No,1:Yes]
@@ -32,7 +51,7 @@ custom_width_base = 19.25;
 custom_width_middle = 19.25;
 custom_height_base = 2;
 custom_height_middle = 2;
-custom_connector_length = 17.5;
+custom_connector_length =0; //17.5;
 
 /*[Hidden]*/
 track_type = use_custom_settings ? 0 : 1;
@@ -74,9 +93,26 @@ intersection(convexity = 20) {
                     brio_female_2D();
         }
 }
-translate([0,(length-track_type_params()[track_type][5])/2-0.1,0])pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
+/***pin***/
+//middle pin
+translate([0,(length+dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
     4*line_thickness * extrusion_width,
     track_type_params()[track_type][3]);
+//male side pin
+translate([0,pin_y_pos,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
+    4*line_thickness * extrusion_width -1,
+    track_type_params()[track_type][3]);
+// female side pin
+translate([0,length+dovetail_depth-(pin_y_pos),0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
+    4*line_thickness * extrusion_width -1,
+    track_type_params()[track_type][3]);
+/***connectors***/
+    translate([0,0,custom_height_middle/2])rotate([90,0,0]) dovetail("male", w=dovetail_width, h=dovetail_depth, slide=custom_height_middle);
+translate([0,length,0])difference(){
+    translate([-custom_width_middle/2,0,0]) cube([custom_width_middle,dovetail_depth,custom_height_middle]);
+    translate([0,dovetail_depth,custom_height_middle/2]) rotate([-90,0,0]) dovetail("female", w=dovetail_width, h=dovetail_depth, slide=custom_height_middle);
+}
+
 
 /***************/
 /*  FUNCTIONS  */

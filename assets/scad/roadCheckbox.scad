@@ -2,7 +2,7 @@ $fn = 200;
 // body specifications
 axis_diameter = 2.5; //maybe use the same material as lever anchor
 body_width = 30; // material constraint
-body_depth = 50;
+body_depth = 60;
 body_height = 13.5; // material constraint
 track_arc_inner_radius = 182;
 
