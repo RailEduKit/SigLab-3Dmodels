@@ -97,7 +97,7 @@ module handle_space_cubes(){
 module space_locking_pin(){
     translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance/2, lock_lever_height]);
 }
-body("main");
+//body("distant");
 module body(symbol_type){
     module box(){
         difference(){
@@ -133,7 +133,7 @@ module body(symbol_type){
     }
 }
 
-//color_block(("distant"));
+color_block(("distant"));
 module color_block(symbol_type){
     difference(){
         union(){
