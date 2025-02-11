@@ -11,7 +11,7 @@ Joiners wiki: https://github.com/BelfrySCAD/BOSL2/wiki/joiners.scad
 ****************/
 include <BOSL2/std.scad>
 include <BOSL2/joiners.scad>
-
+include<./specification_of_components.scad>
 
 $fn = 50;
 
@@ -19,7 +19,7 @@ $fn = 50;
 
 /*[Track Settings]*/
 //length of track piece, in mm
-length = 147; //[30:10:400] //inklusive the male pin
+length = straight_length+2.5; //[30:10:400] //inklusive the male pin
 
 
 //only one preset... for now
@@ -40,6 +40,10 @@ pin_diameter = 4.5;
 pin_y_pos = 25;
 echo("pin_diameter: ", pin_diameter);
 
+// track guidance
+track_guidance_width = 1.6;
+track_guidance_heigth = 2.5;
+
 //dovetail connector specifications
 dovetail_width = 10;
 dovetail_depth = 5;
@@ -47,8 +51,8 @@ dovetail_depth = 5;
 
 /*[Custom Dimensions]*/
 use_custom_settings = 1; //[0:No,1:Yes]
-custom_width_base = 19.25;
-custom_width_middle = 19.25;
+custom_width_base = 19.25+2*track_guidance_width+0.25;
+custom_width_middle = custom_width_base;
 custom_height_base = 2;
 custom_height_middle = 2;
 custom_connector_length =0; //17.5;
@@ -60,6 +64,7 @@ track_type = use_custom_settings ? 0 : 1;
 /***************/
 /*     CODE    */
 /***************/
+module endproduct(){
 translate([-track_type_params()[track_type][1] / 2,0])
 intersection(convexity = 20) {
     rotate([-90,0,0])
@@ -85,7 +90,8 @@ intersection(convexity = 20) {
                     track_type_params()[track_type][2],
                     line_thickness * extrusion_width,
                     line_thickness * extrusion_width,
-                    line_thickness * extrusion_width //this defines the gap_thickness
+                    line_thickness * extrusion_width, //this defines the gap_thickness
+                    true
                 );
             }
             translate([track_type_params()[track_type][1] / 2, track_type_params()[track_type][5] + line_thickness * extrusion_width])
@@ -93,16 +99,28 @@ intersection(convexity = 20) {
                     brio_female_2D();
         }
 }
+translate([-custom_width_middle/2,track_type_params()[track_type][5] + line_thickness * extrusion_width,-track_guidance_heigth])
+    linear_extrude(height = track_guidance_heigth, convexity = 20)
+        flex_track_pattern_2D(
+                length - track_type_params()[track_type][5] * 2 - line_thickness * extrusion_width * 2,
+                track_type_params()[track_type][1],
+                track_type_params()[track_type][2],
+                line_thickness * extrusion_width,
+                line_thickness * extrusion_width,
+                line_thickness * extrusion_width, //this defines the gap_thickness
+                false
+            );
+}
 /***pin***/
 //middle pin
-translate([0,(length+dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
-    4*line_thickness * extrusion_width,
-    track_type_params()[track_type][3]);
-//male side pin
+//translate([0,(length+dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
+//    4*line_thickness * extrusion_width,
+//    track_type_params()[track_type][3]);
+////male side pin
 translate([0,pin_y_pos,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
     4*line_thickness * extrusion_width -1,
     track_type_params()[track_type][3]);
-// female side pin
+//// female side pin
 translate([0,length+dovetail_depth-(pin_y_pos),0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
     4*line_thickness * extrusion_width -1,
     track_type_params()[track_type][3]);
@@ -141,6 +159,17 @@ function track_type_params() =
 /***************/
 /*   MODULES   */
 /***************/
+
+module track_guidance2D(length = 100,
+    width_base = 40,
+    width_middle = 20,
+    line_thickness = 1.6,
+    connector_thickness = 1.6,
+    gap_thickness = 1.6
+){
+    
+}
+
 
 module track_profile_2D(
     width_base = 40,
@@ -181,7 +210,8 @@ module flex_track_pattern_2D(
     width_middle = 20,
     line_thickness = 1.6,
     connector_thickness = 1.6,
-    gap_thickness = 1.6
+    gap_thickness = 1.6,
+    inclusive_bars = true
 ){
     epsilon = .1;
 
@@ -242,9 +272,10 @@ module flex_track_pattern_2D(
             }
         }
     }
-
-    translate([0, leftover / 2])
-        bars();
+    if (inclusive_bars==true){
+        translate([0, leftover / 2])
+            bars();
+    }
 
     difference() {
         translate([(width_base - width_middle) / 2, 0])
@@ -301,4 +332,7 @@ module pin(base_width, base_depth, base_height){
     translate([0,0,base_height/2])cube([base_width, base_depth, base_height], center=true);
     translate([0,0,-pin_height])cylinder(h=pin_height, d=pin_diameter);
 }
+//track_profile_2D();
+//flex_track_pattern_2D();
+endproduct();
 

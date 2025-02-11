@@ -16,6 +16,7 @@
  * tracklib.scad uses this library.
  */
 
+include<./specification_of_components.scad>
 
 /* [parameters for the switch_body] used as global variables in the modules */
 // ATTENTION: The TRack wisth has to be 38.5, not 40 (in tracklib.scad)
@@ -33,29 +34,29 @@
 //right_end = "none"; // [male,female,none]
 
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
-straight_size = 145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
+straight_size = straight_length; //145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
 
 // Curve radius -> inner radius.  Sizes provided are standard.
-radius = 182; // [87.5:small, 180:large]
+radius = curve_radius; //182; // [87.5:small, 180:large]
 
 /* [Hidden] */
 
 // Angle of track to render.  45 is standard.
-angle = 45; // [1:360]
+angle = curve_angle;//45; // [1:360]
 
 //// Wheel wells on both sides of the track?
 //double_sided_rails = false;
 
 /* [parameters for the switch_blade] */
 // coppy values from switch_blade
-blade_length = 45;
-blade_width  = 19;
-pin_diameter = 5;
-pin_female_diameter = pin_diameter*1.3;
-lever_anchor_posY = blade_length*0.8111;
-lever_anchor_posX = blade_width*(1/5);
-lever_hole_size = 2.7;
-y_pos_second_pin = (blade_length*2/3)+1;
+//blade_length = 45;
+//blade_width  = 19;
+//pin_diameter = 5;
+//pin_female_diameter = pin_diameter*1.3;
+//lever_anchor_posY = blade_length*0.8111;
+//lever_anchor_posX = blade_width*(1/5);
+//lever_hole_size = 2.7;
+//y_pos_second_pin = (blade_length*2/3)+1;
 
 
 $fa=3;
