@@ -10,50 +10,52 @@
 1. Symbol auf den Hebel
 */
 
-$fn = 200;
-block_width=undef;
-move_tolerance=undef;
-// body specifications
-axis_diameter = 2.5; //maybe use the same material as lever anchor
-body_width = 30; // material constraint
-body_depth = 60; // minimum, because of the lockpin diameter
-body_height = 13.5; // material constraint
-wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
-wall_thickness_y = 2;
-wall_thickness_z = 2;
-track_arc_inner_radius = 182;
-sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
-z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
+include<./specification_of_components.scad>
 
-// Locking Part specifications
-lock_lever_depth = 9.5;
-lock_lever_thickness = 2.5;
-lock_lever_height = 10;
-foot_width = 2.5;
+$fn = 200;
+//block_width=undef;
+//move_tolerance=undef;
+//// body specifications
+//axis_diameter = 2.5; //maybe use the same material as lever anchor
+//body_width = 30; // material constraint
+//body_depth = 60; // minimum, because of the lockpin diameter
+//body_height = 13.5; // material constraint
+//wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
+//wall_thickness_y = 2;
+//wall_thickness_z = 2;
+//track_arc_inner_radius = 182;
+//sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
+//z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
+//
+//// Locking Part specifications
+//lock_lever_depth = 9.5;
+//lock_lever_thickness = 2.5;
+//lock_lever_height = 10;
+//foot_width = 2.5;
 
 // magnet specification
-magnet_thickness = 3;
-magnet_diameter = 5;
-magnet_distance_to_middle_y = 7.5;
-magnet_z = 6;
+//magnet_thickness = 3;
+//magnet_diameter = 5;
+//magnet_distance_to_middle_y = 7.5;
+//magnet_z = 5.75;
 
 
-// color_block specifications
-move_tolerance = 1;
-block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
-block_depth = (body_depth-2*wall_thickness_y)/2-1.5*move_tolerance;
-block_height = 13.5; // material constraint
-//block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
-overhang = block_height/2-move_tolerance; //the circle has to be flattend at one side with move_tolerance
-handle_depth = 10+wall_thickness_y;
-handle_height = 3;
-
-// main Symbol Specifications
-symbol_side_space = 4;
-symbol_height = 1.5;//(block_height-handle_height)/2;
-symbol_thickness = 1.5;
-symbol_size = block_width-2*symbol_side_space;
-triangle_height = (sqrt(3)*symbol_size)/2;
+//// color_block specifications
+//move_tolerance = 1;
+//block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
+//block_depth = (body_depth-2*wall_thickness_y)/2-1.5*move_tolerance;
+//block_height = 13.5; // material constraint
+////block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
+//overhang = block_height/2-move_tolerance; //the circle has to be flattend at one side with move_tolerance
+//handle_depth = 10+wall_thickness_y;
+//handle_height = 3;
+//
+////Symbol Specifications
+//symbol_side_space = 4;
+//symbol_height = 1.5;//(block_height-handle_height)/2;
+//symbol_thickness = 1.5;
+//symbol_size = block_width-2*symbol_side_space;
+//triangle_height = (sqrt(3)*symbol_size)/2;
 
 
 module equ_triangle(side_length,corner_radius,triangle_height){
@@ -90,12 +92,12 @@ module cavity_cube(){
     translate([wall_thickness_x,wall_thickness_y,wall_thickness_z]) cube([body_width-2*wall_thickness_x, body_depth-2*wall_thickness_y, body_height-wall_thickness_z]);
 }
 module handle_space_cubes(){
-    translate([wall_thickness_x,0,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
-    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+    translate([wall_thickness_x,0,z_pos_axis-handle_height/2+move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
+    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height)/2+move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
 }
 
 module space_locking_pin(){
-    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance/2, lock_lever_height]);
+    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - 2*move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance, lock_lever_height]);
 }
 //body("distant");
 module body(symbol_type){
@@ -161,18 +163,18 @@ module color_block(symbol_type){
 module visualize_colorBlock_in_body(symbol_type, state){
     translate([0,-body_depth/2,-z_pos_axis]) body(symbol_type); //z=-block_height/2-wall_thickness_z
     if(state== "-y"){
-        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+2*move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
     if(state== "y"){
-        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+2*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
 }
 
 module prove_moveability(){
     //move_tolerance space between bottom and color_block
-    translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,move_tolerance]);
+    translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,2*move_tolerance]);
     //middle position
-    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+move_tolerance*2,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
 }
 
 module print_components(symbol_type){
@@ -232,7 +234,7 @@ module mill_signal_body_top_1(symbol_type){
             translate([0,0,-wall_thickness_z]) cavity_cube(); //has to be moved to the ground
             if (symbol_type == "main"){
                 translate([0,0, -(body_height - lock_lever_height)]) space_locking_pin(); //has to be moved to the ground
-                translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance/2),0,-(body_height - lock_lever_height)])space_locking_pin(); //has to be moved to the ground
+                translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance),0,-(body_height - lock_lever_height)])space_locking_pin(); //has to be moved to the ground
                 
             }
     }
@@ -248,7 +250,7 @@ module values_to_console(){
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
-    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth);
+    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance*2 - lock_lever_depth);
 }
 
 module 2D_drawing_signal_body(symbol_type){
