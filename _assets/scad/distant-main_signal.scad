@@ -150,6 +150,8 @@ module color_block(symbol_type){
         if(symbol_type == "main"){
             translate([symbol_side_space,(block_depth-symbol_size)/2,0]) symbol_main();
             translate([symbol_side_space,(block_depth-symbol_size)/2,block_height-symbol_height]) symbol_main();
+            // locker pin hole
+            translate([block_width/2,-wall_thickness_y/2-1.5*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+move_tolerance);
         }
         if (symbol_type == "distant"){
             translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
@@ -275,8 +277,8 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-//visualize_colorBlock_in_body("main", "y");
-print_components("main");
+visualize_colorBlock_in_body("main", "y");
+//print_components("main");
 //color_block("main");
 
 /********************************

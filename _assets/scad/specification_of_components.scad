@@ -89,7 +89,7 @@ foot_width = 2.5;
 
 // color_block specifications
 block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
-block_depth = (body_depth-2*wall_thickness_y)/2-1.5*2*move_tolerance;
+block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
 block_height = 13.5; // material constraint
 //block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
 overhang = block_height/2-2*move_tolerance; //the circle has to be flattend at one side with move_tolerance
