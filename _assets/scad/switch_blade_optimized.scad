@@ -10,7 +10,6 @@ include<./specification_of_components.scad>
 
 $fn = 50;// number of fragments
 wood_thickness  = wood_thickness_rail; // bevor it was 5!
-move_tolerance   = 0.7;
 sqeeze_tolerance = 0.6;
 
 ////blade specification
