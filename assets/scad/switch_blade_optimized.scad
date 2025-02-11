@@ -23,10 +23,10 @@ lever_anchor_posX = blade_width*1/5;
 lever_anchor_posY = blade_length*0.8111;
 
 //pin specification
-pin_diameter = 5;
+pin_diameter = 8;
 pin_height = wood_thickness+2; //2mm move tolerance
 y_pos_first_pin = pin_diameter;
-y_pos_second_pin = (blade_length*2/3)+1;
+y_pos_second_pin = (blade_length*2/3);
 overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
 
 
@@ -65,7 +65,7 @@ module pin(){
 
 module pin_hole(){ union(){
     difference(){
-        cylinder(d = pin_diameter*1.3, h = pin_height+overlap); //pin_diameter*1.3
+        cylinder(d = pin_diameter+1.5, h = pin_height+overlap); //pin_diameter*1.3
         cylinder(d = pin_diameter, h = pin_height+overlap);
     };
 };
@@ -104,9 +104,17 @@ module cap(){ union(){
 };
 };
 
+module print_to_console(){
+    echo("pin_diameter*0.3", pin_diameter*0.3);
+}
+print_to_console();
+
+
 color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) switch_male();
 color("LightGreen") translate([-(blade_width+2)/2,-15,0]) switch_female();
 color("green") translate([-(blade_width+2)*1.5,15,0]) rotate(a=[0,0,180]) cap();
+
+
 
 //pin();
 //lever_anchor();
