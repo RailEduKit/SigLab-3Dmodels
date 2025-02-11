@@ -133,7 +133,7 @@ module body(symbol_type){
     }
 }
 
-color_block(("distant"));
+//color_block(("distant"));
 module color_block(symbol_type){
     difference(){
         union(){
@@ -274,7 +274,7 @@ module 2D_drawing_color_block(symbol_type){
     }
 }
 //visualize_colorBlock_in_body("main", "y");
-//print_components("main");
+print_components("main");
 //color_block("main");
 
 /********************************
