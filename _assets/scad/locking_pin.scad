@@ -17,7 +17,7 @@ $fn = 50;// number of fragments
 
 //// copied parameters from signal
 //magnet_diameter = 5;
-//magnet_distance_to_middle_y = 7.5;
+//magnet_distance_to_middle = 7.5;
 //body_height = 13.5;
 //z_pos_axis = 10; 
 //block_height = 13.5;

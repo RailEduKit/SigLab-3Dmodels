@@ -31,9 +31,12 @@ curve_angle = 45; // degree
 /***************magnet specifications***************/
 magnet_thickness = 3;
 magnet_diameter = 5;
-magnet_distance_to_middle_y = 7.5;
+magnet_distance_to_middle = 7.5;
 magnet_z = 5.75;
 
+/***************engraving specifications***************/
+engraving_height = 1.5;//(block_height-handle_height)/2;
+engraving_thickness = 1.5;
 
 /***************switch_blade_optimized***************/
 
@@ -61,7 +64,7 @@ overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise
 
 /***************locking_pin***************/
 locker_width = 14;
-locker_height = 20;
+locker_height = 25;
 lever_height = 10;
 lever_thickness_switch = 4;
 rounding = 0.5;
@@ -72,7 +75,7 @@ block_width=undef;
 // body specifications
 axis_diameter = 2.5; //maybe use the same material as lever anchor
 body_width = 30; // material constraint
-body_depth = 60; // minimum, because of the lockpin diameter
+body_depth = 50; // minimum, because of the lockpin diameter
 body_height = 13.5; // material constraint
 wall_thickness_x = (body_width-block_width)/2-move_tolerance;//5;
 wall_thickness_y = lever_thickness_switch;
@@ -97,9 +100,16 @@ handle_depth = 10+wall_thickness_y;
 handle_height = 3;
 
 //Symbol Specifications
-symbol_side_space = 4;
-symbol_height = 1.5;//(block_height-handle_height)/2;
-symbol_thickness = 1.5;
-symbol_size = block_width-2*symbol_side_space;
-triangle_height = (sqrt(3)*symbol_size)/2;
+signal_symbol_side_space = 4;
+signal_symbol_size = block_width-2*signal_symbol_side_space;
+signal_triangle_height = (sqrt(3)*signal_symbol_size)/2;
+
+/***************FZS_SZS***************/
+zs_with = 25;
+zs_depth = 10;
+zs_height = 15;
+
+cp_symbol_side_space = 2;
+cp_symbol_size = zs_depth-2*cp_symbol_side_space;
+
 

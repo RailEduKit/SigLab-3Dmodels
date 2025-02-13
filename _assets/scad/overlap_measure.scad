@@ -14,7 +14,7 @@ include <BOSL2/joiners.scad>
 include<./specification_of_components.scad>
 
 $fn = 50;
-
+move_tolerance = 0.5;
 // preview[view:west, tilt:top]
 
 /*[Track Settings]*/
@@ -41,7 +41,7 @@ pin_y_pos = 25;
 echo("pin_diameter: ", pin_diameter);
 
 // track guidance
-track_guidance_width = 1.6;
+track_guidance_width = 0.8;
 track_guidance_heigth = 2.5;
 
 //dovetail connector specifications
@@ -51,7 +51,7 @@ dovetail_depth = 5;
 
 /*[Custom Dimensions]*/
 use_custom_settings = 1; //[0:No,1:Yes]
-custom_width_base = 19.25+2*track_guidance_width+0.25;
+custom_width_base = 19.25+2*track_guidance_width+move_tolerance;
 custom_width_middle = custom_width_base;
 custom_height_base = 2;
 custom_height_middle = 2;
@@ -99,6 +99,7 @@ intersection(convexity = 20) {
                     brio_female_2D();
         }
 }
+//track guidance
 translate([-custom_width_middle/2,track_type_params()[track_type][5] + line_thickness * extrusion_width,-track_guidance_heigth])
     linear_extrude(height = track_guidance_heigth, convexity = 20)
         flex_track_pattern_2D(
@@ -106,21 +107,21 @@ translate([-custom_width_middle/2,track_type_params()[track_type][5] + line_thic
                 track_type_params()[track_type][1],
                 track_type_params()[track_type][2],
                 line_thickness * extrusion_width,
-                line_thickness * extrusion_width,
+                track_guidance_width,
                 line_thickness * extrusion_width, //this defines the gap_thickness
                 false
             );
-}
+
 /***pin***/
 //middle pin
 //translate([0,(length+dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
 //    4*line_thickness * extrusion_width,
 //    track_type_params()[track_type][3]);
-////male side pin
+//male side pin
 translate([0,pin_y_pos,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
     4*line_thickness * extrusion_width -1,
     track_type_params()[track_type][3]);
-//// female side pin
+// female side pin
 translate([0,length+dovetail_depth-(pin_y_pos),0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
     4*line_thickness * extrusion_width -1,
     track_type_params()[track_type][3]);
@@ -130,7 +131,7 @@ translate([0,length,0])difference(){
     translate([-custom_width_middle/2,0,0]) cube([custom_width_middle,dovetail_depth,custom_height_middle]);
     translate([0,dovetail_depth,custom_height_middle/2]) rotate([-90,0,0]) dovetail("female", w=dovetail_width, h=dovetail_depth, slide=custom_height_middle);
 }
-
+}
 
 /***************/
 /*  FUNCTIONS  */
@@ -336,3 +337,4 @@ module pin(base_width, base_depth, base_height){
 //flex_track_pattern_2D();
 endproduct();
 
+echo("custom_width_base", custom_width_base);

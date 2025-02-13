@@ -36,7 +36,7 @@ $fn = 200;
 // magnet specification
 //magnet_thickness = 3;
 //magnet_diameter = 5;
-//magnet_distance_to_middle_y = 7.5;
+//magnet_distance_to_middle = 7.5;
 //magnet_z = 5.75;
 
 
@@ -51,40 +51,40 @@ $fn = 200;
 //handle_height = 3;
 //
 ////Symbol Specifications
-//symbol_side_space = 4;
-//symbol_height = 1.5;//(block_height-handle_height)/2;
-//symbol_thickness = 1.5;
-//symbol_size = block_width-2*symbol_side_space;
-//triangle_height = (sqrt(3)*symbol_size)/2;
+//signal_symbol_side_space = 4;
+//engraving_height = 1.5;//(block_height-handle_height)/2;
+//engraving_thickness = 1.5;
+//signal_symbol_size = block_width-2*signal_symbol_side_space;
+//signal_triangle_height = (sqrt(3)*signal_symbol_size)/2;
 
 
-module equ_triangle(side_length,corner_radius,triangle_height){
+module equ_triangle(side_length,corner_radius,signal_triangle_height){
     // copy from https://www.youtube.com/watch?v=5hDB8Nsd688
     translate([0,corner_radius]){
     hull(){
-        cylinder(r=corner_radius,h=triangle_height);
-     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);   
-         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);
+        cylinder(r=corner_radius,h=signal_triangle_height);
+     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);   
+         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);
         };
 };
 };
 
 module magnet_hole(){
-    cylinder(h=magnet_thickness+0.5, d=magnet_diameter+0.5);
+    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
 }
 
 //symbol_main();
 module symbol_main(){
     difference(){
-        cube([symbol_size, symbol_size, symbol_height]);
-        translate([symbol_thickness,symbol_thickness,0]) cube([symbol_size-2*symbol_thickness, symbol_size-2*symbol_thickness, symbol_height]);
+        cube([signal_symbol_size, signal_symbol_size, engraving_height]);
+        translate([engraving_thickness,engraving_thickness,0]) cube([signal_symbol_size-2*engraving_thickness, signal_symbol_size-2*engraving_thickness, engraving_height]);
     }
 }
 //symbol_distant();
 module symbol_distant(){
     difference(){
-        equ_triangle(symbol_size, symbol_thickness, symbol_height);
-        translate([0,symbol_thickness,0]) equ_triangle(symbol_size-2*symbol_thickness, symbol_thickness, symbol_height);
+        equ_triangle(signal_symbol_size, engraving_thickness, engraving_height);
+        translate([0,engraving_thickness,0]) equ_triangle(signal_symbol_size-2*engraving_thickness, engraving_thickness, engraving_height);
     }
 }
 
@@ -93,13 +93,13 @@ module cavity_cube(){
 }
 module handle_space_cubes(){
     translate([wall_thickness_x,0,z_pos_axis-handle_height/2+move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
-    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height)/2+move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height)/2-move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
 }
 
 module space_locking_pin(){
-    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - 2*move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance, lock_lever_height]);
+    translate([0, body_depth/2 - magnet_distance_to_middle - magnet_diameter - 2*move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance, lock_lever_height]);
 }
-//body("distant");
+//body("main");
 module body(symbol_type){
     module box(){
         difference(){
@@ -121,17 +121,21 @@ module body(symbol_type){
                 translate([body_width-track_arc_inner_radius+sagitta,body_depth/2,0])round_edge();
             }
         }
-        if(symbol_type == "main"){
-            space_locking_pin();
-        }
         //magnet holes
-        translate([0,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([0,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([0,body_depth/2 - magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([0,body_depth/2 + magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([body_width-magnet_thickness-0.5,body_depth/2 - magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
+        translate([body_width-magnet_thickness-0.5,body_depth/2 + magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
         //axis
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
+        // handle space
         handle_space_cubes();
+    }
+    if(symbol_type=="main"){
+        lock_block_width = 6;
+        lock_block_depth = 2;
+        lock_block_height = z_pos_axis-handle_height/2-move_tolerance+handle_height;
+        translate([(body_width-lock_block_width)/2, wall_thickness_y,0])cube([lock_block_width,lock_block_depth,lock_block_height]);
     }
 }
 
@@ -148,14 +152,14 @@ module color_block(symbol_type){
         translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter);
         //symbol
         if(symbol_type == "main"){
-            translate([symbol_side_space,(block_depth-symbol_size)/2,0]) symbol_main();
-            translate([symbol_side_space,(block_depth-symbol_size)/2,block_height-symbol_height]) symbol_main();
+            translate([signal_symbol_side_space, 4*(block_depth-signal_symbol_size)/5,0]) symbol_main();
+            translate([signal_symbol_side_space,4*(block_depth-signal_symbol_size)/5,block_height-engraving_height]) symbol_main();
             // locker pin hole
-            translate([block_width/2,-wall_thickness_y/2-1.5*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+move_tolerance);
+            translate([block_width/2,-wall_thickness_y/2-3*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
         }
         if (symbol_type == "distant"){
-            translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
-            translate([block_width/2,(block_depth-triangle_height)/2,block_height-symbol_height]) symbol_distant();
+            translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
+            translate([block_width/2,(block_depth-signal_triangle_height)/2,block_height-engraving_height]) symbol_distant();
         }
         
     }
@@ -165,10 +169,10 @@ module color_block(symbol_type){
 module visualize_colorBlock_in_body(symbol_type, state){
     translate([0,-body_depth/2,-z_pos_axis]) body(symbol_type); //z=-block_height/2-wall_thickness_z
     if(state== "-y"){
-        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+2*move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
     if(state== "y"){
-        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+2*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
 }
 
@@ -207,10 +211,10 @@ module mill_color_block_top(symbol_type){
     projection(cut=true)difference(){
         unworked_color_block();
         if(symbol_type == "main"){
-            translate([symbol_side_space,(block_depth-symbol_size)/2 + handle_depth,0]) symbol_main();
+            translate([signal_symbol_side_space,(block_depth-signal_symbol_size)/2 + handle_depth,0]) symbol_main();
         }
         if (symbol_type == "distant"){
-            translate([block_width/2,(block_depth-triangle_height)/2 + handle_depth,0]) symbol_distant();
+            translate([block_width/2,(block_depth-signal_triangle_height)/2 + handle_depth,0]) symbol_distant();
         }
     }
     
@@ -218,7 +222,7 @@ module mill_color_block_top(symbol_type){
 module mill_color_block_bottom_distant() {
     projection(cut=true)difference(){
         unworked_color_block();
-        translate([block_width/2,triangle_height+(block_depth-triangle_height)/2 + handle_depth,0]) rotate([0,0,180]) symbol_distant();
+        translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2 + handle_depth,0]) rotate([0,0,180]) symbol_distant();
     }
 }
 
@@ -252,7 +256,7 @@ module values_to_console(){
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
-    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance*2 - lock_lever_depth);
+    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle - magnet_diameter - move_tolerance*2 - lock_lever_depth);
 }
 
 module 2D_drawing_signal_body(symbol_type){
@@ -280,6 +284,8 @@ module 2D_drawing_color_block(symbol_type){
 visualize_colorBlock_in_body("main", "y");
 //print_components("main");
 //color_block("main");
+
+//symbol_distant();
 
 /********************************
 drawing
