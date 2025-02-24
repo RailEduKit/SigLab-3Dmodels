@@ -112,4 +112,54 @@ zs_height = 15;
 cp_symbol_side_space = 2;
 cp_symbol_size = zs_depth-2*cp_symbol_side_space;
 
+/***************drill_template_straight***************/
+line_thickness = 0.8;
+// drill straight ground
+dsg_thickness = 5;
+dsg_hole_depth = 5;
+// drill straight cutout = dsc
+dsc_connector_width = 19;
+dsc_rail_width = 73;
+dsc_y_pos = 24;
+dsc_depth = wood_thickness_middle+move_tolerance;
+
+dsc_connector_z_pos = dsg_thickness+12;
+dsc_supporting_surface_width = 50;
+
+// drill straight hole
+dsh_y_pos = 12/2;
+dsh_x_pos = 7.5;
+
+
+
+// drill straigth base = dsb
+dsb_width = dsc_rail_width+dsc_connector_width;
+dsb_depth = 60;
+dsb_height = 27;
+
+
+/***************drill_template_curve***************/
+// drill template curve = dtc
+dtc_cutout_inner_angle = 45;
+dtc_cutout_middle_angle = 45+5;
+dtc_height = 60;
+dtc_cutout_z_pos = 24;
+dtc_cutout_height = wood_thickness_middle+move_tolerance;
+dtc_side_radius = curve_radius + 30;
+dtc_middle_radius = curve_radius + 12;
+dtc_inner_radius = curve_radius;
+
+// drill template curve hole
+dtch_z_pos = 12/2;
+dtch_y_pos = 7.5;
+
+dtc_switch_hole_y_pos = 136.5;
+
+
+
+
+
+
+
+
 
