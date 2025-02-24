@@ -22,6 +22,7 @@ move_tolerance = 0.5;
 /***************wood rail specification***************/
 wood_thickness_middle = 11.5;
 wood_thickness_rail = 5.5;
+wodd_width = 38.5;
 
 straight_length = 144.5;
 
@@ -120,7 +121,7 @@ dsg_hole_depth = 5;
 // drill straight cutout = dsc
 dsc_connector_width = 19;
 dsc_rail_width = 73;
-dsc_y_pos = 24;
+dsc_y_pos = 12;
 dsc_depth = wood_thickness_middle+move_tolerance;
 
 dsc_connector_z_pos = dsg_thickness+12;
@@ -134,20 +135,22 @@ dsh_x_pos = 7.5;
 
 // drill straigth base = dsb
 dsb_width = dsc_rail_width+dsc_connector_width;
-dsb_depth = 60;
+dsb_depth = 2*dsc_y_pos+dsc_depth;
 dsb_height = 27;
 
 
 /***************drill_template_curve***************/
 // drill template curve = dtc
-dtc_cutout_inner_angle = 45;
 dtc_cutout_middle_angle = 45+5;
-dtc_height = 60;
-dtc_cutout_z_pos = 24;
-dtc_cutout_height = wood_thickness_middle+move_tolerance;
+
+dtc_cutout_z_pos = 12;
+dtc_cutout_height = dsc_depth;
+dtc_outer_radius = curve_radius+wodd_width;
 dtc_side_radius = curve_radius + 30;
 dtc_middle_radius = curve_radius + 12;
 dtc_inner_radius = curve_radius;
+
+dtc_height = 2*dtc_cutout_z_pos+dtc_cutout_height;
 
 // drill template curve hole
 dtch_z_pos = 12/2;

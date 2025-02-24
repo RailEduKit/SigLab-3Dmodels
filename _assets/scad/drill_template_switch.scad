@@ -1,0 +1,47 @@
+// Copyright 2024 Martin Scheidt (Attribution 4.0 International, CC-BY 4.0)
+//
+// You are free to copy and redistribute the material in any medium or format.
+// You are free to remix, transform, and build upon the material for any purpose, even commercially.
+// You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+// You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+// No warranties are given.
+
+include<./specification_of_components.scad>
+
+$fn = 200;
+module switch_shape(){
+    translate([dtc_outer_radius+45,0,dtc_cutout_z_pos]) rotate([0,0,180-curve_angle])union(){
+        rotate_extrude(angle = curve_angle) square([dtc_outer_radius, dtc_cutout_z_pos]);
+        translate([dtc_outer_radius-wodd_width-15,0,0])cube([wodd_width+15, straight_length, dsc_depth]);
+        translate([dtc_outer_radius-(wodd_width-12)-12,0,0]) cube([wodd_width-12,straight_length+19,dsc_depth]);
+    }
+}
+
+module drill_template_switch(){
+difference(){
+    cube([80,130,dtc_height]);
+    switch_shape();
+    
+    // curved sides
+    translate([25.5+dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos+dtc_cutout_height])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    translate([25.6+dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    
+    // ground holes
+    translate([0,0,dtc_cutout_z_pos])cube([80, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,30,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,53,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
+    
+    // hole position lines
+    #translate([56.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([56.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([44, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([44, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos-line_thickness])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
+    translate([44, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
+    translate([44, dtch_y_pos-5/2, dtc_cutout_z_pos+dtch_z_pos]) cube([2*line_thickness, 5, line_thickness]);
+    
+}
+translate([0,-5,0]) cube([45+12, 5,dtc_height]);
+}
+//switch_shape();
+
+drill_template_switch();

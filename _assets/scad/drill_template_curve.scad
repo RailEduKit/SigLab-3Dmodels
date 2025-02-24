@@ -19,13 +19,13 @@ module connector_cutout(){
 
 module inner_curve_cutout(){
     translate([0,0,dtc_cutout_z_pos]) difference(){
-        rotate_extrude(angle = dtc_cutout_inner_angle) square([dtc_side_radius+1, dtc_cutout_height]);
-        rotate_extrude(angle = dtc_cutout_inner_angle) square([dtc_inner_radius,dtc_cutout_height]);        
+        rotate_extrude(angle = curve_angle) square([dtc_side_radius+1, dtc_cutout_height]);
+        rotate_extrude(angle = curve_angle) square([dtc_inner_radius,dtc_cutout_height]);        
     }
 }
 
 module outer_curve_cutout(){
-    rotate_extrude(angle = dtc_cutout_inner_angle) square([dtc_outer_radius, dtc_cutout_height]);
+    translate([dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_outer_radius, dtc_cutout_height]);
 }
 
 module template_outer_curve(){
@@ -36,37 +36,63 @@ difference(){
     inner_curve_cutout();
 }
     connector_cutout();
-    translate([0,125,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dsc_depth]);
-    translate([0,65,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dsc_depth]);
-    cube([dtc_inner_radius-65, dtc_side_radius, 2*dtc_cutout_z_pos+dsc_depth]);
+    //ground holes
+    translate([0,125,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,65,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,0,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,10,dtc_cutout_z_pos]) cube([dtc_inner_radius, dsg_hole_depth, dtc_cutout_height]);
+    
+    // trim template to relevant size
+    cube([dtc_inner_radius-65, dtc_side_radius, dtc_height]);
+    translate([dtc_inner_radius-65,148,0])cube([50, 50, dtc_height]);
     
     // hole position lines
-    translate([dtc_side_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dsc_depth])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_side_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-dsc_depth])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_inner_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_inner_radius-2*line_thickness, dtch_y_pos-dsc_depth/2,dtc_cutout_z_pos+dtch_z_pos-line_thickness/2]) cube([2*line_thickness, dsc_depth, line_thickness]);
+    translate([dtc_side_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_side_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-dtc_cutout_height])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_inner_radius-2*line_thickness, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_inner_radius-2*line_thickness, dtch_y_pos-dtc_cutout_height/2,dtc_cutout_z_pos+dtch_z_pos-line_thickness/2]) cube([2*line_thickness, dtc_cutout_height, line_thickness]);
     translate([dtc_inner_radius-2*line_thickness,dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-line_thickness]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
-    translate([dtc_inner_radius-2*line_thickness,dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dsc_depth]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
+    translate([dtc_inner_radius-2*line_thickness,dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
 
     // hole position lines for switch hole (straight junction)
-    translate([dtc_side_radius-2*line_thickness-49.3, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos+dsc_depth])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_side_radius-2*line_thickness-49.3, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos-dsc_depth])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_inner_radius-2*line_thickness-45, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos])cube([2*line_thickness, line_thickness, dsc_depth]);
-    translate([dtc_inner_radius-2*line_thickness-46, dtc_switch_hole_y_pos-dsc_depth/2,dtc_cutout_z_pos+dtch_z_pos-line_thickness/2]) cube([4*line_thickness, dsc_depth, line_thickness]);
+    translate([dtc_side_radius-2*line_thickness-49.3, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_side_radius-2*line_thickness-49.3, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos-dtc_cutout_height])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_inner_radius-2*line_thickness-45, dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos])cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([dtc_inner_radius-2*line_thickness-46, dtc_switch_hole_y_pos-dtc_cutout_height/2,dtc_cutout_z_pos+dtch_z_pos-line_thickness/2]) cube([4*line_thickness, dtc_cutout_height, line_thickness]);
     translate([dtc_inner_radius-2*line_thickness-46,dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos-line_thickness]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
-    translate([dtc_inner_radius-2*line_thickness-46,dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos+dsc_depth]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
+    translate([dtc_inner_radius-2*line_thickness-46,dtc_switch_hole_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([dtc_side_radius-dtc_inner_radius, line_thickness, line_thickness]);
 }
-
+translate([0,-5,0]) cube([65+12,5,dtc_height]);
 }
 
 module template_inner_curve(){
 difference(){
-    cube([180, 70, 2*dtc_cutout_z_pos+dtc_cutout_height]);
+    cube([70, 130, 2*dtc_cutout_z_pos+dtc_cutout_height]);
+    outer_curve_cutout();
+    // curved sides
+    translate([dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos+dtc_cutout_height])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    translate([dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    
+    // ground holes
+    translate([0,0,dtc_cutout_z_pos])cube([70, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,10,dtc_cutout_z_pos])cube([70, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,70,dtc_cutout_z_pos])cube([70, dsg_hole_depth, dtc_cutout_height]);
+    
+    // hole position lines
+    translate([30.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([30.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([4, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
+    translate([4, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos-line_thickness])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
+    translate([4, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
+    translate([4, dtch_y_pos-5/2, dtc_cutout_z_pos+dtch_z_pos]) cube([2*line_thickness, 5, line_thickness]);
 }
+translate([0,-5,0])cube([dsg_thickness+12,5,2*dtc_cutout_z_pos+dtc_cutout_height]);
 }
-
 
 //template_outer_curve();
+translate([100,0,0]) template_outer_curve();
 template_inner_curve();
+
+
 
 
