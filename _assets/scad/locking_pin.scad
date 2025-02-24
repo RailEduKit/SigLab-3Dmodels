@@ -22,12 +22,22 @@ $fn = 50;// number of fragments
 //z_pos_axis = 10; 
 //block_height = 13.5;
 
-
+module grip_ring(){
+    height = 1.2;
+    depth = 1.2;
+    difference(){
+        cylinder(h=height, d=locker_width);
+        cylinder(h=height, d=locker_width-depth);
+    }
+}
+difference(){
 minkowski() {
     difference(){
         cylinder(d = locker_width-2*rounding, h = locker_height-2*rounding);
         rotate([0,0,90]) translate([(-locker_width/2),(-(lever_thickness_switch+move_tolerance)/2-rounding),(locker_height-lever_height)])cube([(locker_width),(lever_thickness_switch+2*rounding+move_tolerance),(lever_height+2*rounding)]);
     };
     sphere(rounding);
+}
+//translate([0,0,1]) grip_ring();
 }
 //signal_locker();
