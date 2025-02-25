@@ -38,7 +38,7 @@ sqeeze_tolerance = 0.6;
 module switch_blade(thickness){ union(){
     difference(){
         intersection(){
-            #cylinder(r = blade_length, h = thickness);
+            cylinder(r = blade_length, h = thickness);
             translate([-blade_width/2,0,0]) cube([blade_width,blade_length,thickness]); //why pin diameter in translate?
         };
         // flank left
@@ -50,7 +50,7 @@ module switch_blade(thickness){ union(){
 };
 
 module lever_anchor(){
-    cylinder(d = lever_hole_size - move_tolerance + sqeeze_tolerance, h = blade_thickness);
+    cylinder(d = lever_hole_size, h = blade_thickness);
 };
 
 module cap_notch(male=true){
