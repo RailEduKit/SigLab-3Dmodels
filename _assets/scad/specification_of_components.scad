@@ -19,13 +19,13 @@ TODO
 move_tolerance = 0.5;
 
 {/***************wood rail specification***************/
-    wood_thickness_middle = 11.5;
-    wood_thickness_rail = 5.5;
+    wood_thickness_middle = 12;
+    wood_thickness_rail = 6;
     wood_well_height = 9; // copy from tracklib
     wood_well_width = 5.7; // copy from tracklib
-    wood_width = 38.5;
+    wood_width = 40;
 
-    straight_length = 144.5;
+    straight_length = 144;
 
     curve_radius = 182; // inner radius
     curve_angle = 45; // degree
@@ -62,16 +62,19 @@ move_tolerance = 0.5;
     overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
 }
 {/***************switch_body***************/
+        //holes_for_blade
+    pivot_center_x = wood_width/2;
+    pivot_center_y=25;
+    
     //switchblade_space -> sbs
+    sbs_gap_to_wood = 5;
     sbs_width = 40;
-    sbs_depth = blade_length+7;
+    sbs_radius = blade_length-y_pos_first_pin+2*sbs_gap_to_wood;
     sbs_height = wood_thickness_middle-wood_well_height;
     sbs_xpos = wood_width-sbs_width-wood_well_width;
-    sbs_ypos = 22;
+    sbs_ypos = pivot_center_y - pin_diameter - sbs_gap_to_wood;
     
-    //holes_for_blade
-    pivot_center_x = wood_width/2;
-    pivot_center_y=30;
+
 }
 {/***************overlap_measure***/ //-> not integrated yet
 // ATTENTION: Note the general move_tolerance of 0.5
@@ -142,7 +145,7 @@ move_tolerance = 0.5;
     dsc_supporting_surface_width = 50;
 
     // drill straight hole
-    dsh_y_pos = 12/2;
+    dsh_y_pos = (wood_thickness_middle+move_tolerance)/2;
     dsh_x_pos = 7.5;
 
 
@@ -167,7 +170,7 @@ move_tolerance = 0.5;
     dtc_height = 2*dtc_cutout_z_pos+dtc_cutout_height;
 
     // drill template curve hole
-    dtch_z_pos = 12/2;
+    dtch_z_pos = (wood_thickness_middle+move_tolerance)/2;
     dtch_y_pos = 7.5;
 
     dtc_switch_hole_y_pos = 136.5;

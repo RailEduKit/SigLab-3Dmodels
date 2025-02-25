@@ -194,11 +194,12 @@ module render_track(base,left,straight,right,double_sided_rails) {
 1. the double sided rail isn't working for all configurations.
 2. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
 */
-//switchblade_space("none","female","female");
 //switchblade_space("female","female","none");
+//switchblade_space("female","female","none");
+
 module switchblade_space(left,straight,right){ 
 //    sbs_width = 40;
-//    sbs_depth = blade_length+7;
+//    sbs_radius = blade_length+7;
 //    sbs_height = wood_height()-wood_well_height();
 //    sbs_xpos = wood_width()-width-wood_well_width();
 //    sbs_ypos = 22;
@@ -209,13 +210,13 @@ module switchblade_space(left,straight,right){
         rotate_extrude(angle=360) square([radius2,sbs_height]);
     }
     module top_boundery(){
-        radius = sbs_depth;
+        radius = sbs_radius;
         cylinder(h=sbs_height, r=radius);
     }
     if(left != "none" && straight != "none" && right == "none"){
         intersection(){
             difference(){
-                translate([sbs_xpos,sbs_ypos,0]) cube([sbs_width,sbs_depth,sbs_height]);
+                translate([sbs_xpos,sbs_ypos,0]) cube([sbs_width,sbs_radius,sbs_height]);
                 translate([-radius,0,0]) curved_boundery();
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
@@ -224,7 +225,7 @@ module switchblade_space(left,straight,right){
     if(left == "none" && straight != "none" && right != "none"){
         intersection(){
             difference(){
-                translate([wood_well_width(),sbs_ypos,0]) cube([sbs_width,sbs_depth,sbs_height]);
+                translate([wood_well_width(),sbs_ypos,0]) cube([sbs_width,sbs_radius,sbs_height]);
                 translate([radius+wood_width(),0,0]) curved_boundery();
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
@@ -234,11 +235,11 @@ module switchblade_space(left,straight,right){
         intersection(){
             union(){
                 difference(){
-                    translate([sbs_xpos,sbs_ypos,0]) cube([sbs_width,sbs_depth,sbs_height]);
+                    translate([sbs_xpos,sbs_ypos,0]) cube([sbs_width,sbs_radius,sbs_height]);
                     translate([-radius,0,0]) curved_boundery();
                 }
                 difference(){
-                    translate([wood_well_width(),sbs_ypos,0]) cube([sbs_width,sbs_depth,sbs_height]);
+                    translate([wood_well_width(),sbs_ypos,0]) cube([sbs_width,sbs_radius,sbs_height]);
                     translate([radius+wood_width(),0,0]) curved_boundery();
                 }
             }
