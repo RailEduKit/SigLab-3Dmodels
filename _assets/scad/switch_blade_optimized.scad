@@ -9,7 +9,6 @@
 include<./specification_of_components.scad>
 
 $fn = 50;// number of fragments
-sqeeze_tolerance = 0.6;
 
 module switch_blade(thickness){ union(){
     difference(){
@@ -34,12 +33,21 @@ module cap_notch(male=true){
         cube([2,y_pos_second_pin-3*pin_diameter,blade_thickness/2+blade_cover_thicknes]);
     };
     if(male==false){
-        cube([2+sqeeze_tolerance,y_pos_second_pin-3*pin_diameter+sqeeze_tolerance,blade_thickness]);
+        cube([2+move_tolerance,y_pos_second_pin-3*pin_diameter+move_tolerance,blade_thickness]);
     };
 };
+
+module hole_for_om_pin(){
+    cylinder(d=om_pin_diameter+move_tolerance, h=pin_height+overlap);
+}
+
 module pin(){
-    cylinder(d = pin_diameter-sqeeze_tolerance, h = pin_height);
+    difference(){
+        cylinder(d = pin_diameter, h = pin_height);
+        hole_for_om_pin();
+    }
 };
+
 
 module pin_hole(){ union(){
     difference(){
@@ -55,6 +63,7 @@ module switch_male(){ union(){
         // lever_anchor
         translate([lever_anchor_posX,lever_anchor_posY, blade_cover_thicknes]) lever_anchor();
         translate([-lever_anchor_posX,lever_anchor_posY, blade_cover_thicknes]) lever_anchor();
+        translate([0,y_pos_first_pin,0]) hole_for_om_pin();
     };
     translate([0,y_pos_first_pin,blade_thickness]) pin();
     translate([0,y_pos_second_pin,blade_thickness]) pin();
@@ -70,6 +79,7 @@ module switch_female(){ union(){
         // lever_anchor
         translate([lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
         translate([-lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
+        translate([0,y_pos_first_pin,0]) hole_for_om_pin();
     };
     translate([0,y_pos_first_pin,0]) pin_hole(); //Theoretically, the hole should be seen at the bottom
     translate([0,y_pos_second_pin,0]) pin_hole(); 
@@ -77,8 +87,12 @@ module switch_female(){ union(){
 };
 
 module cap(){ union(){
+    difference(){union(){
     switch_blade(blade_cover_thicknes);
     translate([-1,2*pin_diameter,0]) cap_notch(male=true);
+    }
+    translate([0,y_pos_first_pin,0]) hole_for_om_pin();
+    }
 };
 };
 

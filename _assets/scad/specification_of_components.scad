@@ -25,7 +25,7 @@ move_tolerance = 0.5;
     rail_thickness_track = 6;
     rail_well_height = 9; // copy from tracklib
     rail_well_width = 5.7; // copy from tracklib
-    
+    rail_well_spacing = 19.25; // copy from tracklib
 
     straight_length = 144;
 
@@ -43,7 +43,22 @@ move_tolerance = 0.5;
     engraving_thickness = 1.5;
 }
 {/***************overlap_measure***/ //-> not integrated yet
-// ATTENTION: Note the general move_tolerance of 0.5
+    // overlap measure -> om
+    om_thickness = 2;
+    // pin specifications
+    om_pin_height = 5;
+    om_pin_diameter = 4.5;
+    om_pin_y_pos = 25;
+    
+    // track guidance
+    om_track_guidance_width = 0.8;
+    om_track_guidance_height = 2.5;
+    
+    //dovetail connector specifications
+    om_dovetail_width = 10;
+    om_dovetail_depth = 5;
+    
+    
 }
 {/***************switch_blade_optimized***************/
     //blade specification
@@ -58,25 +73,28 @@ move_tolerance = 0.5;
     lever_anchor_posY = blade_length*0.8111;
 
     //pin specification
-    pin_diameter = 5;
-    pin_female_diameter = pin_diameter+1.5;
+    wall_thickness = 1.5;
+    pin_diameter = om_pin_diameter+move_tolerance+wall_thickness;
+    pin_female_diameter = pin_diameter+move_tolerance+wall_thickness;
     pin_height = rail_thickness_track+2; //2mm move tolerance
     y_pos_first_pin = pin_diameter;
     y_pos_second_pin = (blade_length*2/3);
     overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
 }
 {/***************switch_body***************/
-        //holes_for_blade
+    //holes_for_blade
     pivot_center_x = rail_width/2;
     pivot_center_y=25;
     
     //switchblade_space -> sbs
-    sbs_gap_to_wood = 5;
-    sbs_width = 40;
-    sbs_radius = blade_length-y_pos_first_pin+2*sbs_gap_to_wood;
+    sbs_gap_to_wood = 4;
+    sbs_width = rail_width;
+    sbs_radius = blade_length+2*sbs_gap_to_wood;
     sbs_height = rail_height-rail_well_height;
-    sbs_xpos = rail_width-sbs_width-rail_well_width;
+    sbs_xpos = -rail_well_width-2;
     sbs_ypos = pivot_center_y - pin_diameter - sbs_gap_to_wood;
+    
+
     
 
 }

@@ -17,6 +17,7 @@
  */
 
 include<./specification_of_components.scad>
+use<./switch_blade_optimized.scad>
 
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
 straight_size = straight_length; //145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
@@ -158,9 +159,8 @@ module render_track(base,left,straight,right,double_sided_rails) {
 1. the double sided rail isn't working for all configurations.
 2. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
 */
-//switchblade_space("female","female","none");
-//switchblade_space("female","female","none");
 
+//switchblade_space("female","female","none");
 module switchblade_space(left,straight,right){ 
 //    sbs_width = 40;
 //    sbs_radius = blade_length+7;
@@ -237,7 +237,7 @@ module holes_for_blade(left,straight,right){
     }
     module curved_boundery(){
         radius1 = 182+5+wood_well_spacing(); // to get a 3D object
-        radius2 = 182+wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
+        radius2 = 182+wood_well_width()+wood_well_rim()+lever_anchor_posX;
         difference(){
             rotate_extrude(angle=360) square([radius1,h]);
             rotate_extrude(angle=360) square([radius2,h]);
@@ -247,15 +247,15 @@ module holes_for_blade(left,straight,right){
         x_size=14;
         y_size=140;
         if(left!="none"){
-            xpos = wood_width()-wood_well_width()-wood_well_rim()-lever_anchor_posX+lever_hole_size/2 -x_size;
+            xpos =wood_width()-x_size-wood_well_width()-wood_well_rim()-lever_anchor_posX; 
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(right != "none"){
-            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(left != "none" && right != "none"){
-            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX-lever_hole_size/2;
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
     }
@@ -305,7 +305,17 @@ module holes_for_blade(left,straight,right){
     }
 }
 
-
+module drill_holes(left,straight,right){
+    module hole_cylinder(){
+        cylinder(h=rail_height, d=om_pin_diameter+move_tolerance);
+    }
+    if (left != "none" && straight != "none"){
+        //translate([rail_width/2, straight_length/2,0]) hole_cylinder();
+        translate([rail_width/2, straight_length-pivot_center_y,0]) hole_cylinder();
+        //translate([-34.6+rail_width, 77, 0]) hole_cylinder();
+        translate([-61.6+rail_width, 123.5, 0]) hole_cylinder();
+}
+}
 
 /*********** modules for export/ visualization***************/
 module modified_switch(base,left,straight,right,double_sided_rails,hole){    
@@ -318,6 +328,7 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){
         if(hole==true){
             holes_for_blade(left,straight,right);
         }
+        drill_holes(left,straight,right);
     }
 }
 
@@ -331,6 +342,7 @@ module blade_hole_switch(base,left,straight,right, double_sided_rails){
     difference(){
         render_track(base,left,straight,right,double_sided_rails);
         translate([0,0,0])switchblade_space(left,straight,right);
+        drill_holes(left,straight,right);
     }
     holes_for_blade(left,straight,right);
 }
@@ -341,7 +353,14 @@ module mill_components(){
     //projection(cut=true) blade_space_switch("male","none","female","female", false);
 }
 
+module visualize_blade_in_switch(){
+    //translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("male","female","female","none",true,true);
+    //translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("female","female","none");
+    rotate([0,0,16.5])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
+}
+
 echo(pin_female_diameter);
+//visualize_blade_in_switch();
 mill_components();
 //render_track("male","none","female","female",true);
 //modified_switch("male","female","female","none",true,true);
