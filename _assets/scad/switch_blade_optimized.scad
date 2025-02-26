@@ -9,31 +9,7 @@
 include<./specification_of_components.scad>
 
 $fn = 50;// number of fragments
-wood_thickness  = wood_thickness_rail; // bevor it was 5!
 sqeeze_tolerance = 0.6;
-
-////blade specification
-//blade_thickness = 2.5;
-//blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
-//blade_length = 45;
-//blade_width  = 19;
-//
-////lever anchor specification
-//lever_hole_size = 2.7;
-//lever_anchor_posX = blade_width*1/5;
-//lever_anchor_posY = blade_length*0.8111;
-//
-////pin specification
-//pin_diameter = 5;
-//pin_female_diameter = pin_diameter+1.5;
-//pin_height = wood_thickness+2; //2mm move tolerance
-//y_pos_first_pin = pin_diameter;
-//y_pos_second_pin = (blade_length*2/3);
-//overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
-
-
-
-
 
 module switch_blade(thickness){ union(){
     difference(){

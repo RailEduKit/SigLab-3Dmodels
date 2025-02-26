@@ -9,18 +9,6 @@
 include<./specification_of_components.scad>
    
 $fn = 50;// number of fragments
-//locker_width = 14;
-//locker_height = 20;
-//lever_height = 10;
-//lever_thickness_switch = 4;
-//rounding = 0.5;
-
-//// copied parameters from signal
-//magnet_diameter = 5;
-//magnet_distance_to_middle = 7.5;
-//body_height = 13.5;
-//z_pos_axis = 10; 
-//block_height = 13.5;
 
 module grip_ring(){
     height = 1.2;
@@ -38,6 +26,6 @@ minkowski() {
     };
     sphere(rounding);
 }
-//translate([0,0,1]) grip_ring();
+translate([0,0,1]) grip_ring();
 }
 //signal_locker();

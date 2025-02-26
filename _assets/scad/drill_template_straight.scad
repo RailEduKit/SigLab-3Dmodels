@@ -30,7 +30,7 @@ difference(){
     translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos+dsc_depth, dsg_thickness-line_thickness]) cube([line_thickness, line_thickness, dsb_height]);
     
 }
-//translate([-dsc_supporting_surface_width, dsc_y_pos, 0]) cube([dsc_supporting_surface_width, wood_thickness_middle+move_tolerance, dsg_thickness]);
+//translate([-dsc_supporting_surface_width, dsc_y_pos, 0]) cube([dsc_supporting_surface_width, rail_height+move_tolerance, dsg_thickness]);
 }
 
 template_straight();

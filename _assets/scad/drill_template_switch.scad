@@ -11,9 +11,9 @@ include<./specification_of_components.scad>
 $fn = 200;
 module switch_shape(){
     translate([dtc_outer_radius+45,0,dtc_cutout_z_pos]) rotate([0,0,180-curve_angle])union(){
-        rotate_extrude(angle = curve_angle) square([dtc_outer_radius, dtc_cutout_z_pos]);
-        translate([dtc_outer_radius-wodd_width-15,0,0])cube([wodd_width+15, straight_length, dsc_depth]);
-        translate([dtc_outer_radius-(wodd_width-12)-12,0,0]) cube([wodd_width-12,straight_length+19,dsc_depth]);
+        rotate_extrude(angle = curve_angle) square([dtc_outer_radius, dtc_cutout_height]);
+        translate([dtc_outer_radius-rail_width-15,0,0])cube([rail_width+15, straight_length, dsc_depth]);
+        translate([dtc_outer_radius-(rail_width-12)-12,0,0]) cube([rail_width-12,straight_length+19,dsc_depth]);
     }
 }
 
@@ -23,8 +23,8 @@ difference(){
     switch_shape();
     
     // curved sides
-    translate([25.5+dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos+dtc_cutout_height])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
-    translate([25.6+dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    translate([24+dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos+dtc_cutout_height])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    translate([24+dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
     
     // ground holes
     translate([0,0,dtc_cutout_z_pos])cube([80, dsg_hole_depth, dtc_cutout_height]);
