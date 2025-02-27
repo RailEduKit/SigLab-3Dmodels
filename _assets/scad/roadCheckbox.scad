@@ -1,35 +1,76 @@
+// Copyright 2020,2024 Martin Scheidt (Attribution 4.0 International, CC-BY 4.0)
+//
+// You are free to copy and redistribute the material in any medium or format.
+// You are free to remix, transform, and build upon the material for any purpose, even commercially.
+// You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+// You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+// No warranties are given.
+
+
 $fn = 200;
-// body specifications
-axis_diameter = 2.5; //maybe use the same material as lever anchor
-body_width = 30; // material constraint
-body_depth = 60;
-body_height = 13.5; // material constraint
-track_arc_inner_radius = 182;
 
+include<./specification_of_components.scad>
+use<./basis_component-roundedBox.scad>
 
-
-body();
-module body(){
-    module box(){
-        cube([body_width, body_depth, body_height]);
+roadCheckbox();
+//overlap_symbol();
+//turnout_locking_symbol();
+//side_protection_symbol();
+module overlap_symbol(){
+//    translate([0,0,engraving_height/2]) rotate([0,0,45]) cube([rc_symbol_size*(2/3), rc_symbol_size*(2/3), engraving_height], center=true);
+    translate([-rc_symbol_size/2,-rc_symbol_size*(4/6),0])difference(){
+        cube([rc_symbol_size, rc_symbol_size*(4/3), engraving_height]);
+        for(i= [1:4:rc_symbol_size*(5/3)]){
+            translate([0,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
+            echo(i);
+        }
+        for(i= [3:4:rc_symbol_size*(5/3)]){
+            translate([straight_thickness,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
+        }
     }
-    module round_edge(){
-        cylinder(h=body_height, r=track_arc_inner_radius);
+}
+ 
+module turnout_locking_symbol(){
+    translate([-rc_symbol_size/2,-2,0]) 
+    linear_extrude(height = engraving_height) union(){
+        polygon(points=[[0,0], [rc_symbol_size/2,0], [rc_symbol_size/2,rc_symbol_size/2]]);
+        translate([1,0])square([rc_symbol_size-1, straight_thickness]);
+        translate([1.15,0])rotate([0,0,45])square([rc_symbol_size, straight_thickness]);
     }
+}
+
+module side_protection_symbol(){
+    module buckler_half(){
+        translate([rc_symbol_size*(2/3),0,0]) difference(){
+            cylinder(d=3*rc_symbol_size, h=engraving_height);
+            translate([-rc_symbol_size*(3/2), 0,0]) cube([6*rc_symbol_size, 6*rc_symbol_size, engraving_height]);
+            translate([-rc_symbol_size*(2/3), -rc_symbol_size*(3/2),0]) cube([6*rc_symbol_size, 6*rc_symbol_size, engraving_height]);
+        }
+    }
+    module buckler(){
+        translate([0,6,0])difference(){
+            scale([5/8,1,1])union(){
+                buckler_half();
+                mirror([1,0,0]) buckler_half();
+            }
+            scale([1,0.5,1])translate([0,rc_symbol_size*(6/7),0]) cylinder(d=2*rc_symbol_size, h=engraving_height);
+            translate([0,-14,2])rotate([0,15,0])cube([rc_symbol_size,14,3]);
+            translate([0,0,2])rotate([0,15,180]) cube([rc_symbol_size,14,3]);
+        }
+    }
+    buckler();
+    //buckler_half();
+}
+
+
+module roadCheckbox(){
     difference(){
-        intersection(){
-            intersection(){
-                translate([0,0,0])box();
-                translate([track_arc_inner_radius,body_depth/2,0])round_edge();
-            }
-            intersection(){
-                translate([0,0,0])box();
-                translate([body_width-track_arc_inner_radius,body_depth/2,0])round_edge();
-            }
+        curvedBox(); // import from basis_component-roundedBox
+        for (y=[body_depth*(1/6), body_depth/2, body_depth*(5/6)]){
+            translate([body_width*(1/3),y,wall_thickness_z])cylinder(d=locker_width+move_tolerance, h=body_height-wall_thickness_z);
         }
-        for (y=[12.5, 25, 37.5]){
-            translate([body_width*(2/3),y,5])cylinder(d=3,h=body_height-5);
-        }
-
     }
+    translate([rc_symbol_xpos,body_depth*(1/6),body_height]) turnout_locking_symbol(); 
+    translate([rc_symbol_xpos,body_depth*(3/6),body_height]) side_protection_symbol();
+    translate([rc_symbol_xpos,body_depth*(5/6),body_height]) overlap_symbol();
 }

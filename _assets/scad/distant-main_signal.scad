@@ -6,56 +6,11 @@
 // You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 // No warranties are given.
 
-/* **TODO**
-1. Symbol auf den Hebel
-*/
 
 include<./specification_of_components.scad>
+use<./basis_component-roundedBox.scad>
 
 $fn = 200;
-//block_width=undef;
-//move_tolerance=undef;
-//// body specifications
-//axis_diameter = 2.5; //maybe use the same material as lever anchor
-//body_width = 30; // material constraint
-//body_depth = 60; // minimum, because of the lockpin diameter
-//body_height = 13.5; // material constraint
-//wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
-//wall_thickness_y = 2;
-//wall_thickness_z = 2;
-//track_arc_inner_radius = 182;
-//sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
-//z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
-//
-//// Locking Part specifications
-//lock_lever_depth = 9.5;
-//lock_lever_thickness = 2.5;
-//lock_lever_height = 10;
-//foot_width = 2.5;
-
-// magnet specification
-//magnet_thickness = 3;
-//magnet_diameter = 5;
-//magnet_distance_to_middle = 7.5;
-//magnet_z = 5.75;
-
-
-//// color_block specifications
-//move_tolerance = 1;
-//block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
-//block_depth = (body_depth-2*wall_thickness_y)/2-1.5*move_tolerance;
-//block_height = 13.5; // material constraint
-////block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
-//overhang = block_height/2-move_tolerance; //the circle has to be flattend at one side with move_tolerance
-//handle_depth = 10+wall_thickness_y;
-//handle_height = 3;
-//
-////Symbol Specifications
-//signal_symbol_side_space = 4;
-//engraving_height = 1.5;//(block_height-handle_height)/2;
-//engraving_thickness = 1.5;
-//signal_symbol_size = block_width-2*signal_symbol_side_space;
-//signal_triangle_height = (sqrt(3)*signal_symbol_size)/2;
 
 
 module equ_triangle(side_length,corner_radius,signal_triangle_height){
@@ -69,9 +24,6 @@ module equ_triangle(side_length,corner_radius,signal_triangle_height){
 };
 };
 
-module magnet_hole(){
-    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
-}
 
 //symbol_main();
 module symbol_main(){
@@ -100,38 +52,17 @@ module space_locking_pin(){
     translate([0, body_depth/2 - magnet_distance_to_middle - magnet_diameter - 2*move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance, lock_lever_height]);
 }
 //body("main");
+
 module body(symbol_type){
-    module box(){
-        difference(){
-            cube([body_width, body_depth, body_height]);
-            cavity_cube();
-        }
-    }
-    module round_edge(){
-        cylinder(h=body_height, r=track_arc_inner_radius);
-    }
     difference(){
-        intersection(){
-            intersection(){
-                translate([0,0,0])box();
-                translate([track_arc_inner_radius-sagitta,body_depth/2,0])round_edge();
-            }
-            intersection(){
-                translate([0,0,0])box();
-                translate([body_width-track_arc_inner_radius+sagitta,body_depth/2,0])round_edge();
-            }
-        }
-        //magnet holes
-        translate([0,body_depth/2 - magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([0,body_depth/2 + magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 - magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 + magnet_distance_to_middle, magnet_z])rotate([0,90,0])magnet_hole();
+        curvedBox(); // import from basis_component-roundedBox
+        cavity_cube();
         //axis
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
         // handle space
         handle_space_cubes();
     }
-    if(symbol_type=="main"){
+        if(symbol_type=="main"){
         lock_block_width = 6;
         lock_block_depth = 2;
         lock_block_height = z_pos_axis-handle_height/2-move_tolerance+handle_height;

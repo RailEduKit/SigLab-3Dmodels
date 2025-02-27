@@ -39,9 +39,19 @@ move_tolerance = 0.5;
     magnet_z = 5.75;
 }
 {/***************engraving specifications***************/
-    engraving_height = 1.5;//(block_height-handle_height)/2;
+    engraving_height = 2;//(block_height-handle_height)/2;
     engraving_thickness = 1.5;
 }
+
+{/***************basis_component-roundedBox***************/
+    body_width = 30;
+    body_depth = 50;
+    body_height = 13.5; 
+    track_arc_inner_radius = 182;
+    sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
+}
+
+
 {/***************overlap_measure***/ //-> not integrated yet
     // overlap measure -> om
     om_thickness = 2;
@@ -93,10 +103,6 @@ move_tolerance = 0.5;
     sbs_height = rail_height-rail_well_height;
     sbs_xpos = -rail_well_width-2;
     sbs_ypos = pivot_center_y - pin_diameter - sbs_gap_to_wood;
-    
-
-    
-
 }
 
 {/***************locking_pin***************/
@@ -111,14 +117,9 @@ move_tolerance = 0.5;
 
     // body specifications
     axis_diameter = 2.5; //maybe use the same material as lever anchor
-    body_width = 30; // material constraint
-    body_depth = 50; // minimum, because of the lockpin diameter
-    body_height = 13.5; // material constraint
     wall_thickness_x = (body_width-block_width)/2-move_tolerance;//5;
     wall_thickness_y = lever_thickness_switch;
     wall_thickness_z = 2;
-    track_arc_inner_radius = 182;
-    sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
     z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
 
     // Locking Part specifications
@@ -198,6 +199,18 @@ move_tolerance = 0.5;
 {/***************drill_template_switch***************/
     // all needed values in "drill_template_curve" and "drill_template_straight"
 }
+
+
+{/***************roadCheckbox***************/
+    // used "basis_component-roundedBox" and "locking_pin"
+    //road Checkbox -> rc
+    rc_symbol_side_space = 2;
+    rc_symbol_size = body_width*(2/3)-locker_width/2-2*rc_symbol_side_space;
+    echo("rc_symbol_size: ", rc_symbol_size);
+    rc_symbol_xpos = body_width - (body_width - (body_width*(1/3)+locker_width/2))/2;
+    straight_thickness = 0.8;
+}
+
 
 
 
