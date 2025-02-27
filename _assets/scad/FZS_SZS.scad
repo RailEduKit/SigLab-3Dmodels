@@ -14,22 +14,20 @@ module magnet_hole(){
     cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
 }
 module route_clearing_point(){
-    rotate([0,0,90]) translate([0,-cp_symbol_size/2,-engraving_height]) union(){
+    union(){
         difference(){
             cylinder(h=engraving_height, d=cp_symbol_size);
             cylinder(h=engraving_height, d=cp_symbol_size-2*engraving_thickness);
         }   
-        translate([-engraving_thickness/2, cp_symbol_size/2-1,0]) cube([engraving_thickness,cp_symbol_size+1,engraving_height]);
     }
 }
 
 module block_clearing_point(){
-    rotate([0,0,90]) translate([0,-cp_symbol_size/2,-engraving_height/2]) union(){    
+    translate([0,0,engraving_height/2]) union(){    
         difference(){
             cube([cp_symbol_size,cp_symbol_size,engraving_height], center=true);
             cube([cp_symbol_size-2*engraving_thickness,cp_symbol_size-2*engraving_thickness,engraving_height], center=true);
         }
-        translate([-engraving_thickness/2, cp_symbol_size/2,-engraving_height/2]) cube([engraving_thickness,cp_symbol_size,engraving_height]);
     }
 }
 
@@ -43,16 +41,16 @@ module clearing_point(type){
         translate([zs_with/2+magnet_distance_to_middle,magnet_thickness+move_tolerance,magnet_z]) rotate([90,0,0]) magnet_hole();
         translate([zs_with/2-magnet_distance_to_middle,zs_depth,magnet_z]) rotate([90,0,0]) magnet_hole();
         translate([zs_with/2+magnet_distance_to_middle,zs_depth,magnet_z]) rotate([90,0,0]) magnet_hole();
-        //symbols
-        if(type == "rcp"){
+    }
+    //symbols
+    if(type == "rcp"){
             translate([zs_with/2,zs_depth/2,zs_height]) route_clearing_point();
-        }
-        if(type == "bcp"){
+    }
+    if(type == "bcp"){
             translate([zs_with/2,zs_depth/2,zs_height]) block_clearing_point();
-        }
     }
 }
 
-clearing_point("rcp");
+clearing_point("bcp");
 //route_clearing_point();
 //block_clearing_point();
