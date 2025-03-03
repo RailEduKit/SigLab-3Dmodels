@@ -9,6 +9,7 @@
 
 include<./specification_of_components.scad>
 use<./basis_component-roundedBox.scad>
+use<./locking_pin.scad> // used in visualize_colorBlock_in_body("main", "y");
 
 $fn = 200;
 
@@ -61,8 +62,15 @@ module body(symbol_type){
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
         // handle space
         handle_space_cubes();
-    }
+        // locker pin hole
         if(symbol_type=="main"){
+            difference(){
+                translate([body_width/2,body_depth-wall_thickness_y/2,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
+                translate([wall_thickness_x+move_tolerance,body_depth-wall_thickness_y,0])cube([block_width,locker_width,locker_height]);
+            }
+        }
+    }
+    if(symbol_type=="main"){
         lock_block_width = 6;
         lock_block_depth = 2;
         lock_block_height = z_pos_axis-handle_height/2-move_tolerance+handle_height;
@@ -100,10 +108,13 @@ module color_block(symbol_type){
 module visualize_colorBlock_in_body(symbol_type, state){
     translate([0,-body_depth/2,-z_pos_axis]) body(symbol_type); //z=-block_height/2-wall_thickness_z
     if(state== "-y"){
-        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
     if(state== "y"){
         rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        if(symbol_type=="main"){
+            translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+        }
     }
 }
 
@@ -212,7 +223,7 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-visualize_colorBlock_in_body("main", "y");
+visualize_colorBlock_in_body("main", "-y");
 //print_components("main");
 //color_block("main");
 

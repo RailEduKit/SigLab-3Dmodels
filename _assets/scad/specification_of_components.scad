@@ -86,7 +86,7 @@ move_tolerance = 0.5;
     wall_thickness = 1.5;
     pin_diameter = om_pin_diameter+move_tolerance+wall_thickness;
     pin_female_diameter = pin_diameter+move_tolerance+wall_thickness;
-    pin_height = rail_thickness_track+2; //2mm move tolerance
+    pin_height = rail_thickness_track+move_tolerance;
     y_pos_first_pin = pin_diameter;
     y_pos_second_pin = (blade_length*2/3);
     overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
@@ -210,6 +210,15 @@ move_tolerance = 0.5;
     rc_symbol_xpos = body_width - (body_width - (body_width*(1/3)+locker_width/2))/2;
     straight_thickness = 0.8;
 }
+
+{/***************direction_management***************/
+    arrow_depth = 6.5; //5 for onePiece
+    arrowline_length = 6.5; //5 for onePiece
+    
+    arrow_block_height = block_height-engraving_height;
+    
+}
+
 
 
 

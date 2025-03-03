@@ -25,7 +25,7 @@ module switch_blade(thickness){ union(){
 };
 
 module lever_anchor(){
-    cylinder(d = lever_hole_size, h = blade_thickness);
+    #cylinder(d = lever_hole_size, h = blade_thickness);
 };
 
 module cap_notch(male=true){
