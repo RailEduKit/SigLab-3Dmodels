@@ -34,3 +34,14 @@ Add here global latex commands to use throughout your pages.
 </figure>
 ~~~
 }
+
+\newcommand{\figenvLink}[4]{
+~~~
+<figure style="text-align:center;">
+<a href="#4">
+<img src="!#2" style="padding:0;#3" alt="#1"/>
+<figcaption>#1</figcaption>
+</a>
+</figure>
+~~~
+}

@@ -223,10 +223,10 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-visualize_colorBlock_in_body("main", "y");
+//visualize_colorBlock_in_body("main", "y");
 //print_components("main");
 //color_block("main");
-//body("main");
+body("main");
 //symbol_distant();
 
 /********************************

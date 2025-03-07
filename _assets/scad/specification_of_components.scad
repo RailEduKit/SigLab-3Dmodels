@@ -200,6 +200,14 @@ move_tolerance = 0.5;
     // all needed values in "drill_template_curve" and "drill_template_straight"
 }
 
+{/***************magnet_rod***************/
+    //magnet rod = mr
+    mr_diameter = 10;
+    mr_height = 100;
+    
+}
+
+
 
 {/***************roadCheckbox***************/
     // used "basis_component-roundedBox" and "locking_pin"
