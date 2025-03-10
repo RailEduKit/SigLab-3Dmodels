@@ -32,7 +32,7 @@ The signal term can be changed by flipping the color\_block. The red signal term
 ~~~
 
 
-
+<!-- 
 ## new title
 
 \tableinput{Component,Description}{/instruction_for_components/components-overview.csv}
@@ -42,3 +42,5 @@ The signal term can be changed by flipping the color\_block. The red signal term
 * **[Locking](/instruction_for_components/construction-locking_pin/)**
 
 [Locking Pin](/instruction_for_components/construction-locking_pin/)
+
+-->
