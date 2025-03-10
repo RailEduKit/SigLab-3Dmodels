@@ -41,6 +41,9 @@ move_tolerance = 0.5;
 {/***************engraving specifications***************/
     engraving_height = 2;//(block_height-handle_height)/2;
     engraving_thickness = 1.5;
+    
+    fine_line = 0.2;
+    thin_thickness = 0.8;
 }
 
 {/***************basis_component-roundedBox***************/
@@ -152,7 +155,6 @@ move_tolerance = 0.5;
 }
 
 {/***************drill_template_straight***************/
-    line_thickness = 0.8;
     // drill straight ground
     dsg_thickness = 5;
     dsg_hole_depth = 5;

@@ -22,12 +22,12 @@ difference(){
     
     
     // hole position lines
-    translate([dsc_rail_width-2*dsg_hole_depth, dsc_y_pos+(dsc_depth-line_thickness)/2, dsg_thickness-line_thickness]) cube([dsg_hole_depth,line_thickness,line_thickness]);
-    translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos, dsg_thickness-line_thickness])cube([line_thickness, dsc_depth, line_thickness]);
-    translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos-dsc_depth, dsb_height-line_thickness])cube([line_thickness, dsc_depth, line_thickness]);
-    translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos+dsc_depth, dsb_height-line_thickness])cube([line_thickness, dsc_depth, line_thickness]);
-    translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos-line_thickness, dsg_thickness-line_thickness]) cube([line_thickness, line_thickness, dsb_height]);
-    translate([dsc_rail_width-dsh_x_pos-line_thickness/2, dsc_y_pos+dsc_depth, dsg_thickness-line_thickness]) cube([line_thickness, line_thickness, dsb_height]);
+    translate([dsc_rail_width-2*dsg_hole_depth, dsc_y_pos+(dsc_depth-thin_line)/2, dsg_thickness-thin_line]) cube([dsg_hole_depth,thin_line,thin_line]);
+    translate([dsc_rail_width-dsh_x_pos-thin_line/2, dsc_y_pos, dsg_thickness-thin_line])cube([thin_line, dsc_depth, thin_line]);
+    translate([dsc_rail_width-dsh_x_pos-thin_line/2, dsc_y_pos-dsc_depth, dsb_height-thin_line])cube([thin_line, dsc_depth, thin_line]);
+    translate([dsc_rail_width-dsh_x_pos-thin_line/2, dsc_y_pos+dsc_depth, dsb_height-thin_line])cube([thin_line, dsc_depth, thin_line]);
+    translate([dsc_rail_width-dsh_x_pos-thin_line/2, dsc_y_pos-thin_line, dsg_thickness-thin_line]) cube([thin_line, thin_line, dsb_height]);
+    translate([dsc_rail_width-dsh_x_pos-thin_line/2, dsc_y_pos+dsc_depth, dsg_thickness-thin_line]) cube([thin_line, thin_line, dsb_height]);
     
 }
 //translate([-dsc_supporting_surface_width, dsc_y_pos, 0]) cube([dsc_supporting_surface_width, rail_height+move_tolerance, dsg_thickness]);

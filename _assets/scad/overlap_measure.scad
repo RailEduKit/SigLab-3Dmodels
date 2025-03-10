@@ -28,7 +28,7 @@ length = straight_length+2.5; //[30:10:400] //inklusive the male pin
 extrusion_width = .4; //[.1:.05:1]
 
 //track line thickness, in multiples of extrusion width
-line_thickness = 4; //[2:2:10]
+thin_line = 4; //[2:2:10]
 
 //spacing between male and female connectors, in mm
 connector_tolerance = .3; //[.1:.05:1]
@@ -78,50 +78,50 @@ intersection(convexity = 20) {
 
     linear_extrude(height = track_type_params()[track_type][4], convexity = 20)
         union() {
-            translate([0, track_type_params()[track_type][5] + line_thickness * extrusion_width]) {
-                translate([track_type_params()[track_type][1] / 2, length - track_type_params()[track_type][5] * 2 - line_thickness * extrusion_width * 2])
+            translate([0, track_type_params()[track_type][5] + thin_line * extrusion_width]) {
+                translate([track_type_params()[track_type][1] / 2, length - track_type_params()[track_type][5] * 2 - thin_line * extrusion_width * 2])
                         brio_male_2D();
                 
                 flex_track_pattern_2D(
-                    length - track_type_params()[track_type][5] * 2 - line_thickness * extrusion_width * 2,
+                    length - track_type_params()[track_type][5] * 2 - thin_line * extrusion_width * 2,
                     track_type_params()[track_type][1],
                     track_type_params()[track_type][2],
-                    line_thickness * extrusion_width,
-                    line_thickness * extrusion_width,
-                    line_thickness * extrusion_width, //this defines the gap_thickness
+                    thin_line * extrusion_width,
+                    thin_line * extrusion_width,
+                    thin_line * extrusion_width, //this defines the gap_thickness
                     true
                 );
             }
-            translate([track_type_params()[track_type][1] / 2, track_type_params()[track_type][5] + line_thickness * extrusion_width])
+            translate([track_type_params()[track_type][1] / 2, track_type_params()[track_type][5] + thin_line * extrusion_width])
                 scale([1, -1])
                     brio_female_2D();
         }
 }
 //track guidance
-translate([-custom_width_middle/2,track_type_params()[track_type][5] + line_thickness * extrusion_width,-om_track_guidance_height])
+translate([-custom_width_middle/2,track_type_params()[track_type][5] + thin_line * extrusion_width,-om_track_guidance_height])
     linear_extrude(height = om_track_guidance_height, convexity = 20)
         flex_track_pattern_2D(
-                length - track_type_params()[track_type][5] * 2 - line_thickness * extrusion_width * 2,
+                length - track_type_params()[track_type][5] * 2 - thin_line * extrusion_width * 2,
                 track_type_params()[track_type][1],
                 track_type_params()[track_type][2],
-                line_thickness * extrusion_width,
+                thin_line * extrusion_width,
                 om_track_guidance_width,
-                line_thickness * extrusion_width, //this defines the gap_thickness
+                thin_line * extrusion_width, //this defines the gap_thickness
                 false
             );
 
 /***pin***/
 //middle pin
-//translate([0,(length+om_dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
-//    4*line_thickness * extrusion_width,
+//translate([0,(length+om_dovetail_depth)/2-0.1,0]) pin(track_type_params()[track_type][2]-2*thin_line * extrusion_width,
+//    4*thin_line * extrusion_width,
 //    track_type_params()[track_type][3]);
 //male side pin
-translate([0,om_pin_y_pos,0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
-    4*line_thickness * extrusion_width -1,
+translate([0,om_pin_y_pos,0]) pin(track_type_params()[track_type][2]-2*thin_line * extrusion_width,
+    4*thin_line * extrusion_width -1,
     track_type_params()[track_type][3]);
 // female side pin
-translate([0,length+om_dovetail_depth-(om_pin_y_pos),0]) pin(track_type_params()[track_type][2]-2*line_thickness * extrusion_width,
-    4*line_thickness * extrusion_width -1,
+translate([0,length+om_dovetail_depth-(om_pin_y_pos),0]) pin(track_type_params()[track_type][2]-2*thin_line * extrusion_width,
+    4*thin_line * extrusion_width -1,
     track_type_params()[track_type][3]);
 /***connectors***/
     translate([0,0,custom_height_middle/2])rotate([90,0,0]) dovetail("male", w=om_dovetail_width, h=om_dovetail_depth, slide=custom_height_middle);
@@ -162,7 +162,7 @@ function track_type_params() =
 module track_guidance2D(length = 100,
     width_base = 40,
     width_middle = 20,
-    line_thickness = 1.6,
+    thin_line = 1.6,
     connector_thickness = 1.6,
     gap_thickness = 1.6
 ){
@@ -207,14 +207,14 @@ module flex_track_pattern_2D(
     length = 100,
     width_base = 40,
     width_middle = 20,
-    line_thickness = 1.6,
+    thin_line = 1.6,
     connector_thickness = 1.6,
     gap_thickness = 1.6,
     inclusive_bars = true
 ){
     epsilon = .1;
 
-    slice_thickness = line_thickness + gap_thickness;
+    slice_thickness = thin_line + gap_thickness;
     slices = floor(length / slice_thickness);
     leftover = length - (slice_thickness * slices) + gap_thickness;
 
@@ -223,22 +223,22 @@ module flex_track_pattern_2D(
             if (even == true && !(i % 2)) {
                 if(cutter == true) {
                     translate([-epsilon/2,slice_thickness * i]) {
-                        square([width_base + epsilon,line_thickness]);
+                        square([width_base + epsilon,thin_line]);
                     }
                 } else {
                     translate([0,slice_thickness * i]) {
-                        square([width_base,line_thickness]);
+                        square([width_base,thin_line]);
                     }
                 }  
             }
             if (odd == true && (i % 2)) {
                 if(cutter == true) {
                     translate([-epsilon/2,slice_thickness * i]) {
-                        square([width_base + epsilon,line_thickness]);
+                        square([width_base + epsilon,thin_line]);
                     }
                 } else {
                     translate([0,slice_thickness * i]) {
-                        square([width_base,line_thickness]);
+                        square([width_base,thin_line]);
                     }
                 }  
             }
@@ -249,22 +249,22 @@ module flex_track_pattern_2D(
         for (i = [0:slices-2]) {
             if (even == true && !(i % 2)) {
                 if(cutter == true) {
-                    translate([-epsilon/2,slice_thickness * i + line_thickness]) {
+                    translate([-epsilon/2,slice_thickness * i + thin_line]) {
                         square([width_base + epsilon, gap_thickness]);
                     }
                 } else {
-                    translate([0,slice_thickness * i + line_thickness]) {
+                    translate([0,slice_thickness * i + thin_line]) {
                         square([width_base, gap_thickness]);
                     }
                 }  
             }
             if (odd == true && (i % 2)) {
                 if(cutter == true) {
-                    translate([-epsilon/2,slice_thickness * i + line_thickness]) {
+                    translate([-epsilon/2,slice_thickness * i + thin_line]) {
                         square([width_base + epsilon, gap_thickness]);
                     }
                 } else {
-                    translate([0,slice_thickness * i + line_thickness]) {
+                    translate([0,slice_thickness * i + thin_line]) {
                         square([width_base, gap_thickness]);
                     }
                 }  
@@ -298,13 +298,13 @@ module brio_male_2D() {
     stem_length = 11.5;
     post_radius = 6;
 
-    translate([0, line_thickness * extrusion_width/2])
-        square([track_type_params()[1][1], line_thickness * extrusion_width], center = true);
+    translate([0, thin_line * extrusion_width/2])
+        square([track_type_params()[1][1], thin_line * extrusion_width], center = true);
     
-    translate([0, (stem_length + connector_tolerance) / 2 + line_thickness * extrusion_width])
+    translate([0, (stem_length + connector_tolerance) / 2 + thin_line * extrusion_width])
         square([stem_width - connector_tolerance * 2, stem_length + connector_tolerance], center = true);
     
-    translate([0, stem_length + connector_tolerance + line_thickness * extrusion_width])
+    translate([0, stem_length + connector_tolerance + thin_line * extrusion_width])
         circle(r = post_radius - connector_tolerance, $fn = 32);
 }
 
@@ -312,7 +312,7 @@ module brio_female_2D() {
     stem_width = 6.3;
     stem_length = 11.5;
     post_radius = 6.3;
-    total_length = line_thickness * extrusion_width + stem_length + post_radius;
+    total_length = thin_line * extrusion_width + stem_length + post_radius;
 
     difference() {
         translate([0, (total_length)/2])

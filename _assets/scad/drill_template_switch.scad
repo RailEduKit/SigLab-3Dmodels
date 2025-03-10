@@ -32,12 +32,12 @@ difference(){
     translate([0,53,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
     
     // hole position lines
-    #translate([56.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
-    translate([56.5, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
-    translate([44, dtch_y_pos-line_thickness/2, dtc_cutout_z_pos]) cube([2*line_thickness, line_thickness, dtc_cutout_height]);
-    translate([44, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos-line_thickness])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
-    translate([44, dtch_y_pos-line_thickness/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+5, line_thickness, line_thickness]);
-    translate([44, dtch_y_pos-5/2, dtc_cutout_z_pos+dtch_z_pos]) cube([2*line_thickness, 5, line_thickness]);
+    #translate([56.5, dtch_y_pos-thin_line/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
+    translate([56.5, dtch_y_pos-thin_line/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
+    translate([44, dtch_y_pos-thin_line/2, dtc_cutout_z_pos]) cube([2*thin_line, thin_line, dtc_cutout_height]);
+    translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos-thin_line])cube([dtc_cutout_z_pos+5, thin_line, thin_line]);
+    translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+5, thin_line, thin_line]);
+    translate([44, dtch_y_pos-5/2, dtc_cutout_z_pos+dtch_z_pos]) cube([2*thin_line, 5, thin_line]);
     
 }
 translate([0,-5,0]) cube([45+12, 5,dtc_height]);

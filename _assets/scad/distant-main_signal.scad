@@ -89,6 +89,9 @@ module color_block(symbol_type){
         }
         //axis
         translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter);
+        // color border line
+        translate([0,0,4.2])cube([fine_line, 2*block_depth, fine_line]);
+        translate([0,0,block_height-4.2])cube([fine_line, 2*block_depth, fine_line]);
         //symbol
         if(symbol_type == "main"){
             translate([signal_symbol_side_space, 4*(block_depth-signal_symbol_size)/5,0]) symbol_main();
@@ -225,8 +228,8 @@ module 2D_drawing_color_block(symbol_type){
 }
 //visualize_colorBlock_in_body("main", "y");
 //print_components("main");
-//color_block("main");
-body("main");
+color_block("main");
+//body("main");
 //symbol_distant();
 
 /********************************
