@@ -36,8 +36,8 @@ module symbol_main(){
 //symbol_distant();
 module symbol_distant(){
     difference(){
-        equ_triangle(signal_symbol_size, engraving_thickness, engraving_height);
-        translate([0,engraving_thickness,0]) equ_triangle(signal_symbol_size-2*engraving_thickness, engraving_thickness, engraving_height);
+        equ_triangle(signal_symbol_size, fine_line, engraving_height);
+        translate([0,engraving_thickness+0.3,0]) equ_triangle(signal_symbol_size-2*engraving_thickness, fine_line, engraving_height);
     }
 }
 
@@ -45,7 +45,7 @@ module cavity_cube(){
     translate([wall_thickness_x,wall_thickness_y,wall_thickness_z]) cube([body_width-2*wall_thickness_x, body_depth-2*wall_thickness_y, body_height-wall_thickness_z]);
 }
 module handle_space_cubes(){
-    translate([wall_thickness_x,0,z_pos_axis-handle_height/2+move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
+    translate([wall_thickness_x,0,z_pos_axis-(handle_height)/2-move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
     translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height)/2-move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
 }
 
@@ -88,7 +88,7 @@ module color_block(symbol_type){
             translate([0,-handle_depth, (block_height-handle_height)/2]) cube([block_width, handle_depth, handle_height]);
         }
         //axis
-        translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter);
+        translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter+move_tolerance);
         // color border line
         translate([0,0,4.2])cube([fine_line, 2*block_depth, fine_line]);
         translate([0,0,block_height-4.2])cube([fine_line, 2*block_depth, fine_line]);
@@ -125,7 +125,7 @@ module prove_moveability(){
     //move_tolerance space between bottom and color_block
     translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,2*move_tolerance]);
     //middle position
-    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+move_tolerance*2,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+    rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+move_tolerance*2,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
 }
 
 module print_components(symbol_type){
@@ -226,9 +226,9 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-//visualize_colorBlock_in_body("main", "y");
+visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
-color_block("main");
+//color_block("distant");
 //body("main");
 //symbol_distant();
 

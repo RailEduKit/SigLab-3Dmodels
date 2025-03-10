@@ -13,13 +13,23 @@ $fn = 100;
 magnet_rod();
 
 module magnet_hole(){
-    cylinder(h=magnet_thickness-move_tolerance, d=magnet_diameter+move_tolerance);
+    cylinder(h=magnet_thickness, d=magnet_diameter+move_tolerance);
+}
+
+module color_line(){
+    difference(){
+            cylinder(d=mr_diameter, h=fine_line);
+            cylinder(d=mr_diameter-fine_line, h=fine_line);
+        }
 }
 
 module magnet_rod(){
     difference(){
-        cylinder(d=mr_diameter, h=mr_height);
+        scale([1,0.5,1]) cylinder(d=mr_diameter, h=mr_height);
         magnet_hole();
         translate([0,0,mr_height-(magnet_thickness-move_tolerance)])magnet_hole();
+        // color border line
+        scale([1,0.5,1])translate([0,0,25]) color_line();
+        scale([1,0.5,1])translate([0,0,mr_height-25]) color_line();
     }
 }

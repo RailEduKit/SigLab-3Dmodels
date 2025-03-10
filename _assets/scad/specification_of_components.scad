@@ -42,8 +42,9 @@ move_tolerance = 0.5;
     engraving_height = 2;//(block_height-handle_height)/2;
     engraving_thickness = 1.5;
     
+  
     fine_line = 0.2;
-    thin_thickness = 0.8;
+    thin_line = 0.8;
 }
 
 {/***************basis_component-roundedBox***************/
@@ -119,7 +120,7 @@ move_tolerance = 0.5;
     block_width=undef;
 
     // body specifications
-    axis_diameter = 2.5; //maybe use the same material as lever anchor
+    axis_diameter = 2; //maybe use the same material as lever anchor
     wall_thickness_x = (body_width-block_width)/2-move_tolerance;//5;
     wall_thickness_y = lever_thickness_switch;
     wall_thickness_z = 2;
@@ -204,7 +205,7 @@ move_tolerance = 0.5;
 
 {/***************magnet_rod***************/
     //magnet rod = mr
-    mr_diameter = 10;
+    mr_diameter = 20;
     mr_height = 100;
     
 }
