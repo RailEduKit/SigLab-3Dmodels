@@ -148,7 +148,7 @@ module render_track(base,left,straight,right,double_sided_rails) {
                 translate([radius*2+wood_width(),0,0]) rotate([0,0,180-angle]) wood_rails_arc(radius, angle);
                 if (double_sided_rails){
                     echo("right != none")
-                    #translate([2*radius+wood_width(),0,-wood_well_height()])rotate([0,0,3*angle])wood_rails_arc(radius, angle);
+                    translate([2*radius+wood_width(),0,-wood_well_height()])rotate([0,0,3*angle])wood_rails_arc(radius, angle);
                 }
             }
         }

@@ -29,7 +29,7 @@ move_tolerance = 0.5;
 
     straight_length = 144;
 
-    curve_radius = 182; // inner radius
+    curve_radius = 180; // 182; // inner radius
     curve_angle = 45; // degree
 }
 {/***************magnet specifications***************/
@@ -161,7 +161,7 @@ move_tolerance = 0.5;
     dsg_hole_depth = 5;
     // drill straight cutout = dsc
     dsc_connector_width = 19;
-    dsc_rail_width = 73;
+    dsc_rail_width = 90;
     dsc_y_pos = 12;
     dsc_depth = rail_height+move_tolerance;
 
@@ -220,6 +220,9 @@ move_tolerance = 0.5;
     echo("rc_symbol_size: ", rc_symbol_size);
     rc_symbol_xpos = body_width - (body_width - (body_width*(1/3)+locker_width/2))/2;
     straight_thickness = 0.8;
+    rc_arrow_depth = 4;
+    rc_arrowline_length = 4;
+    slash_angle = 45; // 53,13
 }
 
 {/***************direction_management***************/
