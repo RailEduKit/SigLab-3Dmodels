@@ -51,6 +51,6 @@ module clearing_point(type){
     }
 }
 
-clearing_point("bcp");
+clearing_point("rcp");
 //route_clearing_point();
 //block_clearing_point();

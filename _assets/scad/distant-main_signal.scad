@@ -90,8 +90,8 @@ module color_block(symbol_type){
         //axis
         translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter+move_tolerance);
         // color border line
-        translate([0,0,4.2])cube([fine_line, 2*block_depth, fine_line]);
-        translate([0,0,block_height-4.2])cube([fine_line, 2*block_depth, fine_line]);
+        translate([0,0,(block_height-handle_height)/2-fine_line])cube([fine_line, 2*block_depth, fine_line]);
+        translate([0,0,(block_height+handle_height)/2])cube([fine_line, 2*block_depth, fine_line]);
         //symbol
         if(symbol_type == "main"){
             translate([signal_symbol_side_space, 4*(block_depth-signal_symbol_size)/5,0]) symbol_main();
@@ -202,6 +202,8 @@ module values_to_console(){
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
     echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle - magnet_diameter - move_tolerance*2 - lock_lever_depth);
+    echo("(block_height-handle_height)/2: ",(block_height-handle_height)/2);
+    echo("(block_height+handle_height)/2: ", (block_height+handle_height)/2);
 }
 
 module 2D_drawing_signal_body(symbol_type){
@@ -226,9 +228,9 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-visualize_colorBlock_in_body("distant", "y");
+//visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
-//color_block("distant");
+color_block("distant");
 //body("main");
 //symbol_distant();
 
