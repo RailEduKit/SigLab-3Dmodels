@@ -8,6 +8,15 @@
 
 include<./specification_of_components.scad>
 
+module diagonal_cutout(){
+    translate([0,0,4])rotate([0,-17.5,0]) union(){
+        cube([85, dsb_depth, 30]);
+        translate([85/2+2.6,dsc_y_pos,0])rotate([45,0,0])cube([80, 3, 3], center=true);
+        translate([85/2+2.6,dsc_y_pos+dsc_depth,0])rotate([45,0,0])cube([80, 3, 3], center=true);
+    }
+}
+
+
 module template_straight(){
 difference(){
     cube([dsb_width, dsb_depth, dsb_height]);
@@ -19,6 +28,7 @@ difference(){
     for (x=[dsc_rail_width-dsg_hole_depth : -10 : 5]){
         translate([x,dsc_y_pos,0]) cube([dsg_hole_depth,dsc_depth,dsg_thickness]);
     }
+    diagonal_cutout();
     
     
     // hole position lines
@@ -34,3 +44,4 @@ difference(){
 }
 
 template_straight();
+//diagonal_cutout();

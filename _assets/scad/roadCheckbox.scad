@@ -16,18 +16,52 @@ roadCheckbox();
 //overlap_symbol();
 //turnout_locking_symbol();
 //side_protection_symbol();
+
+module bidirectional_arrow(){
+    translate([-rc_arrowline_length/2,-1/2,0])cube([rc_arrowline_length,1,engraving_height]);
+
+    translate([rc_arrow_depth*(3/8)+rc_arrowline_length/2,0,0]) scale([3/4,(rc_arrow_depth/(2*rc_arrow_depth*sin(120))),1]) cylinder(engraving_height,rc_arrow_depth,rc_arrow_depth,$fn=3);
+    
+    rotate([0,0,180]) translate([rc_arrow_depth*(3/8)+rc_arrowline_length/2,0,0]) scale([3/4,(rc_arrow_depth/(2*rc_arrow_depth*sin(120))),1]) cylinder(engraving_height,rc_arrow_depth,rc_arrow_depth,$fn=3);
+}
+
 module overlap_symbol(){
 //    translate([0,0,engraving_height/2]) rotate([0,0,45]) cube([rc_symbol_size*(2/3), rc_symbol_size*(2/3), engraving_height], center=true);
-    translate([-rc_symbol_size/2,-rc_symbol_size*(4/6),0])difference(){
-        cube([rc_symbol_size, rc_symbol_size*(4/3), engraving_height]);
-        for(i= [1:4:rc_symbol_size*(5/3)]){
-            translate([0,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
-            echo(i);
+    module overlap(){
+        difference(){ union(){
+            translate([-rc_symbol_size/2,-rc_symbol_size*(4/6),0])difference(){
+                cube([rc_symbol_size, rc_symbol_size*(4/3), engraving_height]);
+                for(i= [1:4:rc_symbol_size*(5/3)]){
+                    translate([straight_thickness,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
+                    echo(i);
+                }
+                for(i= [3:4:rc_symbol_size*(5/3)]){
+                    translate([0,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
+                }
+            }
         }
-        for(i= [3:4:rc_symbol_size*(5/3)]){
-            translate([straight_thickness,i*straight_thickness,0]) cube([rc_symbol_size-straight_thickness, straight_thickness, engraving_height]);
+            translate([-5.5,-1,engraving_height/2])rotate([0,0,53.13])cube([25,10,engraving_height],center=true);
         }
     }
+    module slash(){
+        translate([-0.1,-0.1,engraving_height/2])rotate([0,0,53.13])cube([15.5,1,engraving_height],center=true);
+    }
+    
+    module arrow(){
+        difference(){
+            translate([-1, 1.8, 0]) rotate([0,0,53.13]) bidirectional_arrow();
+            translate([3.7,-1.7,engraving_height/2]) rotate([0,0,53.13]) cube([15,10,engraving_height], center = true);
+        }
+//        difference(){
+//            translate([-1, 1.8, 0]) rotate([0,0,53.13]) bidirectional_arrow();
+//            translate([3.1,-1.1,engraving_height/2]) rotate([0,0,53.13]) cube([15,10,engraving_height], center = true);
+//        }
+        
+    }
+    overlap();
+    slash();
+    translate([-0.3,0,0]) arrow();
+    //translate([0,-1,0]) arrow();
 }
  
 module turnout_locking_symbol(){

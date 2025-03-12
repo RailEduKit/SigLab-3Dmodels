@@ -72,6 +72,7 @@ difference(){
     // curved sides
     translate([dtc_outer_radius+dsg_thickness,0,dtc_cutout_z_pos+dtc_cutout_height])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
     translate([dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
+    # translate([65,130/2-5,0]) rotate([0,0,-15]) scale([0.5,1,1]) cylinder(d=120, h=dtc_cutout_z_pos);
     
     // ground holes
     translate([0,0,dtc_cutout_z_pos])cube([70, dsg_hole_depth, dtc_cutout_height]);
@@ -90,7 +91,7 @@ translate([0,-5,0])cube([dsg_thickness+12,5,2*dtc_cutout_z_pos+dtc_cutout_height
 }
 
 //template_outer_curve();
-translate([100,0,0]) template_outer_curve();
+//translate([100,0,0]) template_outer_curve();
 template_inner_curve();
 
 
