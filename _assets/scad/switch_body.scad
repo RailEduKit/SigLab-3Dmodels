@@ -23,7 +23,7 @@ use<./switch_blade_optimized.scad>
 straight_size = straight_length; //145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
 
 // Curve radius -> inner radius.  Sizes provided are standard.
-radius = curve_radius; //182; // [87.5:small, 180:large]
+radius = curve_inner_radius; //182; // [87.5:small, 180:large]
 
 // Angle of track to render.  45 is standard.
 angle = curve_angle;//45; // [1:360]

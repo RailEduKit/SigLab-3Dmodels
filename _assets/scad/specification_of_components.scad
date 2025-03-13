@@ -29,7 +29,9 @@ move_tolerance = 0.5;
 
     straight_length = 144;
 
-    curve_radius = 180; // 182; // inner radius
+    curve_inner_radius = 180; // 182; // inner radius
+    curve_middle_radius = curve_inner_radius+rail_width/2;
+    curve_outer_radius = curve_inner_radius+rail_width;
     curve_angle = 45.7; // degree
 }
 {/***************magnet specifications***************/
@@ -45,6 +47,7 @@ move_tolerance = 0.5;
   
     fine_line = 0.2;
     thin_line = 0.8;
+    regular_line = 1;
 }
 
 
@@ -238,10 +241,10 @@ move_tolerance = 0.5;
 
     dtc_cutout_z_pos = 12;
     dtc_cutout_height = dsc_depth;
-    dtc_outer_radius = curve_radius+rail_width;
-    dtc_side_radius = curve_radius + 28;
-    dtc_middle_radius = curve_radius + 12;
-    dtc_inner_radius = curve_radius;
+    dtc_outer_radius = curve_inner_radius+rail_width;
+    dtc_side_radius = curve_inner_radius + 28;
+    dtc_middle_radius = curve_inner_radius + 12;
+    dtc_inner_radius = curve_inner_radius;
 
     dtc_height = 2*dtc_cutout_z_pos+dtc_cutout_height;
 
@@ -252,11 +255,18 @@ move_tolerance = 0.5;
     dtc_switch_hole_y_pos = straight_length-dtch_y_pos;
     
     // horizontal template = ht
+    origin_shift = 10;
     ht_scope = 0.1;
-    ht_male_connector_angle = 4.3;
+    ht_male_connector_angle = 1.8; //6mm
     ht_height = rail_height/2;
-    ht_beta = curve_angle;
-    male_connector_space_xpos = (curve_radius+rail_width)-cos(ht_beta)*(curve_radius+rail_width/2);
+    ht_beta = curve_angle+ht_male_connector_angle;
+    male_connector_space_xpos = (curve_outer_radius)-cos(ht_beta)*curve_middle_radius;
+    male_connector_space_ypos = sin(ht_beta)*curve_middle_radius;
+    
+    grip_hole_left_xpos = (curve_outer_radius)-cos(ht_beta/2)*curve_outer_radius;
+    grip_hole_left_ypos = sin(ht_beta/2)*curve_outer_radius;
+    grip_hole_right_xpos = (curve_outer_radius)-cos(ht_beta/2)*curve_inner_radius;
+    grip_hole_right_ypos = sin(ht_beta/2)*curve_inner_radius;
 }
 {/***************drill_template_switch***************/
     // all needed values in "drill_template_curve" and "drill_template_straight"

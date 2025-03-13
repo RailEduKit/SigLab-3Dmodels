@@ -7,6 +7,7 @@
 // No warranties are given.
 
 include<./specification_of_components.scad>
+use<./curve.scad>
 
 $fn = 200;
 
@@ -124,12 +125,36 @@ difference(){
 translate([0,-5,0])cube([dsg_thickness+12,5,2*dtc_cutout_z_pos+dtc_cutout_height]);
 }
 
-module horizontal_template(){
-    scope = 0.1;
-    rotate_extrude(angle = curve_angle) square([curve_radius+rail_width+scope, rail_height/2]);
+module curve_shape(){
+    difference(){
+        translate([curve_outer_radius+ht_scope,0,0]) rotate([0,0,180-(curve_angle+ht_male_connector_angle)])rotate_extrude(angle = curve_angle+ht_male_connector_angle) 
+        difference(){
+            square([curve_outer_radius+ht_scope, ht_height]);
+            square([curve_inner_radius-ht_scope, ht_height]);
+        }
+        translate([(rail_width-3)/2,0,0])cube([3,3,ht_height]);
+    }
+    translate([male_connector_space_xpos,male_connector_space_ypos,ht_height/2])rotate([0,0,-(curve_angle+ht_male_connector_angle)])translate([0,12/2,0])cube([13,12,ht_height], center=true);
+    translate([grip_hole_left_xpos,grip_hole_left_ypos,0]) cylinder(d=30, h = ht_height);
+    translate([grip_hole_right_xpos,grip_hole_right_ypos,0]) cylinder(d=30, h = ht_height);
 }
 
-template_outer_curve();
+module horizontal_template(){
+    difference(){
+        cube([120,180,ht_height]);
+        translate([origin_shift,origin_shift,0]) curve_shape();
+        translate([origin_shift-regular_line,0,ht_height-regular_line]) cube([regular_line,79,regular_line]);
+        translate([0,origin_shift-regular_line,ht_height-regular_line]) cube([79,regular_line,regular_line]);
+        translate([11,81,ht_height-regular_line]) linear_extrude(height = regular_line) text("10 mm", size = 5, halign= "center");
+        translate([81,8.5,ht_height-regular_line]) linear_extrude(height = regular_line) text("10 mm", size = 7);
+    }
+}
+horizontal_template();
+//translate([10+ht_scope, 10, 0]) curve_with_drill_holes();
+
+
+//curve_shape();
+//template_outer_curve();
 //translate([100,0,0]) template_outer_curve();
 //template_inner_curve();
 

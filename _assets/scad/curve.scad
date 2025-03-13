@@ -47,7 +47,7 @@ include<./specification_of_components.scad>
 straight_size = straight_length; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
 
 // Curve radius.  Sizes provided are standard.
-radius = curve_radius; // [87.5:small, 180:large]
+radius = curve_inner_radius; // [87.5:small, 180:large]
 
 /* [Hidden] */
 
@@ -208,5 +208,5 @@ module curve_with_drill_holes(){
 }
 
 //curve_shape_control();
-//curve_with_drill_holes();
+curve_with_drill_holes();
 //render_track("female","none","none","male", true);
