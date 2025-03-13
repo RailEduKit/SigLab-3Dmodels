@@ -11,6 +11,7 @@ include<./specification_of_components.scad>
 module diagonal_cutout(){
     translate([0,0,4])rotate([0,-17.5,0]) union(){
         cube([85, dsb_depth, 30]);
+        // chamfer
         translate([85/2+2.6,dsc_y_pos,0])rotate([45,0,0])cube([80, 3, 3], center=true);
         translate([85/2+2.6,dsc_y_pos+dsc_depth,0])rotate([45,0,0])cube([80, 3, 3], center=true);
     }

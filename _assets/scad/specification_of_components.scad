@@ -30,7 +30,7 @@ move_tolerance = 0.5;
     straight_length = 144;
 
     curve_radius = 180; // 182; // inner radius
-    curve_angle = 45; // degree
+    curve_angle = 45.7; // degree
 }
 {/***************magnet specifications***************/
     magnet_thickness = 3;
@@ -47,6 +47,8 @@ move_tolerance = 0.5;
     thin_line = 0.8;
 }
 
+
+
 {/***************basis_component-roundedBox***************/
     body_width = 30;
     body_depth = 50;
@@ -56,7 +58,7 @@ move_tolerance = 0.5;
 }
 
 
-{/***************overlap_measure***/ //-> not integrated yet
+{/***************overlap_measure***************/
     // overlap measure -> om
     om_thickness = 2;
     // pin specifications
@@ -74,6 +76,56 @@ move_tolerance = 0.5;
     
     
 }
+
+{/***************curve***************/
+    // curve = c
+    // pin hole 1 = ph1
+    c_ph1_ypos = 24.9;
+    c_ph1_xpos = 21.56;
+    // pin hole 2 = ph2
+    c_ph2_ypos = 77.66;
+    c_ph2_xpos = 35.7;
+    // pin hole 3 = ph3
+    c_ph3_ypos = 124.61;
+    c_ph3_xpos = 63.57;
+    
+    c_mh_zpos = rail_height/2;
+    // magnet hole 4 = mh1
+    c_mh4_xpos = 0.1;
+    c_mh4_ypos = 7.7;
+    c_mh4_zrot = -2;
+    // magnet hole 5 = mh1
+    c_mh5_xpos = 40.3;
+    c_mh5_ypos = 7.5;
+    c_mh5_zrot = -2.4;
+    // magnet hole 6 = mh1
+    c_mh6_xpos = 61;
+    c_mh6_ypos = 152;
+    c_mh6_zrot = -43.7;
+    // magnet hole 7 = mh1
+    c_mh7_xpos = 89.05;
+    c_mh7_ypos = 123.35;
+    c_mh7_zrot = -43.3;
+    
+}
+
+{/***************straight***************/
+    //straight = s
+    // pin hole 1 = ph1
+    s_ph_xpos = rail_width/2;
+    s_ph1_ypos = 25;
+    s_ph2_ypos = straight_length/2;
+    s_ph3_ypos = straight_length-s_ph1_ypos;
+    
+    // magnet hole = mh
+    s_mh_xpos = rail_width;
+    s_mh_zpos = rail_height/2;
+    s_mh_ypos1 = 7.5;
+    s_mh_ypos2 = straight_length-s_mh_ypos1;
+    
+    
+}
+
 {/***************switch_blade_optimized***************/
     //blade specification
     blade_thickness = 2.5;
@@ -187,7 +239,7 @@ move_tolerance = 0.5;
     dtc_cutout_z_pos = 12;
     dtc_cutout_height = dsc_depth;
     dtc_outer_radius = curve_radius+rail_width;
-    dtc_side_radius = curve_radius + 30;
+    dtc_side_radius = curve_radius + 28;
     dtc_middle_radius = curve_radius + 12;
     dtc_inner_radius = curve_radius;
 
@@ -197,7 +249,14 @@ move_tolerance = 0.5;
     dtch_z_pos = (rail_height+move_tolerance)/2;
     dtch_y_pos = 7.5;
 
-    dtc_switch_hole_y_pos = 136.5;
+    dtc_switch_hole_y_pos = straight_length-dtch_y_pos;
+    
+    // horizontal template = ht
+    ht_scope = 0.1;
+    ht_male_connector_angle = 4.3;
+    ht_height = rail_height/2;
+    ht_beta = curve_angle;
+    male_connector_space_xpos = (curve_radius+rail_width)-cos(ht_beta)*(curve_radius+rail_width/2);
 }
 {/***************drill_template_switch***************/
     // all needed values in "drill_template_curve" and "drill_template_straight"

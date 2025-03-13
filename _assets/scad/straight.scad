@@ -189,24 +189,18 @@ module pin_hole(){
     cylinder(h=rail_height, d=om_pin_diameter+move_tolerance);
 }
 
-module curve_shape_control(){
-    linear_extrude(height = 1) projection() render_track("female","none","none","male", false);
-}
-
-module curve_with_drill_holes(){
+module straight_with_drill_holes() {
     difference(){
-        render_track("female","none","none","male", true);
-        translate([c_ph1_xpos, c_ph1_ypos, 0]) pin_hole();
-        translate([c_ph2_xpos, c_ph2_ypos, 0]) pin_hole();
-        translate([c_ph3_xpos, c_ph3_ypos, 0]) pin_hole();
-        translate([c_mh4_xpos, c_mh4_ypos, c_mh_zpos]) rotate([0,90,c_mh4_zrot]) magnet_hole();
-        translate([c_mh5_xpos, c_mh5_ypos, c_mh_zpos]) rotate([0,-90,c_mh5_zrot]) magnet_hole();
-        translate([c_mh6_xpos, c_mh6_ypos, c_mh_zpos]) rotate([0,90,c_mh6_zrot]) magnet_hole();
-    translate([c_mh7_xpos, c_mh7_ypos, c_mh_zpos]) rotate([0,-90,c_mh7_zrot]) magnet_hole();
+        render_track("female", "none", "male", "none", false);
+        translate([s_ph_xpos, s_ph1_ypos, 0]) pin_hole();
+        translate([s_ph_xpos, s_ph2_ypos, 0]) pin_hole();
+        translate([s_ph_xpos, s_ph3_ypos, 0]) pin_hole();
+        translate([0,s_mh_ypos1, s_mh_zpos]) rotate([0,90,0]) magnet_hole();
+        translate([s_mh_xpos,s_mh_ypos1, s_mh_zpos]) rotate([0,-90,0]) magnet_hole();
+        translate([0,s_mh_ypos2, s_mh_zpos]) rotate([0,90,0]) magnet_hole();
+        translate([s_mh_xpos,s_mh_ypos2, s_mh_zpos]) rotate([0,-90,0]) magnet_hole();
+        
     }
-    
 }
 
-//curve_shape_control();
-//curve_with_drill_holes();
-//render_track("female","none","none","male", true);
+//straight_with_drill_holes();
