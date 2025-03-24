@@ -170,7 +170,7 @@ module switchblade_space(left,straight,right){
     //pivot_center_x = wood_width()/2;
     
     module curved_boundery(){
-        radius2 = 182+wood_well_width()+wood_well_rim()/2;
+        radius2 = curve_inner_radius+wood_well_width()+wood_well_rim()/2;
         rotate_extrude(angle=360) square([radius2,sbs_height]);
     }
     module top_boundery(){
@@ -236,8 +236,8 @@ module holes_for_blade(left,straight,right){
         }
     }
     module curved_boundery(){
-        radius1 = 182+5+wood_well_spacing(); // to get a 3D object
-        radius2 = 182+wood_well_width()+wood_well_rim()+lever_anchor_posX;
+        radius1 = curve_inner_radius+5+wood_well_spacing(); // to get a 3D object
+        radius2 = curve_inner_radius+wood_well_width()+wood_well_rim()+lever_anchor_posX;
         difference(){
             rotate_extrude(angle=360) square([radius1,h]);
             rotate_extrude(angle=360) square([radius2,h]);
@@ -247,15 +247,15 @@ module holes_for_blade(left,straight,right){
         x_size=14;
         y_size=140;
         if(left!="none"){
-            xpos =wood_width()-x_size-wood_well_width()-wood_well_rim()-lever_anchor_posX; 
+            xpos =wood_width()-x_size-wood_well_width()-wood_well_rim()-lever_anchor_posX-0.5; 
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(right != "none"){
-            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX;
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX+0.5;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
         if(left != "none" && right != "none"){
-            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX;
+            xpos = wood_well_width()+wood_well_rim()+lever_anchor_posX+0.5;
             translate([xpos,0,0]) cube([x_size,y_size,h]);
         }
     }
@@ -339,36 +339,41 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){
     }
 }
 
-module blade_hole_switch(base,left,straight,right, double_sided_rails){
-    difference(){
-        render_track(base,left,straight,right,double_sided_rails);
+ module mill_projections(base,left,straight,right,blade_space, axis_space, pin_holes){    
+    projection(cut=true)union(){
+     difference(){
+        render_track(base,left,straight,right,false);
+        if(blade_space==true){
+            translate([0,0,0])switchblade_space(left,straight,right);
+        }
+        if(axis_space==true && blade_space==false){
+            holes_for_blade(left,straight,right);
+        }
+        if(pin_holes==true){
+            drill_holes(left,straight,right);
+        }
+    }
+    if(axis_space==true && blade_space==true){
         holes_for_blade(left,straight,right);
     }
-}
- module blade_space_switch(base,left,straight,right, double_sided_rails){    
-    difference(){
-        render_track(base,left,straight,right,double_sided_rails);
-        translate([0,0,0])switchblade_space(left,straight,right);
-        drill_holes(left,straight,right);
-    }
-    holes_for_blade(left,straight,right);
+}   
 }
 
 module mill_components(){
-    //projection() blade_hole_switch("male","female","female","none", false);
-    //projection(cut=true) blade_space_switch("male","female","female","none", false);
-    projection(cut=true) blade_space_switch("male","none","female","female", false);
+    //projection(cut=true) mill_projections("female","female","female","none", false);
+    //projection(cut=true) mill_projections("male","none","female","female", false);
 }
 
 module visualize_blade_in_switch(){
-    //translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("male","female","female","none",true,true);
+    //translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("female","female","female","none",true,true);
     //translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("female","female","none");
     rotate([0,0,15])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
 }
 
+//mill_projections("female","none","female","female",true,true,true);
 echo(pin_female_diameter);
-//visualize_blade_in_switch();
-mill_components();
+visualize_blade_in_switch();
+//mill_components();
 //render_track("male","none","female","female",true);
 //modified_switch("male","none","female","female",true,true);
 //translate([100,0,0]) modified_switch("male","female","female","none",false,true);

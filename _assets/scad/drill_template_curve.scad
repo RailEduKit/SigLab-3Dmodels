@@ -149,14 +149,14 @@ module horizontal_template(){
         translate([81,8.5,ht_height-regular_line]) linear_extrude(height = regular_line) text("10 mm", size = 7);
     }
 }
-horizontal_template();
+//horizontal_template();
 //translate([10+ht_scope, 10, 0]) curve_with_drill_holes();
 
 
 //curve_shape();
 //template_outer_curve();
 //translate([100,0,0]) template_outer_curve();
-//template_inner_curve();
+template_inner_curve();
 
 
 
