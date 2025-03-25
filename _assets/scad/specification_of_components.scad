@@ -300,8 +300,10 @@ move_tolerance = 0.5;
     arrow_depth = 6.5; //5 for onePiece
     arrowline_length = 6.5; //5 for onePiece
     
-    overlap_cube_depth = 2;
+    
     arrow_block_height = 9-engraving_height;
+    overlap_cube_depth = arrow_block_height/2;
+    arrow_block_depth = block_depth - overlap_cube_depth;
     
 }
 
