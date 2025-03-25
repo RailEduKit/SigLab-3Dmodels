@@ -16,8 +16,8 @@ use<./locking_pin.scad> // used in "visualize_arrowBlock_in_body"
 
 //visualize_onePiece_with_locker();
 //onedirect_arrow();
-//arrow_block();
-visualize_arrowBlock_in_body("-y");
+arrow_block();
+//visualize_arrowBlock_in_body("-y");
 //direction_management_flipFlop();
 //direction_management_onePiece();
 //bidirectional_arrow();
@@ -78,7 +78,8 @@ module arrow_block(){
     difference(){
         union(){
             cube([block_width, block_depth, arrow_block_height]);
-            translate([0,block_depth,arrow_block_height/2]) scale([1,0.5,1]) rotate([0,90,0]) cylinder(h=block_width, r=arrow_block_height/2); // scale y: (overhang)/(arrow_block_height/2) // curve is flat, because the printer can't make that much overhang
+            translate([0,block_depth,0])cube([block_width, overlap_cube_depth, arrow_block_height]);
+            translate([0,block_depth+overlap_cube_depth,arrow_block_height/2]) scale([1,0.5,1]) rotate([0,90,0]) cylinder(h=block_width, r=arrow_block_height/2); // scale y: (overhang)/(arrow_block_height/2) // curve is flat, because the printer can't make that much overhang
             //handle
             translate([0,-handle_depth, (arrow_block_height-handle_height)/2]) cube([block_width, handle_depth, handle_height]);
         }
@@ -95,22 +96,26 @@ module arrow_block(){
 
 
 module visualize_arrowBlock_in_body(state){
-    translate([0,-body_depth/2,-z_pos_axis]) direction_management_flipFlop(); //z=-arrow_block_height/2-wall_thickness_z
-    if(state== "-y"){
-        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
-        translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
-    }
-    if(state== "y"){
-        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
-        translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+    difference(){
+        union(){
+            translate([0,-body_depth/2,-z_pos_axis]) direction_management_flipFlop(); //z=-arrow_block_height/2-wall_thickness_z
+            if(state== "-y"){
+                rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
+                translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+            }
+            if(state== "y"){
+                rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
+                translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+            }
+        }
+        //cut
+        translate([12,-50,-25])cube([50,100,50]);
     }
 }
 
 module visualize_onePiece_with_locker(){
     direction_management_onePiece();
     translate([body_width*(1/2),body_depth*(1/6),locker_height-0.5+wall_thickness_z]) rotate([180,0,90]) locking_pin();
-    
-    
 }
 
     
