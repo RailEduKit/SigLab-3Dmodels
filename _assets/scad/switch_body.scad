@@ -232,7 +232,7 @@ module holes_for_blade(left,straight,right){
         inner_r = y_pos_second_pin-(pin_female_diameter-2);
         difference(){ 
             translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([outer_r,h]);
-            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35]) rotate_extrude(angle=a) square([inner_r,h]);
+            translate([pivot_center_x,pivot_center_y-pin_diameter,0]) rotate([0,0,90-35-0.1]) rotate_extrude(angle=a+0.2) square([inner_r,h]); // 0.1 and 0.2 because of a rendering bug
         }
     }
     module curved_boundery(){
@@ -371,8 +371,10 @@ module visualize_blade_in_switch(){
 }
 
 //mill_projections("female","none","female","female",true,true,true);
+mill_projections("female", "female", "female", "none", true, false, false);
+
 echo(pin_female_diameter);
-visualize_blade_in_switch();
+//visualize_blade_in_switch();
 //mill_components();
 //render_track("male","none","female","female",true);
 //modified_switch("male","none","female","female",true,true);

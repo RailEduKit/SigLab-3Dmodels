@@ -133,7 +133,7 @@ move_tolerance = 0.5;
     //blade specification
     blade_thickness = 2.5;
     blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
-    blade_length = 45;
+    blade_length = 42;
     blade_width  = 19;
 
     //lever anchor specification
@@ -146,22 +146,22 @@ move_tolerance = 0.5;
     pin_diameter = om_pin_diameter+move_tolerance+wall_thickness;
     pin_female_diameter = pin_diameter+move_tolerance+wall_thickness;
     pin_height = rail_thickness_track+move_tolerance;
-    y_pos_first_pin = pin_diameter;
+    y_pos_first_pin = pin_female_diameter/2+1;
     y_pos_second_pin = (blade_length*2/3);
     overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
 }
 {/***************switch_body***************/
     //holes_for_blade
     pivot_center_x = rail_width/2;
-    pivot_center_y=25;
+    pivot_center_y=27;
     
     //switchblade_space -> sbs
-    sbs_gap_to_wood = 4;
+    sbs_gap_to_wood = 1.5;
     sbs_width = rail_width;
     sbs_radius = blade_length+2*sbs_gap_to_wood;
     sbs_height = rail_height-rail_well_height;
     sbs_xpos = -rail_well_width-2;
-    sbs_ypos = pivot_center_y - pin_diameter - sbs_gap_to_wood;
+    sbs_ypos = pivot_center_y - y_pos_first_pin-sbs_gap_to_wood;
 }
 
 {/***************locking_pin***************/
@@ -292,13 +292,16 @@ move_tolerance = 0.5;
     rc_arrow_depth = 4;
     rc_arrowline_length = 4;
     slash_angle = 45; // 53,13
+    
+    junction_r=11.5;
 }
 
 {/***************direction_management***************/
     arrow_depth = 6.5; //5 for onePiece
     arrowline_length = 6.5; //5 for onePiece
     
-    arrow_block_height = block_height-engraving_height;
+    overlap_cube_depth = 2;
+    arrow_block_height = 9-engraving_height;
     
 }
 
