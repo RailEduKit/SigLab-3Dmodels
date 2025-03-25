@@ -65,12 +65,26 @@ module overlap_symbol(){
 }
  
 module turnout_locking_symbol(){
-    translate([-rc_symbol_size/2,-2,0]) 
-    linear_extrude(height = engraving_height) union(){
-        polygon(points=[[0,0], [rc_symbol_size/2,0], [rc_symbol_size/2,rc_symbol_size/2]]);
-        translate([1,0])square([rc_symbol_size-1, straight_thickness]);
-        translate([1.15,0])rotate([0,0,45])square([rc_symbol_size, straight_thickness]);
+    module schematic_drawing(){
+        translate([-rc_symbol_size/2,-2,0]) 
+        linear_extrude(height = engraving_height) union(){
+            polygon(points=[[0,0], [rc_symbol_size/2,0], [rc_symbol_size/2,rc_symbol_size/2]]);
+            translate([1,0])square([rc_symbol_size-1, straight_thickness]);
+            translate([1.15,0])rotate([0,0,45])square([rc_symbol_size, straight_thickness]);
+        }
     }
+    module junction_curve(){
+        rotate_extrude(angle=50) difference(){
+           square([junction_r,engraving_height]);
+           square([junction_r-regular_line,engraving_height]);
+        }
+    }
+    module junction(){
+        translate([-regular_line/2,0,0])cube([regular_line,1,engraving_height]);
+        translate([-(junction_r-regular_line/2),1,0])junction_curve();
+        translate([junction_r-regular_line/2,1,engraving_height])rotate([0,180,0])junction_curve();
+    }
+    translate([0,-5,0]) junction();
 }
 
 module side_protection_symbol(){
