@@ -307,6 +307,12 @@ move_tolerance = 0.5;
     
 }
 
+{/***************direction_management***************/
+    // number_plate = np
+    np_diameter = rail_well_spacing-2*3;
+    number_height = 0.6;
+}
+
 
 
 
