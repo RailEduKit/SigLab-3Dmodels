@@ -13,13 +13,13 @@ include<./specification_of_components.scad>
 include <BOSL2/std.scad>
 use<./basis_component-roundedBox.scad>
 use<./locking_pin.scad> // used in "visualize_arrowBlock_in_body"
-//Y_axis();
+//V_axis();
 //T_axis();
 //cavity_cube();
 //visualize_onePiece_with_locker();
 //onedirect_arrow();
 arrow_block();
-//visualize_arrowBlock_in_body("z");
+//visualize_arrowBlock_in_body("-yz");
 translate([30,0,0]) direction_management_flipFlop();
 //guide_cube();
 //direction_management_onePiece();
@@ -38,11 +38,11 @@ module onedirect_arrow(){
 }
 
 module guide_cube(){
-    diff() cuboid([body_width-2*wall_thickness_x+0.1, arrow_block_depth + 2*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=BOTTOM+LEFT+FWD, rounding=3, edges=TOP+BACK){
+    diff() cuboid([body_width-2*wall_thickness_x+0.1, arrow_block_depth + 2.5*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=BOTTOM+LEFT+FWD, rounding=3, edges=TOP+BACK){
         //remove middle
-        tag("remove") position(TOP) cuboid([8, arrow_block_depth+ 2*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=TOP);
+        tag("remove") position(TOP) cuboid([8, arrow_block_depth+ 2.5*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=TOP);
         //add middle with rounding
-        tag("keep") position(BOTTOM) cuboid([8, arrow_block_depth+ 2*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z - engraving_height], anchor=BOTTOM, rounding =2, edges=TOP+BACK);
+        tag("keep") position(BOTTOM) cuboid([8, arrow_block_depth - engraving_height - move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z - engraving_height], anchor=BOTTOM, rounding =2, edges=TOP+BACK);
     }
 }
 
@@ -68,11 +68,26 @@ module T_axis() {
 module Y_axis() {
     hull(){
         fwd(overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
-        right(overlap_cube_depth-2*move_tolerance) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        right(overlap_cube_depth/2) cylinder(h=body_width, d=axis_diameter+move_tolerance);
     }
     hull(){
         back(overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
-        right(overlap_cube_depth-2*move_tolerance) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        right(overlap_cube_depth/2) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+    }
+    hull() {
+        right(overlap_cube_depth/2) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        right((3/2)*overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+    }
+}
+
+module V_axis() {
+    hull(){
+        fwd(overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        right((3/2)*overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+    }
+    hull(){
+        back(overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        right((3/2)*overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
     }
 }
 
@@ -98,7 +113,7 @@ module direction_management_flipFlop(){
         curvedBox(); // import from basis_component-roundedBox
         cavity_cube();
         //axis
-        translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) Y_axis();//cylinder(h=body_width, d=axis_diameter+move_tolerance);
+        translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) V_axis();//cylinder(h=body_width, d=axis_diameter+move_tolerance);
         // handle space
         handle_space_cubes();
         // locker pin hole
@@ -118,7 +133,7 @@ module arrow_block(){
         union(){
             cube([block_width, arrow_block_depth, arrow_block_height]);
             translate([0,arrow_block_depth,0])cube([block_width, overlap_cube_depth, arrow_block_height]);
-            translate([0,arrow_block_depth+overlap_cube_depth,arrow_block_height/2]) scale([1,0.5,1]) rotate([0,90,0]) cylinder(h=block_width, r=arrow_block_height/2); // scale y: (overhang)/(arrow_block_height/2) // curve is flat, because the printer can't make that much overhang
+            //translate([0,arrow_block_depth+overlap_cube_depth,arrow_block_height/2]) scale([1,0.5,1]) rotate([0,90,0]) cylinder(h=block_width, r=arrow_block_height/2); // scale y: (overhang)/(arrow_block_height/2) // curve is flat, because the printer can't make that much overhang
             //handle
             translate([0,-handle_depth, (arrow_block_height-handle_height)/2]) cube([block_width, handle_depth, handle_height]);
         }
@@ -143,11 +158,15 @@ module visualize_arrowBlock_in_body(state){
                 translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
             }
             if(state== "-yz"){
-                translate([0,-overlap_cube_depth/2,-(overlap_cube_depth-2*move_tolerance)/2]) rotate([-45,0,0]) translate([wall_thickness_x + move_tolerance, -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
+                translate([0,-overlap_cube_depth/2,-(overlap_cube_depth)/4]) rotate([-45,0,0]) translate([wall_thickness_x + move_tolerance, -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
                 translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
             }
             if(state == "z"){
-                down(overlap_cube_depth-2*move_tolerance) rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
+                down(overlap_cube_depth/2) rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
+                translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+            }
+            if(state == "-z"){
+                #down((3/2)*overlap_cube_depth) rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) arrow_block();
                 translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
             }
             if(state== "y"){
@@ -156,7 +175,7 @@ module visualize_arrowBlock_in_body(state){
             }
         }
         //cut
-        translate([14,-50,-25])cube([50,100,50]);
+        translate([15,-50,-25])cube([50,100,50]);
     }
 }
 
