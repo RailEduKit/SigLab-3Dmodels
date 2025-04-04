@@ -307,12 +307,26 @@ move_tolerance = 0.5;
     
 }
 
-{/***************direction_management***************/
+{/***************number_plate***************/
     // number_plate = np
     np_diameter = rail_well_spacing-2*3;
+    np_height = 1;
     number_height = 0.6;
+    np_pin_diameter = om_pin_diameter;
+    np_pin_height = om_pin_height;
+    frame_width = 180;
+    frame_depth = 180;
 }
 
+{/***************balise***************/
+    balise_width = rail_well_spacing-2*3;
+    balise_depth = 2* balise_width;
+    balise_height = np_height;
+    
+    balise_pin_diameter = om_pin_diameter;
+    balise_pin_height = om_pin_height;
+
+}
 
 
 
