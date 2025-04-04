@@ -38,7 +38,7 @@ module onedirect_arrow(){
 }
 
 module guide_cube(){
-    diff() cuboid([body_width-2*wall_thickness_x+0.1, arrow_block_depth + 2.5*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=BOTTOM+LEFT+FWD, rounding=3, edges=TOP+BACK){
+    diff() cuboid([body_width-2*wall_thickness_x+0.1, arrow_block_depth + 2.5*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=BOTTOM+LEFT+FWD, rounding=2, edges=TOP+BACK){ // rounding = 2 because you can turn the block without neutral position with 3mm rounding
         //remove middle
         tag("remove") position(TOP) cuboid([8, arrow_block_depth+ 2.5*move_tolerance, z_pos_axis - arrow_block_height/2 - move_tolerance - wall_thickness_z], anchor=TOP);
         //add middle with rounding
@@ -88,6 +88,10 @@ module V_axis() {
     hull(){
         back(overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
         right((3/2)*overlap_cube_depth) cylinder(h=body_width, d=axis_diameter+move_tolerance);
+    }
+    right((1/6)*overlap_cube_depth+0.25) difference(){
+        translate([(axis_diameter+move_tolerance)/2,0,body_width/2]) cube([(axis_diameter+move_tolerance),axis_diameter,body_width], center = true);
+        down(0.1)cylinder(h=body_width+0.2, d=axis_diameter+move_tolerance);
     }
 }
 
@@ -183,5 +187,7 @@ module visualize_onePiece_with_locker(){
     direction_management_onePiece();
     translate([body_width*(1/2),body_depth*(1/6),locker_height-0.5+wall_thickness_z]) rotate([180,0,90]) locking_pin();
 }
+
+
 
     
