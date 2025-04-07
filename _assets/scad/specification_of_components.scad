@@ -316,6 +316,9 @@ move_tolerance = 0.5;
     np_pin_height = om_pin_height;
     frame_width = 180;
     frame_depth = 180;
+    step_size = np_diameter+2*move_tolerance;
+    x_start = -(frame_width/2-np_diameter/2-1);
+    y_start = -(frame_depth/2-np_diameter/2-1);
 }
 
 {/***************balise***************/

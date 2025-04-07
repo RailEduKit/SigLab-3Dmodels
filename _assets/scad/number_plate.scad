@@ -41,7 +41,6 @@ module plate_collection(){
 
 module numberPlate_collection(){
     // can't render, to slow
-    step_size = np_diameter+2*move_tolerance;
     x_start = -(frame_width/2-np_diameter/2-1);
     y_start = -(frame_depth/2-np_diameter/2-1);
     numeration_start = 0;
