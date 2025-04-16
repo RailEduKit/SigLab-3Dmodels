@@ -61,13 +61,13 @@ c_block_width = cavity_width-move_tolerance;
 c_block_depth = cavity_depth/2 - move_tolerance;
 c_block_height = cavity_height-bottom_h-groove_h-2*move_tolerance; // has to be < cavity_height-bottom_h-groove_h-2*move_tolerance
 
-module equ_triangle(side_length,corner_radius,triangle_height){
+module equ_triangle(side_length,corner_radius,signal_triangle_height){
     // copy from https://www.youtube.com/watch?v=5hDB8Nsd688
     translate([0,corner_radius]){
     hull(){
-        cylinder(r=corner_radius,h=triangle_height);
-     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);   
-         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);
+        cylinder(r=corner_radius,h=signal_triangle_height);
+     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);   
+         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);
         };
 };
 };

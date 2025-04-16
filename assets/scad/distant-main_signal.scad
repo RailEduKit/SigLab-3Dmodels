@@ -6,83 +6,38 @@
 // You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 // No warranties are given.
 
-/* **TODO**
-1. Symbol auf den Hebel
-*/
+
+include<./specification_of_components.scad>
+use<./basis_component-roundedBox.scad>
+use<./locking_pin.scad> // used in visualize_colorBlock_in_body("main", "y");
 
 $fn = 200;
-block_width=undef;
-move_tolerance=undef;
-// body specifications
-axis_diameter = 2.5; //maybe use the same material as lever anchor
-body_width = 30; // material constraint
-body_depth = 60; // minimum, because of the lockpin diameter
-body_height = 13.5; // material constraint
-wall_thickness_x = (body_width-block_width-move_tolerance)/2;//5;
-wall_thickness_y = 2;
-wall_thickness_z = 2;
-track_arc_inner_radius = 182;
-sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
-z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
-
-// Locking Part specifications
-lock_lever_depth = 9.5;
-lock_lever_thickness = 2.5;
-lock_lever_height = 10;
-foot_width = 2.5;
-
-// magnet specification
-magnet_thickness = 3;
-magnet_diameter = 5;
-magnet_distance_to_middle_y = 7.5;
-magnet_z = 6;
 
 
-// color_block specifications
-move_tolerance = 1;
-block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
-block_depth = (body_depth-2*wall_thickness_y)/2-1.5*move_tolerance;
-block_height = 13.5; // material constraint
-//block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
-overhang = block_height/2-move_tolerance; //the circle has to be flattend at one side with move_tolerance
-handle_depth = 10+wall_thickness_y;
-handle_height = 3;
-
-// main Symbol Specifications
-symbol_side_space = 4;
-symbol_height = 1.5;//(block_height-handle_height)/2;
-symbol_thickness = 1.5;
-symbol_size = block_width-2*symbol_side_space;
-triangle_height = (sqrt(3)*symbol_size)/2;
-
-
-module equ_triangle(side_length,corner_radius,triangle_height){
+module equ_triangle(side_length,corner_radius,signal_triangle_height){
     // copy from https://www.youtube.com/watch?v=5hDB8Nsd688
     translate([0,corner_radius]){
     hull(){
-        cylinder(r=corner_radius,h=triangle_height);
-     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);   
-         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=triangle_height);
+        cylinder(r=corner_radius,h=signal_triangle_height);
+     rotate([0,0,60])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);   
+         rotate([0,0,120])translate([side_length-corner_radius*2,0,0])cylinder(r=corner_radius,h=signal_triangle_height);
         };
 };
 };
 
-module magnet_hole(){
-    cylinder(h=magnet_thickness+0.5, d=magnet_diameter+0.5);
-}
 
 //symbol_main();
 module symbol_main(){
     difference(){
-        cube([symbol_size, symbol_size, symbol_height]);
-        translate([symbol_thickness,symbol_thickness,0]) cube([symbol_size-2*symbol_thickness, symbol_size-2*symbol_thickness, symbol_height]);
+        cube([signal_symbol_size, signal_symbol_size, engraving_height]);
+        translate([engraving_thickness,engraving_thickness,0]) cube([signal_symbol_size-2*engraving_thickness, signal_symbol_size-2*engraving_thickness, engraving_height]);
     }
 }
 //symbol_distant();
 module symbol_distant(){
     difference(){
-        equ_triangle(symbol_size, symbol_thickness, symbol_height);
-        translate([0,symbol_thickness,0]) equ_triangle(symbol_size-2*symbol_thickness, symbol_thickness, symbol_height);
+        equ_triangle(signal_symbol_size, fine_line, engraving_height);
+        translate([0,engraving_thickness+0.3,0]) equ_triangle(signal_symbol_size-2*engraving_thickness, fine_line, engraving_height);
     }
 }
 
@@ -90,46 +45,36 @@ module cavity_cube(){
     translate([wall_thickness_x,wall_thickness_y,wall_thickness_z]) cube([body_width-2*wall_thickness_x, body_depth-2*wall_thickness_y, body_height-wall_thickness_z]);
 }
 module handle_space_cubes(){
-    translate([wall_thickness_x,0,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
-    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height+move_tolerance)/2]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
+    translate([wall_thickness_x,0,z_pos_axis-(handle_height)/2-move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]); //z=wall_thickness_z+(block_height-handle_height)/2
+    translate([wall_thickness_x,body_depth-wall_thickness_y,z_pos_axis-(handle_height)/2-move_tolerance]) cube([body_width-2*wall_thickness_x,wall_thickness_y,body_height]);
 }
 
 module space_locking_pin(){
-    translate([0, body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance/2, lock_lever_height]);
+    translate([0, body_depth/2 - magnet_distance_to_middle - magnet_diameter - 2*move_tolerance - lock_lever_depth, body_height - lock_lever_height])cube([wall_thickness_x-lock_lever_thickness, lock_lever_depth+move_tolerance, lock_lever_height]);
 }
-//body("distant");
+//body("main");
+
 module body(symbol_type){
-    module box(){
-        difference(){
-            cube([body_width, body_depth, body_height]);
-            cavity_cube();
-        }
-    }
-    module round_edge(){
-        cylinder(h=body_height, r=track_arc_inner_radius);
-    }
     difference(){
-        intersection(){
-            intersection(){
-                translate([0,0,0])box();
-                translate([track_arc_inner_radius-sagitta,body_depth/2,0])round_edge();
-            }
-            intersection(){
-                translate([0,0,0])box();
-                translate([body_width-track_arc_inner_radius+sagitta,body_depth/2,0])round_edge();
-            }
-        }
-        if(symbol_type == "main"){
-            space_locking_pin();
-        }
-        //magnet holes
-        translate([0,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([0,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 - magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
-        translate([body_width-magnet_thickness-0.5,body_depth/2 + magnet_distance_to_middle_y, magnet_z])rotate([0,90,0])magnet_hole();
+        curvedBox(); // import from basis_component-roundedBox
+        cavity_cube();
         //axis
         translate([0,body_depth/2,z_pos_axis]) rotate([0,90,0]) cylinder(h=body_width, d=axis_diameter);
+        // handle space
         handle_space_cubes();
+        // locker pin hole
+        if(symbol_type=="main"){
+            difference(){
+                translate([body_width/2,body_depth-wall_thickness_y/2,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
+                translate([wall_thickness_x+move_tolerance,body_depth-wall_thickness_y,0])cube([block_width,locker_width,locker_height]);
+            }
+        }
+    }
+    if(symbol_type=="main"){
+        lock_block_width = 6;
+        lock_block_depth = 2;
+        lock_block_height = z_pos_axis-handle_height/2-move_tolerance+handle_height;
+        translate([(body_width-lock_block_width)/2, wall_thickness_y,0])cube([lock_block_width,lock_block_depth,lock_block_height]);
     }
 }
 
@@ -143,15 +88,20 @@ module color_block(symbol_type){
             translate([0,-handle_depth, (block_height-handle_height)/2]) cube([block_width, handle_depth, handle_height]);
         }
         //axis
-        translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter);
+        translate([0,block_depth,block_height/2]) rotate([0,90,0]) cylinder(h=block_width, d=axis_diameter+move_tolerance);
+        // color border line
+        translate([0,0,(block_height-handle_height)/2-fine_line])cube([fine_line, 2*block_depth, fine_line]);
+        translate([0,0,(block_height+handle_height)/2])cube([fine_line, 2*block_depth, fine_line]);
         //symbol
         if(symbol_type == "main"){
-            translate([symbol_side_space,(block_depth-symbol_size)/2,0]) symbol_main();
-            translate([symbol_side_space,(block_depth-symbol_size)/2,block_height-symbol_height]) symbol_main();
+            translate([signal_symbol_side_space, 4*(block_depth-signal_symbol_size)/5,0]) symbol_main();
+            translate([signal_symbol_side_space,4*(block_depth-signal_symbol_size)/5,block_height-engraving_height]) symbol_main();
+            // locker pin hole
+            translate([block_width/2,-wall_thickness_y/2-3*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
         }
         if (symbol_type == "distant"){
-            translate([block_width/2,triangle_height+(block_depth-triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
-            translate([block_width/2,(block_depth-triangle_height)/2,block_height-symbol_height]) symbol_distant();
+            translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
+            translate([block_width/2,(block_depth-signal_triangle_height)/2,block_height-engraving_height]) symbol_distant();
         }
         
     }
@@ -161,18 +111,21 @@ module color_block(symbol_type){
 module visualize_colorBlock_in_body(symbol_type, state){
     translate([0,-body_depth/2,-z_pos_axis]) body(symbol_type); //z=-block_height/2-wall_thickness_z
     if(state== "-y"){
-        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance*1.5,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([0,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
     }
     if(state== "y"){
-        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+3*move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+        if(symbol_type=="main"){
+            translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis]) rotate([180,0,90]) locking_pin();
+        }
     }
 }
 
 module prove_moveability(){
     //move_tolerance space between bottom and color_block
-    translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,move_tolerance]);
+    translate([0,-body_depth/2,-block_height/2]) cube([body_width,body_depth,2*move_tolerance]);
     //middle position
-    #rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance/2, -body_depth/2 + wall_thickness_y+move_tolerance,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
+    rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 + wall_thickness_y+move_tolerance*2,-block_height/2-wall_thickness_z+wall_thickness_z]) color_block(symbol_type=symbol_type);
 }
 
 module print_components(symbol_type){
@@ -203,10 +156,10 @@ module mill_color_block_top(symbol_type){
     projection(cut=true)difference(){
         unworked_color_block();
         if(symbol_type == "main"){
-            translate([symbol_side_space,(block_depth-symbol_size)/2 + handle_depth,0]) symbol_main();
+            translate([signal_symbol_side_space,(block_depth-signal_symbol_size)/2 + handle_depth,0]) symbol_main();
         }
         if (symbol_type == "distant"){
-            translate([block_width/2,(block_depth-triangle_height)/2 + handle_depth,0]) symbol_distant();
+            translate([block_width/2,(block_depth-signal_triangle_height)/2 + handle_depth,0]) symbol_distant();
         }
     }
     
@@ -214,7 +167,7 @@ module mill_color_block_top(symbol_type){
 module mill_color_block_bottom_distant() {
     projection(cut=true)difference(){
         unworked_color_block();
-        translate([block_width/2,triangle_height+(block_depth-triangle_height)/2 + handle_depth,0]) rotate([0,0,180]) symbol_distant();
+        translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2 + handle_depth,0]) rotate([0,0,180]) symbol_distant();
     }
 }
 
@@ -232,7 +185,7 @@ module mill_signal_body_top_1(symbol_type){
             translate([0,0,-wall_thickness_z]) cavity_cube(); //has to be moved to the ground
             if (symbol_type == "main"){
                 translate([0,0, -(body_height - lock_lever_height)]) space_locking_pin(); //has to be moved to the ground
-                translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance/2),0,-(body_height - lock_lever_height)])space_locking_pin(); //has to be moved to the ground
+                translate([body_width-(wall_thickness_x-lock_lever_thickness+move_tolerance),0,-(body_height - lock_lever_height)])space_locking_pin(); //has to be moved to the ground
                 
             }
     }
@@ -248,7 +201,9 @@ module values_to_console(){
     echo("axis height: ", block_height/2+wall_thickness_z);
     echo("wall_thickness_x: ", wall_thickness_x);
     echo("block_depth: ", block_depth);
-    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle_y - magnet_diameter - move_tolerance - lock_lever_depth);
+    echo("y pos lockpin: ", body_depth/2 - magnet_distance_to_middle - magnet_diameter - move_tolerance*2 - lock_lever_depth);
+    echo("(block_height-handle_height)/2: ",(block_height-handle_height)/2);
+    echo("(block_height+handle_height)/2: ", (block_height+handle_height)/2);
 }
 
 module 2D_drawing_signal_body(symbol_type){
@@ -273,9 +228,11 @@ module 2D_drawing_color_block(symbol_type){
         } 
     }
 }
-//visualize_colorBlock_in_body("main", "y");
-print_components("main");
-//color_block("main");
+//visualize_colorBlock_in_body("distant", "y");
+//print_components("main");
+color_block("distant");
+//body("main");
+//symbol_distant();
 
 /********************************
 drawing

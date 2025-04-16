@@ -9,37 +9,11 @@
 include<./specification_of_components.scad>
 
 $fn = 50;// number of fragments
-wood_thickness  = wood_thickness_rail; // bevor it was 5!
-move_tolerance   = 0.7;
-sqeeze_tolerance = 0.6;
-
-////blade specification
-//blade_thickness = 2.5;
-//blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
-//blade_length = 45;
-//blade_width  = 19;
-//
-////lever anchor specification
-//lever_hole_size = 2.7;
-//lever_anchor_posX = blade_width*1/5;
-//lever_anchor_posY = blade_length*0.8111;
-//
-////pin specification
-//pin_diameter = 5;
-//pin_female_diameter = pin_diameter+1.5;
-//pin_height = wood_thickness+2; //2mm move tolerance
-//y_pos_first_pin = pin_diameter;
-//y_pos_second_pin = (blade_length*2/3);
-//overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
-
-
-
-
 
 module switch_blade(thickness){ union(){
     difference(){
         intersection(){
-            #cylinder(r = blade_length, h = thickness);
+            cylinder(r = blade_length, h = thickness);
             translate([-blade_width/2,0,0]) cube([blade_width,blade_length,thickness]); //why pin diameter in translate?
         };
         // flank left
@@ -51,7 +25,7 @@ module switch_blade(thickness){ union(){
 };
 
 module lever_anchor(){
-    cylinder(d = lever_hole_size - move_tolerance + sqeeze_tolerance, h = blade_thickness);
+    cylinder(d = lever_hole_size, h = blade_thickness);
 };
 
 module cap_notch(male=true){
@@ -59,12 +33,21 @@ module cap_notch(male=true){
         cube([2,y_pos_second_pin-3*pin_diameter,blade_thickness/2+blade_cover_thicknes]);
     };
     if(male==false){
-        cube([2+sqeeze_tolerance,y_pos_second_pin-3*pin_diameter+sqeeze_tolerance,blade_thickness]);
+        cube([2+move_tolerance,y_pos_second_pin-3*pin_diameter+move_tolerance,blade_thickness]);
     };
 };
+
+module hole_for_om_pin(){
+    cylinder(d=om_pin_diameter+move_tolerance, h=pin_height+overlap);
+}
+
 module pin(){
-    cylinder(d = pin_diameter-sqeeze_tolerance, h = pin_height);
+    difference(){
+        cylinder(d = pin_diameter, h = pin_height);
+        hole_for_om_pin();
+    }
 };
+
 
 module pin_hole(){ union(){
     difference(){
@@ -74,12 +57,22 @@ module pin_hole(){ union(){
 };
 };
 
+module base_rounding(){
+    difference(){
+        translate([-blade_width/2,-blade_width/2,0]) cube([blade_width,blade_width,blade_thickness]);
+        translate([0,blade_width/2,0]) cylinder(h=blade_thickness, d=blade_width);
+//        translate([-blade_width/2,-(blade_width-y_pos_first_pin),0]) cube([blade_width,blade_width,blade_thickness]);
+//        scale([1.5,1,1]) translate([0,y_pos_first_pin,0]) cylinder(h=blade_thickness, r=y_pos_first_pin);
+    }
+}
+
 module switch_male(){ union(){
     difference(){
         switch_blade(blade_thickness);
         // lever_anchor
         translate([lever_anchor_posX,lever_anchor_posY, blade_cover_thicknes]) lever_anchor();
         translate([-lever_anchor_posX,lever_anchor_posY, blade_cover_thicknes]) lever_anchor();
+        translate([0,y_pos_first_pin,0]) hole_for_om_pin();
     };
     translate([0,y_pos_first_pin,blade_thickness]) pin();
     translate([0,y_pos_second_pin,blade_thickness]) pin();
@@ -95,6 +88,8 @@ module switch_female(){ union(){
         // lever_anchor
         translate([lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
         translate([-lever_anchor_posX,lever_anchor_posY,0]) lever_anchor();
+        translate([0,y_pos_first_pin,0]) hole_for_om_pin();
+        base_rounding();
     };
     translate([0,y_pos_first_pin,0]) pin_hole(); //Theoretically, the hole should be seen at the bottom
     translate([0,y_pos_second_pin,0]) pin_hole(); 
@@ -102,8 +97,12 @@ module switch_female(){ union(){
 };
 
 module cap(){ union(){
+    difference(){union(){
     switch_blade(blade_cover_thicknes);
     translate([-1,2*pin_diameter,0]) cap_notch(male=true);
+    }
+    translate([0,y_pos_first_pin,0]) hole_for_om_pin();
+    }
 };
 };
 
@@ -112,10 +111,11 @@ module print_to_console(){
 }
 print_to_console();
 
-
-color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) switch_male();
-color("LightGreen") translate([-(blade_width+2)/2,-15,0]) switch_female();
-color("green") translate([-(blade_width+2)*1.5,15,0]) rotate(a=[0,0,180]) cap();
+//base_rounding();
+switch_female();
+//color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) switch_male();
+//color("LightGreen") translate([-(blade_width+2)/2,-15,0]) switch_female();
+//color("green") translate([-(blade_width+2)*1.5,15,0]) rotate(a=[0,0,180]) cap();
 
 
 

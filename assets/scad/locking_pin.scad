@@ -5,47 +5,35 @@
 // You must give appropriate credit, provide a link to the license, and indicate if changes were made.
 // You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 // No warranties are given.
-    
+
+include<./specification_of_components.scad>
+   
 $fn = 50;// number of fragments
-move_tolerance = 0.5;
-width = 14;
-height = 20;
-lever_height = 10;
-lever_thickness_switch = 4;
-signal_wall_thickness = 2.5;
-signal_wall_height = 10;
-rounding = 0.5;
-foot_width = 2.5;
 
-// copied parameters from signal
-magnet_diameter = 5;
-magnet_distance_to_middle_y = 7.5;
-body_height = 13.5;
-z_pos_axis = 10; 
-block_height = 13.5;
+locking_pin();
 
-// signal locker specifications
-signal_color_overhang = block_height/2 - (body_height-z_pos_axis);
-signal_locker_width = width/2 + 15;
-signal_locker_depth = (width-signal_wall_thickness-rounding)/2;
-signal_locker_height = height - signal_color_overhang - signal_wall_height + 1.5;
-
-module signal_locker(){
+module grip_ring(){
+    height = 1.2;
+    depth = 1.2;
+    difference(){
+        cylinder(h=height, d=locker_width);
+        cylinder(h=height, d=locker_width-depth);
+    }
+}
+module locking_pin(){
+    difference(){
     minkowski() {
-        translate([0,(signal_wall_thickness)/2 - rounding,0]) cube([signal_locker_width-rounding, signal_locker_depth-2*rounding, signal_locker_height-2*rounding]);
-        translate([0,signal_wall_thickness/2,0]) sphere(rounding);
+        difference(){
+            cylinder(d = locker_width-2*rounding, h = locker_height-2*rounding);
+            rotate([0,0,90]) translate([(-locker_width/2),(-(lever_thickness_switch+move_tolerance)/2-rounding),(locker_height-lever_height)])cube([(locker_width),(lever_thickness_switch+2*rounding+move_tolerance),(lever_height+2*rounding)]);
+        };
+        sphere(rounding);
+    }
+    translate([0,0,1]) grip_ring();
     }
 }
 
-minkowski() {
-    difference(){
-        cylinder(d = width-2*rounding, h = height-2*rounding);
-        rotate([0,0,90]) translate([(-width/2),(-(lever_thickness_switch+move_tolerance)/2-rounding),(height-signal_wall_height)]) cube([(width),(lever_thickness_switch+2*rounding+move_tolerance),(lever_height+2*rounding)]);
-        // signal lock
-        translate([-width/2, -(signal_wall_thickness+rounding+move_tolerance)/2, height-signal_wall_height]) cube([width, signal_wall_thickness+2*rounding+move_tolerance, signal_wall_height+2*rounding]);
-        #translate([foot_width+(lever_thickness_switch+move_tolerance)/2-rounding,-width/2,height-signal_wall_height]) cube([width/2,width/2, signal_wall_height+2*rounding]); //make "foot" smaller
-        #translate([-(foot_width+(lever_thickness_switch+move_tolerance)/2-rounding)-width/2,-width/2,height-signal_wall_height]) cube([width/2,width/2, signal_wall_height+2*rounding]); //make "foot" smaller
-    };
-    sphere(rounding);
-}
-signal_locker();
+echo("lever_height+2*rounding: ",lever_height+2*rounding);
+echo("z_pos_axis-handle_height/2+move_tolerance+2*rounding: ", z_pos_axis-handle_height/2+move_tolerance+2*rounding);
+
+//signal_locker();
