@@ -365,13 +365,13 @@ module mill_components(){
 }
 
 module visualize_blade_in_switch(){
-    //translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("female","female","female","none",true,true);
+    translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("female","female","female","none",true,true);
     //translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("female","female","none");
-    rotate([0,0,15])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
+    rotate([0,0,0])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
 }
 
-//mill_projections("female","none","female","female",true,true,true);
-mill_projections("female", "female", "female", "none", true, false, false);
+//mill_projections("female","none","female","female",true,true,true); //right
+mill_projections("female", "female", "female", "none", true, false, false); //left
 
 echo(pin_female_diameter);
 //visualize_blade_in_switch();

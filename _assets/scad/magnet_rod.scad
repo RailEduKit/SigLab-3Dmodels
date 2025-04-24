@@ -25,7 +25,7 @@ module color_line(){
 
 module magnet_rod(){
     difference(){
-        scale([1,0.5,1]) cylinder(d=mr_diameter, h=mr_height);
+        scale([1,1,1]) cylinder(d=mr_diameter, h=mr_height);
         magnet_hole();
         translate([0,0,mr_height-(magnet_thickness-move_tolerance)])magnet_hole();
         // color border line
