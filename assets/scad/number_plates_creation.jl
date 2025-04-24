@@ -13,10 +13,16 @@ numeration_end = 59
 numeration_length = 60
 counter = 1
 
-for i in 0:11
-    for j in 0:(60/12)-1
-        print(counter, ", ")
-        global counter += 1
+# Open (or create) the file in write mode ("w") and write all lines in one go
+open("./number_plate_code_for_scad.txt", "w") do file
+    for i in 0:11
+        for j in 0:(60/12)-1
+            # Create a string with variable values using interpolation (with $)
+            line = "translate([x_start+$i*step_size,y_start+$j*step_size,0])number_plate($counter);\n"
+            write(file, line)        
+            print(counter, ", ")
+            global counter += 1
+        end
+        println()
     end
-    println()
 end
