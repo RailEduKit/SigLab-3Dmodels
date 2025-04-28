@@ -1,4 +1,4 @@
-Sitemap: railedukit.github.io/BRIOgame-construction/sitemap.xml
+Sitemap: railedukit.github.io/InteractiveSignallingLaboratory-construction/sitemap.xml
 
 User-agent: *
 Disallow:
