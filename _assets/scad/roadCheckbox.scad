@@ -13,12 +13,13 @@ include<./specification_of_components.scad>
 use<./basis_component-roundedBox.scad>
 
 roadCheckbox();
+
 //overlap_symbol();
 //turnout_locking_symbol();
 //side_protection_symbol();
 
 module bidirectional_arrow(){
-    translate([-rc_arrowline_length/2,-1/2,0])cube([rc_arrowline_length,1,engraving_height]);
+    translate([-rc_arrowline_length/2,-1.2/2,0])cube([rc_arrowline_length,1.2,engraving_height]);
 
     translate([rc_arrow_depth*(3/8)+rc_arrowline_length/2,0,0]) scale([3/4,(rc_arrow_depth/(2*rc_arrow_depth*sin(120))),1]) cylinder(engraving_height,rc_arrow_depth,rc_arrow_depth,$fn=3);
     
