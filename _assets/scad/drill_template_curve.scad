@@ -156,9 +156,9 @@ module horizontal_template(){
 
 
 //curve_shape();
-template_outer_curve();
+//template_outer_curve();
 //translate([100,0,0]) template_outer_curve();
-//template_inner_curve();
+template_inner_curve();
 
 
 

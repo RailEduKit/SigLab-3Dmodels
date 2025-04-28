@@ -211,6 +211,7 @@ move_tolerance = 0.5;
 }
 
 {/***************drill_template_straight***************/
+    drill_move_tolerance = 0.1;
     // drill straight ground
     dsg_thickness = 5;
     dsg_hole_depth = 5;
@@ -218,7 +219,7 @@ move_tolerance = 0.5;
     dsc_connector_width = 15;
     dsc_connector_height = 15;
     dsc_y_pos = 12;
-    dsc_depth = rail_height;
+    dsc_depth = rail_height+drill_move_tolerance;
 
     dsc_connector_z_pos = dsg_thickness+12;
     dsc_supporting_surface_width = 50;
