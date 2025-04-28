@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame construction contributors"
+title = "SigLab construction contributors"
 +++
 
 # Contributors

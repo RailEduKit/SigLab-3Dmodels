@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame construction howto"
+title = "SigLab construction howto"
 +++
 
 * two version: paper prototype for fast iteration and wooden final version for durability

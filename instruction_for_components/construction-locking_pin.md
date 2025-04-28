@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame locking pin"
+title = "SigLab locking pin"
 +++
 
 # Instruction Locking Pin

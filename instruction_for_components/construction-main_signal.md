@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame main signal"
+title = "SigLab main signal"
 +++
 
 # Instruction Main Signal
@@ -23,8 +23,8 @@ The magnets on the side attach the signal to the track. The body has magnets on 
 - brass rod (&#8960; = 2 mm; l = 29 mm)
 - neodym magnets (&#8960; = 5 mm; h = 3 mm)
 - [magnet rod](/instruction_for_components/construction-magnet_rod)
-- color\_block-main.stl ([Github](https://github.com/RailEduKit/BRIOgame-construction/tree/26da9a3ef2bb5dd24fbcce4d757b15be189f7ef6/_assets) | [direct download](/assets/stl-files/color_block-main.stl))
-- signal\_body-main.stl ([Github](https://github.com/RailEduKit/BRIOgame-construction/tree/26da9a3ef2bb5dd24fbcce4d757b15be189f7ef6/_assets) | [direct download](/assets/stl-files/color_block-main.stl))
+- color\_block-main.stl ([Github](https://github.com/RailEduKit/InteractiveSignallingLaboratory-construction/tree/26da9a3ef2bb5dd24fbcce4d757b15be189f7ef6/_assets) | [direct download](/assets/stl-files/color_block-main.stl))
+- signal\_body-main.stl ([Github](https://github.com/RailEduKit/InteractiveSignallingLaboratory-construction/tree/26da9a3ef2bb5dd24fbcce4d757b15be189f7ef6/_assets) | [direct download](/assets/stl-files/color_block-main.stl))
 
 ## Production Steps
 

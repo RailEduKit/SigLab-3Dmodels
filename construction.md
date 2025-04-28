@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame construction overview"
+title = "SigLab construction overview"
 +++
 
 # Construction

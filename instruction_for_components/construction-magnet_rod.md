@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame magnet rod"
+title = "SigLab magnet rod"
 +++
 
 # Instruction Magnet Rod

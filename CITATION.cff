@@ -3,7 +3,7 @@
 # Visit https://bit.ly/cffinit to generate yours today!
 ---
 cff-version: 1.2.0
-title: 'BRIOgame - edugame-railway-operation'
+title: 'InteractiveSignallingLaboratory - edugame-railway-operation'
 message: 'If you use this project, please cite it using these metadata.'
 type: dataset
 authors:
@@ -19,9 +19,9 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.6245291
     description: Current version
-repository-code: 'https://github.com/railedukit/BRIOgame-construction'
-url: 'https://www.railtoolkit.org/projects/BRIOgame'
-repository: 'https://github.com/railedukit/BRIOgame-handbook'
+repository-code: 'https://github.com/railedukit/InteractiveSignallingLaboratory-construction'
+url: 'https://www.railedukit.org/projects/InteractiveSignallingLaboratory'
+repository: 'https://github.com/railedukit/InteractiveSignallingLaboratory-handbook'
 abstract: >-
   This education game is a physical model made from
   either paper craft or a wooden railway. It comes
