@@ -371,7 +371,7 @@ module visualize_blade_in_switch(){
 }
 
 //mill_projections("female","none","female","female",true,true,true); //right
-mill_projections("female", "female", "female", "none", true, false, false); //left
+//mill_projections("female", "female", "female", "none", true, false, false); //left
 
 echo(pin_female_diameter);
 //visualize_blade_in_switch();

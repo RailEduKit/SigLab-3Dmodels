@@ -153,7 +153,7 @@ move_tolerance = 0.5;
 {/***************switch_body***************/
     //holes_for_blade
     pivot_center_x = rail_width/2;
-    pivot_center_y=27;
+    pivot_center_y= 25; //27;
     
     //switchblade_space -> sbs
     sbs_gap_to_wood = 1.5;
@@ -201,7 +201,7 @@ move_tolerance = 0.5;
     signal_symbol_size = block_width-2*signal_symbol_side_space;
     signal_triangle_height = (sqrt(3)*signal_symbol_size)/2;
 }
-{/***************FZS_SZS***************/
+{/***************clearing_point***************/
     zs_with = 25;
     zs_depth = 10;
     zs_height = 15;
@@ -211,28 +211,26 @@ move_tolerance = 0.5;
 }
 
 {/***************drill_template_straight***************/
+    drill_move_tolerance = 0.1;
     // drill straight ground
     dsg_thickness = 5;
     dsg_hole_depth = 5;
     // drill straight cutout = dsc
-    dsc_connector_width = 19;
-    dsc_rail_width = 90;
+    dsc_connector_width = 15;
+    dsc_connector_height = 15;
     dsc_y_pos = 12;
-    dsc_depth = rail_height+move_tolerance;
+    dsc_depth = rail_height+drill_move_tolerance;
 
     dsc_connector_z_pos = dsg_thickness+12;
     dsc_supporting_surface_width = 50;
 
     // drill straight hole
-    dsh_y_pos = (rail_height+move_tolerance)/2;
+    dsh_y_pos = dsc_depth/2;
     dsh_x_pos = 7.5;
 
-
-
     // drill straigth base = dsb
-    dsb_width = dsc_rail_width+dsc_connector_width;
     dsb_depth = 2*dsc_y_pos+dsc_depth;
-    dsb_height = 27;
+    dsb_height = dsg_thickness+rail_width;//27;
 }
 
 {/***************drill_template_curve***************/
@@ -249,7 +247,7 @@ move_tolerance = 0.5;
     dtc_height = 2*dtc_cutout_z_pos+dtc_cutout_height;
 
     // drill template curve hole
-    dtch_z_pos = (rail_height+move_tolerance)/2;
+    dtch_z_pos = dsc_depth/2;
     dtch_y_pos = 7.5;
 
     dtc_switch_hole_y_pos = straight_length-dtch_y_pos;
