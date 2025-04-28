@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame paper version"
+title = "SigLab paper version"
 +++
 
 # Paper version

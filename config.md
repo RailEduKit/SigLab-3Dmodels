@@ -17,10 +17,10 @@ ignore = ["node_modules/","deploy.jl","README.md","LICENSE","CITATION.cff"]
 
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
-website_title = "BRIOgame construction"
-website_descr = "How to construct the BRIOgame"
-website_url   = "railedukit.github.io/BRIOgame-construction/"
-prepath       = "BRIOgame-construction"
+website_title = "SigLab construction"
+website_descr = "How to construct the SigLab"
+website_url   = "railedukit.github.io/InteractiveSignallingLaboratory-construction/"
+prepath       = "InteractiveSignallingLaboratory-construction"
 +++
 
 <!--

@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame wooden version"
+title = "SigLab wooden version"
 +++
 
 # Wooden version

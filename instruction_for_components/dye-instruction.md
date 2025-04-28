@@ -1,5 +1,5 @@
 +++
-title = "BRIOgame dye instruction"
+title = "SigLab dye instruction"
 +++
 
 # How to dye layer by layer in Bambu Studio
