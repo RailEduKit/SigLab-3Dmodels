@@ -331,7 +331,7 @@ move_tolerance = 0.5;
 
 
 
-
+echo("signal_symbol_size: ", signal_symbol_size);
 
 
 
