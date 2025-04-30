@@ -100,7 +100,7 @@ module color_block(symbol_type){
             translate([block_width/2,-wall_thickness_y/2-3*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
         }
         if (symbol_type == "distant"){
-            translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
+            #translate([block_width/2,(block_depth-signal_triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
             translate([block_width/2,(block_depth-signal_triangle_height)/2,block_height-engraving_height]) symbol_distant();
         }
         
@@ -230,7 +230,8 @@ module 2D_drawing_color_block(symbol_type){
 }
 //visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
-color_block("main");
+color_block("distant");
+translate([30,0,0]) color_block("main");
 //body("main");
 //symbol_distant();
 

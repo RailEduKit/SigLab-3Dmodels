@@ -211,7 +211,7 @@ move_tolerance = 0.5;
 }
 
 {/***************drill_template_straight***************/
-    drill_move_tolerance = 0.1;
+    drill_move_tolerance = 0.2;
     // drill straight ground
     dsg_thickness = 5;
     dsg_hole_depth = 5;
