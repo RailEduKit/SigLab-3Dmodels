@@ -35,10 +35,26 @@ module symbol_main(){
 }
 //symbol_distant();
 module symbol_distant(){
+    // symbol_distant = sb
+    cylinder_diameter = 0.4;
+    sb_beta = atan(1/2);
+    sb_gamma = 180-90-sb_beta;
+    sb_theta = 90-sb_gamma;
+    top_cyl_ydif = engraving_thickness/sin(sb_beta);
+    bottom_cyl_xdif = engraving_thickness/sin(sb_gamma) + tan(sb_theta)*engraving_thickness;
+
     difference(){
-        equ_triangle(signal_symbol_size, fine_line, engraving_height);
-        translate([0,engraving_thickness+0.3,0]) equ_triangle(signal_symbol_size-2*engraving_thickness, fine_line, engraving_height);
-    }
+        hull(){
+            translate([signal_symbol_size/2,cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
+            translate([cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0]) cylinder(d=0.4, h=engraving_height);
+            translate([signal_symbol_size-cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0])cylinder(d=0.4, h=engraving_height);
+        }
+        hull(){
+            translate([signal_symbol_size/2,top_cyl_ydif+cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
+            translate([bottom_cyl_xdif+cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0]) cylinder(d=0.4, h=engraving_height);
+            translate([signal_symbol_size-bottom_cyl_xdif-cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0])cylinder(d=0.4, h=engraving_height);
+        }
+    } 
 }
 
 module cavity_cube(){
@@ -100,8 +116,8 @@ module color_block(symbol_type){
             translate([block_width/2,-wall_thickness_y/2-3*move_tolerance,0]) cylinder(h=locker_height, d=locker_width+2*move_tolerance);
         }
         if (symbol_type == "distant"){
-            #translate([block_width/2,signal_triangle_height+(block_depth-signal_triangle_height)/2,0]) rotate([0,0,180]) symbol_distant();
-            translate([block_width/2,(block_depth-signal_triangle_height)/2,block_height-engraving_height]) symbol_distant();
+            translate([signal_symbol_size+signal_symbol_side_space,signal_symbol_size+4*(block_depth-signal_symbol_size)/5,0]) rotate([0,0,180]) symbol_distant();
+            translate([signal_symbol_side_space,4*(block_depth-signal_symbol_size)/5,block_height-engraving_height]) symbol_distant();
         }
         
     }
@@ -230,8 +246,11 @@ module 2D_drawing_color_block(symbol_type){
 }
 //visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
+
 color_block("distant");
-translate([30,0,0]) color_block("main");
+
+
+
 //body("main");
 //symbol_distant();
 
