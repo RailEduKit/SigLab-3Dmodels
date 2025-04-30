@@ -50,6 +50,14 @@ translate([straight_length,0, 0]) connector_space();
 //translate([-dsc_supporting_surface_width, dsc_y_pos, 0]) cube([dsc_supporting_surface_width, rail_height+move_tolerance, dsg_thickness]);
 }
 
+module test_print(){
+    difference(){
+        template_straight();
+        cube([straight_length-30,50,50]);
+    }
+}
+
 template_straight();
 //diagonal_cutout();
 //connector_space();
+//test_print();
