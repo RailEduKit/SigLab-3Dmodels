@@ -25,6 +25,21 @@ module equ_triangle(side_length,corner_radius,signal_triangle_height){
 };
 };
 
+module attach_arrow(){
+    hull() {
+        cyl_d = 0.4;
+        translate([cyl_d/2,(attach_arrow_depth-cyl_d)/2,0]) cylinder(d=cyl_d, h=attach_arrow_height);
+        translate([cyl_d/2,-(attach_arrow_depth-cyl_d)/2,0]) cylinder(d=cyl_d, h=attach_arrow_height);
+        translate([attach_arrow_depth-cyl_d/2,0,0]) cylinder(d=cyl_d, h=attach_arrow_height);
+
+    }
+}
+
+module driving_direction_arrow(){
+    translate([attach_arrow_depth/2,0,0]) rotate([0,0,-90])attach_arrow();
+    translate([(attach_arrow_depth-1.2)/2,0,0]) cube([1.2,attach_arrow_depth, attach_arrow_height]);
+}
+
 
 //symbol_main();
 module symbol_main(){
@@ -86,6 +101,9 @@ module body(symbol_type){
             }
         }
     }
+    //translate([body_width-wall_thickness_x+attach_arrow_wall_distance,body_depth/2,body_height]) attach_arrow();
+    translate([body_width-wall_thickness_x+attach_arrow_wall_distance,body_depth/2,body_height]) driving_direction_arrow();
+    translate([attach_arrow_wall_distance,body_depth/2,body_height]) driving_direction_arrow();
     if(symbol_type=="main"){
         lock_block_width = 6;
         lock_block_depth = 2;
@@ -247,12 +265,13 @@ module 2D_drawing_color_block(symbol_type){
 //visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
 
-color_block("distant");
+//color_block("distant");
 
 
 
-//body("main");
+body("main");
 //symbol_distant();
+
 
 /********************************
 drawing

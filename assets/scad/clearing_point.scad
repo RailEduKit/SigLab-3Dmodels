@@ -7,6 +7,7 @@
 // No warranties are given.
 
 include<./specification_of_components.scad>
+use<./distant-main_signal.scad>
 
 $fn = 50;
 
@@ -42,6 +43,7 @@ module clearing_point(type){
         translate([zs_with/2-magnet_distance_to_middle,zs_depth,magnet_z]) rotate([90,0,0]) magnet_hole();
         translate([zs_with/2+magnet_distance_to_middle,zs_depth,magnet_z]) rotate([90,0,0]) magnet_hole();
     }
+    translate([zs_with*(4/5),(zs_depth-attach_arrow_depth)/2,zs_height]) rotate([0,0,90]) driving_direction_arrow();
     //symbols
     if(type == "rcp"){
             translate([zs_with/2,zs_depth/2,zs_height]) route_clearing_point();
@@ -51,6 +53,6 @@ module clearing_point(type){
     }
 }
 
-clearing_point("rcp");
+clearing_point("bcp");
 //route_clearing_point();
 //block_clearing_point();
