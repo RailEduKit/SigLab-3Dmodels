@@ -180,6 +180,9 @@ move_tolerance = 0.5;
     wall_thickness_y = lever_thickness_switch;
     wall_thickness_z = 2;
     z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
+    attach_arrow_wall_distance = 0.8;
+    attach_arrow_depth = wall_thickness_x-2*attach_arrow_wall_distance;
+    attach_arrow_height = 1.2;
 
     // Locking Part specifications
     lock_lever_depth = 9.5;
@@ -195,6 +198,7 @@ move_tolerance = 0.5;
     overhang = block_height/2-2*move_tolerance; //the circle has to be flattend at one side with move_tolerance
     handle_depth = 10+wall_thickness_y;
     handle_height = 3;
+    
 
     //Symbol Specifications
     signal_symbol_side_space = 4;
