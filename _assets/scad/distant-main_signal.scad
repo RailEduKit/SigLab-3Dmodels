@@ -61,13 +61,13 @@ module symbol_distant(){
     difference(){
         hull(){
             translate([signal_symbol_size/2,cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
-            translate([cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0]) cylinder(d=0.4, h=engraving_height);
-            translate([signal_symbol_size-cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0])cylinder(d=0.4, h=engraving_height);
+            translate([cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0]) cylinder(d=cylinder_diameter, h=engraving_height);
+            translate([signal_symbol_size-cylinder_diameter/2, signal_symbol_size-cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
         }
         hull(){
             translate([signal_symbol_size/2,top_cyl_ydif+cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
-            translate([bottom_cyl_xdif+cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0]) cylinder(d=0.4, h=engraving_height);
-            translate([signal_symbol_size-bottom_cyl_xdif-cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0])cylinder(d=0.4, h=engraving_height);
+            translate([bottom_cyl_xdif+cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0]) cylinder(d=cylinder_diameter, h=engraving_height);
+            translate([signal_symbol_size-bottom_cyl_xdif-cylinder_diameter/2, signal_symbol_size-engraving_thickness-cylinder_diameter/2,0])cylinder(d=cylinder_diameter, h=engraving_height);
         }
     } 
 }
