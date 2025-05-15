@@ -2,3 +2,6 @@ __site/
 .DS_Store
 node_modules/
 package-lock.json
+_assets/scad/route_clearing_point_magnetHoles_with_d-movetolerancee.stl
+.gitignore
+_assets/scad/route_clearing_point_magnetHoles_without_movetolerance.stl

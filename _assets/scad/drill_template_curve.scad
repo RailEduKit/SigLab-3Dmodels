@@ -20,8 +20,8 @@ module connector_cutout(){
 
 module inner_curve_cutout(){
     translate([0,0,dtc_cutout_z_pos]) difference(){
-        rotate_extrude(angle = curve_angle) square([dtc_outer_radius, dtc_cutout_height]);
-        rotate_extrude(angle = curve_angle) square([dtc_inner_radius,dtc_cutout_height]);        
+        rotate_extrude(angle = curve_angle+0.05) square([dtc_outer_radius, dtc_cutout_height]); //0.05 to get 0.2mm move-tolerance
+        rotate_extrude(angle = curve_angle+0.05) square([dtc_inner_radius,dtc_cutout_height]);        
     }
 }
 
@@ -79,7 +79,7 @@ difference(){
 // connector space
 difference(){
     translate([0,-dsc_connector_width/2,0])cube([dtc_outer_radius,dsc_connector_width/2,2*dtc_cutout_z_pos+dtc_cutout_height]);
-    translate([dtc_inner_radius+12,-dsc_connector_width, dtc_cutout_z_pos]) cube([dsc_connector_height ,dsc_connector_width, dsc_depth]);
+    #translate([dtc_inner_radius+12,-dsc_connector_width, dtc_cutout_z_pos]) cube([dsc_connector_height ,dsc_connector_width, dsc_depth]);
     translate([dtc_outer_radius-1, -dsc_connector_width, dtc_cutout_z_pos+dtch_z_pos]) cube([2*thin_line, dsc_connector_width, thin_line]);
     // trim template to relevant size
     translate([0,-dsc_connector_width,0])cube([dtc_inner_radius-65, dsc_connector_width, dtc_height]);
@@ -142,7 +142,7 @@ module template_inner_curve(){
     }    
     // connector space
     difference(){
-        translate([0,-dsc_connector_width,0])cube([dsb_height,dsc_connector_width,2*dtc_cutout_z_pos+dtc_cutout_height]);
+        translate([0,-dsc_connector_width/2,0])cube([dsb_height,dsc_connector_width/2,2*dtc_cutout_z_pos+dtc_cutout_height]);
         translate([dsg_thickness+12,-dsc_connector_width, dtc_cutout_z_pos]) cube([dsc_connector_height ,dsc_connector_width, dsc_depth]);
         translate([dsb_height-1, -dsc_connector_width, dtc_cutout_z_pos+dtch_z_pos]) cube([2*thin_line, dsc_connector_width, thin_line]);
     }
@@ -181,6 +181,8 @@ echo("dtc_outer_radius: ", dtc_outer_radius-(dtc_inner_radius-65));
 
 //curve_shape();
 template_outer_curve();
+
+
 //translate([100,0,0]) template_outer_curve();
 //template_inner_curve();
 

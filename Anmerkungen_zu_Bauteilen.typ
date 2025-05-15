@@ -6,3 +6,6 @@ Druck nicht quer sondern längs anordnen. Dann ist der Support leichter aus dem 
 
 == MAgnetpolung
 durch die MAgnetpolung können Signale nicht Links vom Gleis angeordnet werden. Das heißt es können keine Signale für eine fahrt auf dem Gegengleis angebracht werden
+
+== Druckerklärung
+Bei Vor- und Hauptsignal darauf achten das zusammengehörige Farben gleich oben/ unten liegen. DAdurch ist die STruktur auf der Oberfläche gleich
