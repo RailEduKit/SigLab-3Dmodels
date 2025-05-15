@@ -265,11 +265,11 @@ module 2D_drawing_color_block(symbol_type){
 //visualize_colorBlock_in_body("distant", "y");
 //print_components("main");
 
-//color_block("distant");
+color_block("main");
 
 
 
-body("main");
+//body("distant");
 //symbol_distant();
 
 

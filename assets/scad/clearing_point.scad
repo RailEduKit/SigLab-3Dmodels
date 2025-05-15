@@ -7,7 +7,7 @@
 // No warranties are given.
 
 include<./specification_of_components.scad>
-use<./distant-main_signal.scad>
+use<./distant-main_signal.scad> // for the arrow
 
 $fn = 50;
 
