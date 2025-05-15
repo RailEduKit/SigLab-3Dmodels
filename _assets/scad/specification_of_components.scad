@@ -80,18 +80,51 @@ move_tolerance = 0.5;
     
 }
 
+{/***************straight***************/
+    //straight = s
+    // pin hole 1 = ph1
+    s_ph_xpos = rail_width/2;
+    s_ph1_ypos = 30;
+    s_ph2_ypos = straight_length/2;
+    s_ph3_ypos = straight_length-s_ph1_ypos;
+    
+    // magnet hole = mh
+    s_mh_xpos = rail_width;
+    s_mh_zpos = rail_height/2;
+    s_mh_ypos1 = 7.5;
+    s_mh_ypos2 = straight_length-s_mh_ypos1;
+    
+    
+}
+
 {/***************curve***************/
+    
+
     // curve = c
     // pin hole 1 = ph1
-    c_ph1_ypos = 24.9;
-    c_ph1_xpos = 21.56;
+    c_alpha = (s_ph1_ypos * 360)/(2*PI*curve_middle_radius);
+    c_ph1_ypos = sin(c_alpha) * curve_middle_radius;
+    c_ph1_xpos = curve_outer_radius - cos(c_alpha) * curve_middle_radius;
     // pin hole 2 = ph2
-    c_ph2_ypos = 77.66;
-    c_ph2_xpos = 35.7;
+    c_beta = curve_angle/2;
+    c_ph2_ypos = sin(c_beta) * curve_middle_radius;
+    c_ph2_xpos = curve_outer_radius - cos(c_beta) * curve_middle_radius;
     // pin hole 3 = ph3
-    c_ph3_ypos = 124.61;
-    c_ph3_xpos = 63.57;
-    
+    c_gamma = curve_angle - c_alpha;
+    c_ph3_ypos = sin(c_gamma) * curve_middle_radius;
+    c_ph3_xpos = curve_outer_radius - cos(c_gamma) * curve_middle_radius;
+
+    echo("  ");
+    echo("c_ph1_ypos", c_ph1_ypos);
+    echo("c_ph1_xpos", c_ph1_xpos);
+    echo("  ");
+    echo("c_ph2_ypos", c_ph2_ypos);
+    echo("c_ph2_xpos", c_ph2_xpos);
+    echo("  ");
+    echo("c_ph3_ypos", c_ph3_ypos);
+    echo("c_ph3_xpos", c_ph3_xpos);
+    echo("  ");
+
     c_mh_zpos = rail_height/2;
     // magnet hole 4 = mh1
     c_mh4_xpos = 0.1;
@@ -112,22 +145,7 @@ move_tolerance = 0.5;
     
 }
 
-{/***************straight***************/
-    //straight = s
-    // pin hole 1 = ph1
-    s_ph_xpos = rail_width/2;
-    s_ph1_ypos = 25;
-    s_ph2_ypos = straight_length/2;
-    s_ph3_ypos = straight_length-s_ph1_ypos;
-    
-    // magnet hole = mh
-    s_mh_xpos = rail_width;
-    s_mh_zpos = rail_height/2;
-    s_mh_ypos1 = 7.5;
-    s_mh_ypos2 = straight_length-s_mh_ypos1;
-    
-    
-}
+
 
 {/***************switch_blade_optimized***************/
     //blade specification
@@ -153,7 +171,7 @@ move_tolerance = 0.5;
 {/***************switch_body***************/
     //holes_for_blade
     pivot_center_x = rail_width/2;
-    pivot_center_y= 25; //27;
+    pivot_center_y= s_ph1_ypos;
     
     //switchblade_space -> sbs
     sbs_gap_to_wood = 1.5;
@@ -333,7 +351,25 @@ move_tolerance = 0.5;
 
 }
 
+{/***************coupler***************/
+    thinnest_layer     = 0.2;
+    
+    coupling_radius    = 13/2;
+    coupling_depth     = 8;
+    coupling_curvature = 2;
+    coupling_cut_pos   = coupling_radius*1/2;
+    boogie_width       = 20;
+    coupler_thickness          = 1.5;
+    lipp_height        = 4;
+    lipp_width         = coupler_thickness - move_tolerance;
+    shield_width       = 20;
+    shield_depth        = 25;
+    shield_thickness   = 2;
+    inlay_thickness    = 0.45;
+    inlay_radius       = 10.5/2;
 
+    headlight_d = (1/3)*shield_width;
+}
 
 echo("signal_symbol_size: ", signal_symbol_size);
 
