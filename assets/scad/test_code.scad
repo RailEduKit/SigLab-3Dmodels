@@ -5,7 +5,5 @@ echo(numbers[2]);
 numbers[2] = a;
 echo(numbers); */
 
-something = "x";
-text(str(something), 7.5, halign="center", valign="center");
-
-echo(3^4);
+$fs = 0.25;
+circle(d=5, h = 5);

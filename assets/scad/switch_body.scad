@@ -160,6 +160,10 @@ module render_track(base,left,straight,right,double_sided_rails) {
 2. (optional: die kurve ist ca. 2mm zu kurz) -> wahrscheinlich zum fräsen nicht wichtig
 */
 
+
+module rail_chamfer(){
+    translate([0,0,sbs_height/2]) cube([1.1,1.1,sbs_height], center = true);
+}
 //switchblade_space("female","female","none");
 module switchblade_space(left,straight,right){ 
 //    sbs_width = 40;
@@ -185,6 +189,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
+        translate([wood_well_width()+wood_well_rim(),sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
+        translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
     }
     if(left == "none" && straight != "none" && right != "none"){
         intersection(){
@@ -194,6 +200,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
+        translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
+        translate([wood_well_width()+wood_well_rim()+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
     }
     if(left != "none" && right != "none"){
         intersection(){
@@ -209,6 +217,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
+        translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
+        translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
     }
     
 }
@@ -310,7 +320,7 @@ module drill_holes(left,straight,right){
         cylinder(h=rail_height, d=om_pin_diameter+move_tolerance);
     }
     module magnet_hole(){
-    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
+    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter);
     }
     if (right != "none" && straight != "none"){
         //translate([rail_width/2, straight_length/2,0]) pin_hole();
@@ -359,14 +369,11 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){
 }   
 }
 
-module mill_components(){
-    //projection(cut=true) mill_projections("female","female","female","none", false);
-    //projection(cut=true) mill_projections("male","none","female","female", false);
-}
+
 
 module visualize_blade_in_switch(){
     translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("female","none","female","female",true,true);
-    //translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("female","female","none");
+    translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("none","female","female");
     rotate([0,0,-16])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
 }
 
@@ -375,7 +382,6 @@ module visualize_blade_in_switch(){
 
 echo(pin_female_diameter);
 //visualize_blade_in_switch();
-//mill_components();
 //render_track("male","none","female","female",true);
 //modified_switch("male","none","female","female",true,true);
 //translate([100,0,0]) modified_switch("male","female","female","none",false,true);

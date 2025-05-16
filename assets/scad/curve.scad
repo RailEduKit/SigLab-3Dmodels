@@ -182,7 +182,7 @@ module render_track(base, left, straight, right, double_sided_rails) {
 }
 
 module magnet_hole(){
-    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
+    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter);
 }
 
 module pin_hole(){

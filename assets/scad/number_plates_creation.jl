@@ -25,4 +25,17 @@ open("./number_plate_code_for_scad.txt", "w") do file
         end
         println()
     end
+    write(file, "\n")
+    global counter = 1
+    println("counter: ", counter)
+    for i in 0:11
+        for j in 0:(60/12)-1
+            # Create a string with variable values using interpolation (with $)
+            line = "translate([x_start+$i*step_size,y_start+$j*step_size,0])piece_number($counter);\n"
+            write(file, line)        
+            print(counter, ", ")
+            global counter += 1
+        end
+        println()
+    end
 end
