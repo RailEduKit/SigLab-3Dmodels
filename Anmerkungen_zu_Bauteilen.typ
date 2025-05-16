@@ -4,6 +4,8 @@ Durckgeschwindigkeit default. Es muss nicht langsam gedruckt werden, da es nicht
 
 Druck nicht quer sondern längs anordnen. Dann ist der Support leichter aus dem Objekt entfernbar.
 
+Ground holes an den Bohrstellen weggelassen, da die Bauteile dadurch beim Bohren "nicken"
+
 == MAgnetpolung
 durch die MAgnetpolung können Signale nicht Links vom Gleis angeordnet werden. Das heißt es können keine Signale für eine fahrt auf dem Gegengleis angebracht werden
 

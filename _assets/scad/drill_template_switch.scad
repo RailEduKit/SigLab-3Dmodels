@@ -19,7 +19,7 @@ module switch_shape(){
 
 module drill_template_switch(){
 difference(){
-    cube([80,130,dtc_height]);
+    cube([80,130,dtc_height]); //dtc_height
     switch_shape();
     
     // curved sides
@@ -27,20 +27,34 @@ difference(){
     translate([24+dtc_outer_radius+dsg_thickness,0,0])rotate([0,0,180-curve_angle])rotate_extrude(angle = curve_angle) square([dtc_middle_radius, dtc_cutout_z_pos]);
     
     // ground holes
-    translate([0,0,dtc_cutout_z_pos])cube([80, dsg_hole_depth, dtc_cutout_height]);
     translate([0,30,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
-    translate([0,53,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
+    translate([0,65,dtc_cutout_z_pos])cube([60, dsg_hole_depth, dtc_cutout_height]);
     
     // hole position lines
-    translate([56.5, dtch_y_pos-thin_line/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
-    translate([56.5, dtch_y_pos-thin_line/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
     translate([44, dtch_y_pos-thin_line/2, dtc_cutout_z_pos]) cube([2*thin_line, thin_line, dtc_cutout_height]);
     translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos-thin_line])cube([dtc_cutout_z_pos+5, thin_line, thin_line]);
     translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+5, thin_line, thin_line]);
     translate([44, dtch_y_pos-5/2, dtc_cutout_z_pos+dtch_z_pos]) cube([2*thin_line, 5, thin_line]);
     
 }
-translate([0,-5,0]) cube([45+12, 5,dtc_height]);
+//translate([0,-5,0]) cube([45+12, 5,dtc_height]);
+difference(){
+    union(){
+        //stabilisation pillar
+        cube([45+rail_width,15,dtc_cutout_z_pos]);
+        translate([0,0,dtc_cutout_z_pos+dtc_cutout_height]) cube([45+rail_width,15,dtc_cutout_z_pos]);
+    }
+    translate([45+rail_width-2*thin_line, dtch_y_pos-thin_line/2, dtc_cutout_z_pos-dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
+    translate([45+rail_width-2*thin_line, dtch_y_pos-thin_line/2, dtc_cutout_z_pos+dtc_cutout_height]) cube([2*thin_line, thin_line, dtc_cutout_height]);
+    translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos-thin_line])cube([dtc_cutout_z_pos+rail_width, thin_line, thin_line]);
+    translate([44, dtch_y_pos-thin_line/2,dtc_cutout_z_pos+dtc_cutout_height])cube([dtc_cutout_z_pos+rail_width, thin_line, thin_line]);
+}
+// connector space
+difference(){
+    translate([0,-dsc_connector_width/2,0])cube([45+rail_width,dsc_connector_width/2,2*dtc_cutout_z_pos+dtc_cutout_height]);
+    translate([45+12,-dsc_connector_width, dtc_cutout_z_pos]) cube([dsc_connector_height ,dsc_connector_width, dsc_depth]);
+    translate([45+rail_width-2*thin_line, -dsc_connector_width, dtc_cutout_z_pos+dtch_z_pos]) cube([2*thin_line, dsc_connector_width, thin_line]);
+}
 }
 //switch_shape();
 
