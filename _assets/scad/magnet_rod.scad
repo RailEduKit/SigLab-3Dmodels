@@ -13,7 +13,7 @@ $fn = 100;
 magnet_rod();
 
 module magnet_hole(){
-    cylinder(h=magnet_thickness, d=magnet_diameter+move_tolerance);
+    cylinder(h=magnet_thickness, d=magnet_diameter);
 }
 
 module color_line(){
