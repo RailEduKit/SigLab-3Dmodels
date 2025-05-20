@@ -7,9 +7,7 @@
 // No warranties are given.
 
 
-$fn = 200;
-
-include<./specification_of_components.scad>
+include<config.scad>
 include <BOSL2/std.scad>
 use<./basis_component-roundedBox.scad>
 use<./locking_pin.scad> // used in "visualize_arrowBlock_in_body"

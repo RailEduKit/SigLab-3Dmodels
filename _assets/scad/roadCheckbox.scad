@@ -7,9 +7,7 @@
 // No warranties are given.
 
 
-$fn = 200;
-
-include<./specification_of_components.scad>
+include<config.scad>
 use<./basis_component-roundedBox.scad>
 
 roadCheckbox();
