@@ -10,7 +10,7 @@ Joiners wiki: https://github.com/BelfrySCAD/BOSL2/wiki/joiners.scad
 
 ****************/
 include<config.scad>
-include <BOSL2/std.scad>
+include <lib/BOSL2/std.scad> // Import std from BOSL2
 include <BOSL2/joiners.scad>
 
 

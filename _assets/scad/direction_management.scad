@@ -8,7 +8,7 @@
 
 
 include<config.scad>
-include <BOSL2/std.scad>
+include <lib/BOSL2/std.scad> // Import std from BelfrySCAD/BOSL2.git
 use<./basis_component-roundedBox.scad>
 use<./locking_pin.scad> // used in "visualize_arrowBlock_in_body"
 //V_axis();

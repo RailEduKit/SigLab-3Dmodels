@@ -27,7 +27,7 @@
  * ****************************************************************************** */
 
 include<config.scad>
-
+use <lib/trains/tracklib.scad>; // Import tracklib from dotscad/trains.git
 
 /* [parameters] */
 
@@ -64,8 +64,6 @@ double_sided_rails = true;
  * Main module code below:
  * ****************************************************************************** */
 
-// Import tracklib from globally-installed copy
-use <trains/tracklib.scad>;
 
 /*
  * @param string base              Connector to place on the base end of the piece.
