@@ -9,12 +9,10 @@ Installation: https://github.com/BelfrySCAD/BOSL2/wiki#installation
 Joiners wiki: https://github.com/BelfrySCAD/BOSL2/wiki/joiners.scad
 
 ****************/
+include<config.scad>
 include <BOSL2/std.scad>
 include <BOSL2/joiners.scad>
-include<./specification_of_components.scad>
 
-$fn = 50;
-// preview[view:west, tilt:top]
 
 /*[Track Settings]*/
 //length of track piece, in mm

@@ -26,8 +26,7 @@
  * Unfortunately, Customizer doesn't support multiple .scad files so this won't work.
  * ****************************************************************************** */
 
-include<./specification_of_components.scad>
-
+include<config.scad>
 
 /* [parameters] */
 
@@ -56,10 +55,6 @@ angle = curve_angle; // [1:360]
 
 // Wheel wells on both sides of the track?
 double_sided_rails = true;
-
-
-// Lots of facets
-$fn=120;
 
 // Render the part
 //render_track(base, left, straight, right, straight_size, radius, angle, double_sided_rails);

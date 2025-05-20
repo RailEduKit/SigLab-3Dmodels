@@ -16,7 +16,7 @@
  * tracklib.scad uses this library.
  */
 
-include<./specification_of_components.scad>
+include<config.scad>
 use<./switch_blade_optimized.scad>
 
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
@@ -27,11 +27,6 @@ radius = curve_inner_radius; //182; // [87.5:small, 180:large]
 
 // Angle of track to render.  45 is standard.
 angle = curve_angle;//45; // [1:360]
-
-
-$fa=3;
-$fs=1;
-
 
 /* ******************************************************************************
  * Main module code below:

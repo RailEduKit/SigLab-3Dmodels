@@ -6,10 +6,8 @@
 // You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
 // No warranties are given.
 
-include<./specification_of_components.scad>
+include<config.scad>
 use<./distant-main_signal.scad> // for the arrow
-
-$fn = 50;
 
 module magnet_hole(){
     cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter+move_tolerance);
@@ -31,8 +29,6 @@ module block_clearing_point(){
         }
     }
 }
-
-
 
 module clearing_point(type){
     difference(){
