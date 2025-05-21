@@ -102,7 +102,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,linux,macos,julia
-#### costum
 
+#### Franklin.jl
 __site/
-_assets/scad/lib/

@@ -27,7 +27,7 @@
  * ****************************************************************************** */
 
 include<config.scad>
-use <lib/trains/tracklib.scad>; // Import tracklib from dotscad/trains.git
+use <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
 
 /* [parameters] */
 
