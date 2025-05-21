@@ -7,7 +7,7 @@
 // No warranties are given.
 
 include<config.scad>
-use <lib/trains/tracklib.scad>; // Import tracklib from dotscad/trains.git
+use <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
 use<./switch_blade.scad>
 
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
