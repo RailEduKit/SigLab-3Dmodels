@@ -37,10 +37,37 @@ function parse_commandline()
     return parse_args(s)
 end
 
+function detect_openscad_version(version_str::String)
+    # Define supported versions and their detection patterns
+    version_patterns = Dict(
+        "2025" => "OpenSCAD version 2025",
+        "2021" => "OpenSCAD version 2021",
+        "2019" => "OpenSCAD version 2019"
+    )
+    
+    # Check each line for version information
+    for line in split(version_str, '\n')
+        for (version, pattern) in version_patterns
+            if occursin(pattern, line)
+                @debug "Detected OpenSCAD version $version"
+                return version
+            end
+        end
+    end
+    
+    @warn "Unknown OpenSCAD version: $version_str"
+    return "unknown"
+end
+
 function check_openscad_installed()
     try
-        result = run(pipeline(`openscad --version`, stdout=devnull, stderr=devnull))
-        return true
+        # Run OpenSCAD version command and capture output
+        output = IOBuffer()
+        run(pipeline(`openscad --version`, stdout=output, stderr=output))
+        version_str = String(take!(output))
+        
+        # Detect version from output
+        return detect_openscad_version(version_str)
     catch e
         error("OpenSCAD is not installed or not found in PATH. Please install OpenSCAD first.")
     end
@@ -128,16 +155,37 @@ function parse_openscad_output(output_str::String)
 end
 
 function render_openscad_to_png(input_file::String; output_dir::String=".", width::Int=1024, height::Int=1024, timeout::Int=300)
-    # Check if OpenSCAD is installed
-    check_openscad_installed()
+    # Check if OpenSCAD is installed and get version
+    version = check_openscad_installed()
     
     base_name = replace(basename(input_file), ".scad" => "")
     
     # Create a temporary file for the summary
     summary_file = joinpath(output_dir, "$base_name.summary.json")
     
-    # Construct the OpenSCAD command
-    cmd = `openscad
+    # Construct the OpenSCAD command based on version
+    cmd = if version == "2021"
+        `openscad
+            --o $(joinpath(output_dir, "$base_name.png"))
+            --render
+            --viewall
+            --autocenter
+            --imgsize $(width),$(height)
+            --export-format png
+            --summary all
+            --summary-file $summary_file
+            $input_file`
+    elseif version == "2019"
+        `openscad
+            --o $(joinpath(output_dir, "$base_name.png"))
+            --render
+            --viewall
+            --autocenter
+            --imgsize $(width),$(height)
+            --export-format png
+            $input_file`
+    else
+        `openscad
             --o $(joinpath(output_dir, "$base_name.png"))
             --backend Manifold
             --render
@@ -148,6 +196,7 @@ function render_openscad_to_png(input_file::String; output_dir::String=".", widt
             --summary all
             --summary-file $summary_file
             $input_file`
+    end
     
     @debug("Running OpenSCAD command: $cmd")
     
