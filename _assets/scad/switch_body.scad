@@ -171,8 +171,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
-        translate([wood_well_width()+wood_well_rim(),sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
-        translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim(),sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
     }
     if(left == "none" && straight != "none" && right != "none"){
         intersection(){
@@ -182,8 +182,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
-        translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
-        translate([wood_well_width()+wood_well_rim()+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim()+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
     }
     if(left != "none" && right != "none"){
         intersection(){
@@ -199,8 +199,8 @@ module switchblade_space(left,straight,right){
             }
             translate([pivot_center_x,sbs_ypos,0])top_boundery();
         }
-        translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
-        translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim()-1.22+rail_well_spacing,sbs_ypos,0]) rotate([0,0,-45]) rail_chamfer();
+        //translate([wood_well_width()+wood_well_rim()+1.22,sbs_ypos,0]) rotate([0,0,45]) rail_chamfer();
     }
     
 }
@@ -359,8 +359,8 @@ module visualize_blade_in_switch(){
     rotate([0,0,-16])translate([0,-y_pos_first_pin,rail_well_height+3])rotate([0,180,0])switch_female();
 }
 
-//mill_projections("female","none","female","female",true,true,true); //right
-//mill_projections("female", "female", "female", "none", true, false, false); //left
+//mill_projections("male","none","male","male",true,true,true); //right
+mill_projections("male", "male", "male", "none", true, false, false); //left
 
 echo(pin_female_diameter);
 //visualize_blade_in_switch();

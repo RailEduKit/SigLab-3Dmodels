@@ -14,7 +14,23 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/142348?v=4",
       "profile": "https://github.com/kaat0",
       "contributions": [
-        "code"
+        "code",
+        "design",
+        "ideas",
+        "mentoring",
+        "maintenance",
+        "fundingFinding"
+      ]
+    },
+    {
+      "login": "ThanDerJoren",
+      "name": "ThanDerJoren",
+      "avatar_url": "https://avatars.githubusercontent.com/u/113887898?v=4",
+      "profile": "https://github.com/ThanDerJoren",
+      "contributions": [
+        "code",
+        "design",
+        "ideas"
       ]
     }
   ]
