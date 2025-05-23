@@ -4,6 +4,7 @@
 DEFAULT_REPOS=(
     "https://github.com/BelfrySCAD/BOSL2.git"
     "https://github.com/dotscad/trains.git"
+    "https://github.com/dotscad/dotscad.git"
 )
 
 # ===== Initialization Functions =====
@@ -104,15 +105,15 @@ install_or_update() {
     local repo_url=$1
     local repo_name=$(basename "$repo_url" .git)
     
-    if [ -d "$TARGET_DIR/$repo_name" ]; then
+    if [ -d "$target_dir/$repo_name" ]; then
         echo "Repository $repo_name exists, updating..."
-        cd "$TARGET_DIR/$repo_name"
+        cd "$target_dir/$repo_name"
         git fetch --depth 1
         git reset --hard origin/HEAD
-        cd "$TARGET_DIR"
+        cd "$target_dir"
     else
         echo "Cloning $repo_name..."
-        git clone --single-branch --depth 1 "$repo_url" "$TARGET_DIR/$repo_name"
+        git clone --single-branch --depth 1 "$repo_url" "$target_dir/$repo_name"
     fi
 }
 
