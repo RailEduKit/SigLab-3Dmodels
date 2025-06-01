@@ -1,11 +1,11 @@
-/* RailEduKit/InteractiveSignallingLaboratory © 2025 by Martin Scheidt and contributor
+/* RailEduKit/InteractiveSignallingLaboratory © 2025 by Martin Scheidt and contributors
  * License: CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/
  * Project description: The Interactive Signalling Laboratory is a tool for training in Rail
  * Applications to enhance the knowledge of control and signalling principles for rail transport systems.
  *
- * Module: config 
+ * Module: config/global_variables.scad
  * Description: Configuration file for the Interactive Signalling Laboratory.
- * It contains all the essential parameters and measurements needed for the various components of the Interactive Signalling Laboratory.
+ * It contains all the essential parameters and measurements needed for the various components.
  */
 
 
