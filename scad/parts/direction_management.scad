@@ -7,7 +7,7 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 // include common components
 include <components/signal_box.scad>

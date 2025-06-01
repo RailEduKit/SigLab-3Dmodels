@@ -7,7 +7,7 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module triangle() {
 	cylinder_diameter = 0.1;

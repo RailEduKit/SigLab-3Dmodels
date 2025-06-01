@@ -6,7 +6,7 @@
  * Module: number_plate
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module frame() {
 	difference() {

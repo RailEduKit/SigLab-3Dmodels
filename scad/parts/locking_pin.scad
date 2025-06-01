@@ -6,7 +6,7 @@
  * Module: locking_pin
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 locking_pin();
 

@@ -6,7 +6,7 @@
  * Module: drill_template_curve
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 use <track_curve.scad>
 
 module connector_cutout() {

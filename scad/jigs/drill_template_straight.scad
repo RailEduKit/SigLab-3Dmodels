@@ -6,7 +6,7 @@
  * Module: drill_template_straight
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module diagonal_cutout() {
 	translate([ 0, 0, 4 ])
