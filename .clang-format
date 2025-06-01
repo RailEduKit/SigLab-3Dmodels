@@ -1,0 +1,9 @@
+{
+  BasedOnStyle: Microsoft,
+  UseTab: ForIndentation,
+  ColumnLimit: 120,
+  StatementMacros: [rotate, translate],
+  BreakBeforeBraces: Attach,
+  SpaceBeforeParens: ControlStatements,
+  SpacesInAngles: Never
+}

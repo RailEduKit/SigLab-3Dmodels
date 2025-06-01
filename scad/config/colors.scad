@@ -4,7 +4,14 @@
  * Applications to enhance the knowledge of control and signalling principles for rail transport systems.
  *
  * Module: config/colors.scad
- * Description: Colors for the Interactive Signalling Laboratory.
- * It contains the colors for the various components.
  */
 
+// component colors
+BASE_COLOR = "black";
+INDICATOR_COLOR = "white";
+ROUTE_COLOR = "blue";
+
+// signal colors
+ASPECT_CLEAR = "green";
+ASPECT_APPROACH = "yellow";
+ASPECT_STOP = "red";

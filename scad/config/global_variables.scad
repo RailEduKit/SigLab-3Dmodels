@@ -4,8 +4,6 @@
  * Applications to enhance the knowledge of control and signalling principles for rail transport systems.
  *
  * Module: config/global_variables.scad
- * Description: Configuration file for the Interactive Signalling Laboratory.
- * It contains all the essential parameters and measurements needed for the various components.
  */
 
 
