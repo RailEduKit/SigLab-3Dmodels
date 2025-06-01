@@ -6,7 +6,7 @@
  * Module: magnet_rod
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 magnet_rod();
 

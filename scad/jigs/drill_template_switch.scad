@@ -6,7 +6,7 @@
  * Module: drill_template_switch
  */
 
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module switch_shape() {
 	translate([ dtc_outer_radius + 45, 0, dtc_cutout_z_pos ])

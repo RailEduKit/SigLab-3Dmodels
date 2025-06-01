@@ -7,11 +7,11 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 // include common components
-include <components/magnet_hole.scad>
-include <components/pin_hole.scad>
+include <../parts/components/magnet_hole.scad>
+include <../parts/components/pin_hole.scad>
 
 // include external libraries
 use <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git

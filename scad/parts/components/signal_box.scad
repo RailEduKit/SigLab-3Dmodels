@@ -7,7 +7,7 @@
  */
 
 // include common components
-include <../components/magnet_hole.scad>
+include <magnet_hole.scad>
 
 module signal_box() {
 	module box() {

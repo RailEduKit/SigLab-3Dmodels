@@ -7,7 +7,7 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module switch_blade(thickness) {
 	union() {

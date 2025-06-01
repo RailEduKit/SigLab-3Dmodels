@@ -7,7 +7,7 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 module balise() {
 	translate([ 0, 0, balise_height / 2 ])

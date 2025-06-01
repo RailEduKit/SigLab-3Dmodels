@@ -7,7 +7,7 @@
  */
 
 // Include configuration file
-include <config/global_variables.scad>
+include <../config/global_variables.scad>
 
 // Include external libraries
 use <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
