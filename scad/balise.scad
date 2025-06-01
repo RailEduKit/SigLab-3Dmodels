@@ -10,7 +10,7 @@
  */
 
 // Include configuration file
-include <config.scad>
+include <config/global_variables.scad>
 
 module balise(){
     translate([0,0,balise_height/2]) cube([balise_width, balise_depth, balise_height], center = true);

@@ -8,7 +8,7 @@
  */
 
 // include common components
-include <../config.scad>
+include <../config/global_variables.scad>
 
 module signal_lever(top_color="green",bottom_color="red"){
     module handle(){

@@ -9,7 +9,7 @@
  */
 
 // Include configuration file
-include <config.scad>
+include <config/global_variables.scad>
 
 // include common components
 include <components/magnet_hole.scad>
