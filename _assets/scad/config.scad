@@ -1,12 +1,13 @@
-// Copyright 2020,2024 Martin Scheidt (Attribution 4.0 International, CC-BY 4.0)
-//
-// You are free to copy and redistribute the material in any medium or format.
-// You are free to remix, transform, and build upon the material for any purpose, even commercially.
-// You must give appropriate credit, provide a link to the license, and indicate if changes were made.
-// You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-// No warranties are given.
+/* RailEduKit/InteractiveSignallingLaboratory © 2025 by Martin Scheidt and contributor
+ * License: CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+ * Project description: The Interactive Signalling Laboratory is a tool for training in Rail
+ * Applications to enhance the knowledge of control and signalling principles for rail transport systems.
+ *
+ * Module: config 
+ * Description: Configuration file for the Interactive Signalling Laboratory.
+ * It contains all the essential parameters and measurements needed for the various components of the Interactive Signalling Laboratory.
+ */
 
-// preview[view:west, tilt:top]
 
 /*************** resolution ***************/
 // number of fragments; default 0;
@@ -124,16 +125,16 @@ move_tolerance = 0.5;
     c_ph3_ypos = sin(c_gamma) * curve_middle_radius;
     c_ph3_xpos = curve_outer_radius - cos(c_gamma) * curve_middle_radius;
 
-    echo("  ");
-    echo("c_ph1_ypos", c_ph1_ypos);
-    echo("c_ph1_xpos", c_ph1_xpos);
-    echo("  ");
-    echo("c_ph2_ypos", c_ph2_ypos);
-    echo("c_ph2_xpos", c_ph2_xpos);
-    echo("  ");
-    echo("c_ph3_ypos", c_ph3_ypos);
-    echo("c_ph3_xpos", c_ph3_xpos);
-    echo("  ");
+    // echo("  ");
+    // echo("c_ph1_ypos", c_ph1_ypos);
+    // echo("c_ph1_xpos", c_ph1_xpos);
+    // echo("  ");
+    // echo("c_ph2_ypos", c_ph2_ypos);
+    // echo("c_ph2_xpos", c_ph2_xpos);
+    // echo("  ");
+    // echo("c_ph3_ypos", c_ph3_ypos);
+    // echo("c_ph3_xpos", c_ph3_xpos);
+    // echo("  ");
 
     c_mh_zpos = rail_height/2;
     // magnet hole 4 = mh1
@@ -157,7 +158,7 @@ move_tolerance = 0.5;
 
 
 
-{/***************switch_blade_optimized***************/
+{/***************switch_blade***************/
     //blade specification
     blade_thickness = 2.5;
     blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
@@ -199,8 +200,8 @@ move_tolerance = 0.5;
     lever_thickness_switch = 4;
     rounding = 0.5;
 }
-{/***************distant-main_signal***************/
-    block_width=undef;
+{/***************distant and block signal***************/
+    block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
 
     // body specifications
     axis_diameter = 2; //maybe use the same material as lever anchor
@@ -219,7 +220,6 @@ move_tolerance = 0.5;
     foot_width = 2.5;
 
     // color_block specifications
-    block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
     block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
     block_height = 13.5; // material constraint
     //block_height =(body_height-wall_thickness_z)*1.4; //the heigher the value, the more color_block comes out of the body. BUT also: the higher will be the axis hole
@@ -311,12 +311,12 @@ move_tolerance = 0.5;
 
 
 
-{/***************roadCheckbox***************/
+{/***************route signal***************/
     // used "basis_component-roundedBox" and "locking_pin"
     //road Checkbox -> rc
     rc_symbol_side_space = 2;
     rc_symbol_size = body_width*(2/3)-locker_width/2-2*rc_symbol_side_space;
-    echo("rc_symbol_size: ", rc_symbol_size);
+    // echo("rc_symbol_size: ", rc_symbol_size);
     rc_symbol_xpos = body_width - (body_width - (body_width*(1/3)+locker_width/2))/2;
     straight_thickness = 0.8;
     rc_arrow_depth = 4;
@@ -361,7 +361,7 @@ move_tolerance = 0.5;
 
 }
 
-{/***************coupler***************/
+{/***************train integrity***************/
     thinnest_layer     = 0.2;
     
     coupling_radius    = 13/2;
@@ -380,9 +380,3 @@ move_tolerance = 0.5;
 
     headlight_d = (1/3)*shield_width;
 }
-
-echo("signal_symbol_size: ", signal_symbol_size);
-
-
-
-
