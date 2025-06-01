@@ -6,31 +6,62 @@ This folder contains the OpenSCAD source files for the Interactive Signalling La
 
 ### Structure
 
-The SCAD folder is organized into several key components:
+The repository is organized into several key components:
+
+```
+InteractiveSignallingLaboratory-scad/
+├── README.md                    # Overview and printing instructions
+├── scad/
+│   ├── config/                  # Configuration files
+│   │   ├── global_variables.scad    # Global variables
+│   │   └── colors.scad              # Color definitions for views
+│   │
+│   ├── components/             # Reusable components
+│   │
+│   ├── parts/                  # Main models
+│   │
+│   └── views/                  # Various views
+│
+├── stl-files/                  # Generated STL files
+│
+├── images/                     # Rendered images and photos
+│   ├── renders/                # OpenSCAD renders
+│   └── photos/                 # Photos of printed parts
+│
+├── documentation/              # Technical documentation
+│   ├── assembly_guide.md       # Assembly instructions
+│   ├── print_settings.md       # Print settings
+│   └── materials.md            # Material recommendations
+│
+└── scripts/                    # Build automation
+    ├── build_stl.sh            # Generate all STL files
+    ├── render_images.sh        # Render all images
+    └── install_dependencies.sh # Model validation
+```
 
 1. **Core Components**
-   - `config.scad` - Main configuration file containing global parameters and settings
-   - `template.scad` - Base template for creating new components
-   - `basis_component-roundedBox.scad` - Basic component library
+   - `config/` - Configuration files containing global parameters and settings
+   - `components/` - Reusable component library
+   - `parts/` - Main model components
 
 2. **Track Components**
-   - `straight.scad` - Straight track segment design
-   - `curve.scad` - Curved track segment design
+   - `track_straight.scad` - Straight track segment design
+   - `track_curve.scad` - Curved track segment design
    - `switch_body.scad` - Switch mechanism body
    - `switch_blade.scad` - Switch blade components
    - `direction_management.scad` - Direction control mechanisms
    - `overlap_measure.scad` - Overlap measurement components
 
 3. **Signalling Components**
-   - `distant-main_signal.scad` - Main and distant signal designs
-   - `signal.scad` - Basic signal components
+   - `signal_distant.scad` - Distant signal designs
+   - `signal_block.scad` - Block signal components
+   - `signal_route.scad` - Route signal components
    - `balise.scad` - Balise (track-side beacon) components
    - `clearing_point.scad` - Clearing point indicators
+   - `train_integrity.scad` - Train integrity components
 
 4. **Supporting Components**
    - `number_plate.scad` - Number plate generation
-   - `coupler.scad` - Coupling mechanisms
-   - `bracket.scad` - Mounting brackets
    - `magnet_rod.scad` - Magnetic components
    - `locking_pin.scad` - Locking mechanism components
 
@@ -38,22 +69,15 @@ The SCAD folder is organized into several key components:
    - `drill_template_straight.scad` - Drilling templates for straight tracks
    - `drill_template_curve.scad` - Drilling templates for curved tracks
    - `drill_template_switch.scad` - Drilling templates for switches
-   - `route_signal.scad` - Road crossing components
 
 6. **Testing and Development**
    - `test_code.scad` - General testing file
    - `test_magnets.scad` - Magnet component testing
    - `test_pins.scad` - Pin component testing
 
-7. **Documentation and Scripts**
-   - `README.md` - This documentation file
-   - `dependencies.sh` - Installation script for required libraries
-   - `number_plates_creation.jl` - Julia script for number plate generation
-   - `number_plate_code_for_scad.txt` - Code definitions for number plates
-
 ## config
 
-The `config.scad` file serves as the central configuration file for the entire project. It contains all the essential parameters and measurements needed for the various components of the Interactive Signalling Laboratory.
+The `config/global_variables.scad` file serves as the central configuration file for the entire project. It contains all the essential parameters and measurements needed for the various components of the Interactive Signalling Laboratory.
 
 ### Key Attributes
 
@@ -87,7 +111,7 @@ The `config.scad` file serves as the central configuration file for the entire p
 
 ## dependencies
 
-This project requires several OpenSCAD libraries to render the models correctly. The dependencies can be installed automatically using the provided `dependencies.sh` script or manually following the instructions below.
+This project requires several OpenSCAD libraries to render the models correctly. The dependencies can be installed automatically using the provided `scripts/install_dependencies.sh` script or manually following the instructions below.
 
 ### Official OpenSCAD Library Installation
 
@@ -122,7 +146,7 @@ openscad --info
 
 #### Automatic Installation (Recommended)
 
-The `dependencies.sh` script provides an automated way to install all required dependencies. It will:
+The `scripts/install_dependencies.sh` script provides an automated way to install all required dependencies. It will:
 - Check for required tools (OpenSCAD and git)
 - Determine the OpenSCAD library path
 - Install/update all required repositories
@@ -130,16 +154,16 @@ The `dependencies.sh` script provides an automated way to install all required d
 To use the script:
 ```bash
 # Basic usage (installs to OpenSCAD library path)
-./dependencies.sh
+./scripts/install_dependencies.sh
 
 # Install to a specific directory
-./dependencies.sh -d /path/to/directory
+./scripts/install_dependencies.sh -d /path/to/directory
 
 # Install from a custom repository list
-./dependencies.sh -f repositories.txt
+./scripts/install_dependencies.sh -f repositories.txt
 
 # Show help
-./dependencies.sh --help
+./scripts/install_dependencies.sh --help
 ```
 
 #### Manual Installation

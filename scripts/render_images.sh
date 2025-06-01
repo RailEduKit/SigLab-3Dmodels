@@ -3,8 +3,8 @@
 # ===== Default Values =====
 
 # Directory and file settings
-INPUT_DIR="_assets/scad"
-OUTPUT_DIR="_assets/renderings"
+INPUT_DIR="../scad/views"
+OUTPUT_DIR="../images/renders"
 LOG_FILE="render.log"
 SINGLE_FILE=""
 
