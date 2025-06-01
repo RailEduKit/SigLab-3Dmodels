@@ -104,11 +104,6 @@ module cap(){ union(){
 };
 };
 
-module print_to_console(){
-    echo("pin_diameter*0.3", pin_diameter*0.3);
-}
-print_to_console();
-
 //base_rounding();
 switch_female();
 //color("LightBlue") translate([(blade_width+2)/2,15,0]) rotate(a=[0,0,180]) switch_male();

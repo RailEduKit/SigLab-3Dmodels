@@ -7,7 +7,7 @@
 // No warranties are given.
 
 include<config.scad>
-use<./curve.scad>
+use<./track_curve.scad>
 
 
 module connector_cutout(){

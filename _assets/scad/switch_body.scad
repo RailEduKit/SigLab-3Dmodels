@@ -1,14 +1,23 @@
-// Copyright 2020,2024 Martin Scheidt (Attribution 4.0 International, CC-BY 4.0)
-//
-// You are free to copy and redistribute the material in any medium or format.
-// You are free to remix, transform, and build upon the material for any purpose, even commercially.
-// You must give appropriate credit, provide a link to the license, and indicate if changes were made.
-// You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
-// No warranties are given.
+/* RailEduKit/InteractiveSignallingLaboratory © 2025 by Martin Scheidt and contributor
+ * License: CC-BY 4.0 - https://creativecommons.org/licenses/by/4.0/
+ * Project description: The Interactive Signalling Laboratory is a tool for training in Rail
+ * Applications to enhance the knowledge of control and signalling principles for rail transport systems.
+ *
+ * Module: switch_body
+ * Description: Switch body component for the Interactive Signalling Laboratory.
+ * It is used to create a switch body with a magnet hole and pin hole.
+ */
 
-include<config.scad>
+// Include configuration file
+include <config.scad>
+
+// include common components
+include <components/magnet_hole.scad>
+include <components/pin_hole.scad>
+
+// include external libraries
 use <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
-use<./switch_blade.scad>
+use <switch_blade.scad>
 
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
 straight_size = straight_length; //145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]
@@ -146,13 +155,14 @@ module render_track(base,left,straight,right,double_sided_rails) {
 module rail_chamfer(){
     translate([0,0,sbs_height/2]) cube([1.1,1.1,sbs_height], center = true);
 }
+
 //switchblade_space("female","female","none");
 module switchblade_space(left,straight,right){ 
-//    sbs_width = 40;
-//    sbs_radius = blade_length+7;
-//    sbs_height = wood_height()-wood_well_height();
-//    sbs_xpos = wood_width()-width-wood_well_width();
-//    sbs_ypos = 22;
+    //    sbs_width = 40;
+    //    sbs_radius = blade_length+7;
+    //    sbs_height = wood_height()-wood_well_height();
+    //    sbs_xpos = wood_width()-width-wood_well_width();
+    //    sbs_ypos = 22;
     //pivot_center_x = wood_width()/2;
     
     module curved_boundery(){
@@ -210,8 +220,8 @@ module switchblade_space(left,straight,right){
 //holes_for_blade("none","female","female");
 module holes_for_blade(left,straight,right){
     h = wood_height();
-//    pivot_center_x = wood_width()/2;
-//    pivot_center_y=30;
+    //    pivot_center_x = wood_width()/2;
+    //    pivot_center_y=30;
     
     module pivot_hole(){
     translate([pivot_center_x,pivot_center_y,0]) cylinder(h=wood_height(), d=pin_female_diameter+1);
@@ -298,12 +308,6 @@ module holes_for_blade(left,straight,right){
 }
 
 module drill_holes(left,straight,right){
-    module pin_hole(){
-        cylinder(h=rail_height, d=om_pin_diameter+move_tolerance);
-    }
-    module magnet_hole(){
-    cylinder(h=magnet_thickness+move_tolerance, d=magnet_diameter);
-    }
     if (right != "none" && straight != "none"){
         //translate([rail_width/2, straight_length/2,0]) pin_hole();
         translate([rail_width/2, straight_length-pivot_center_y,0]) pin_hole();
@@ -313,7 +317,7 @@ module drill_holes(left,straight,right){
         translate([c_mh6_xpos, c_mh6_ypos, c_mh_zpos]) rotate([0,90,c_mh6_zrot]) magnet_hole();
         translate([c_mh7_xpos, c_mh7_ypos, c_mh_zpos]) rotate([0,-90,c_mh7_zrot]) magnet_hole();
         
-}
+    }
 }
 
 /*********** modules for export/ visualization***************/
@@ -351,8 +355,6 @@ module modified_switch(base,left,straight,right,double_sided_rails,hole){
 }   
 }
 
-
-
 module visualize_blade_in_switch(){
     translate([-pivot_center_x, -pivot_center_y,0]) modified_switch("female","none","female","female",true,true);
     translate([-pivot_center_x, -pivot_center_y,0]) switchblade_space("none","female","female");
@@ -362,7 +364,7 @@ module visualize_blade_in_switch(){
 //mill_projections("male","none","male","male",true,true,true); //right
 mill_projections("male", "male", "male", "none", true, false, false); //left
 
-echo(pin_female_diameter);
+// echo(pin_female_diameter);
 //visualize_blade_in_switch();
 //render_track("male","none","female","female",true);
 //modified_switch("male","none","female","female",true,true);
