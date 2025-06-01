@@ -38,7 +38,7 @@ The SCAD folder is organized into several key components:
    - `drill_template_straight.scad` - Drilling templates for straight tracks
    - `drill_template_curve.scad` - Drilling templates for curved tracks
    - `drill_template_switch.scad` - Drilling templates for switches
-   - `routeSignal.scad` - Road crossing components
+   - `route_signal.scad` - Road crossing components
 
 6. **Testing and Development**
    - `test_code.scad` - General testing file

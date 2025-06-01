@@ -17,6 +17,6 @@ module attach_arrow(){
 }
 
 module driving_direction_arrow(){
-    translate([attach_arrow_depth/2,0,0]) rotate([0,0,-90])attach_arrow();
-    translate([(attach_arrow_depth-1.2)/2,0,0]) cube([1.2,attach_arrow_depth, attach_arrow_height]);
+    translate([attach_arrow_depth/2,0,0]) rotate([0,0,-90]) color("white") attach_arrow();
+    translate([(attach_arrow_depth-1.2)/2,0,0]) color("white") cube([1.2,attach_arrow_depth, attach_arrow_height]);
 }
