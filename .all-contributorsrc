@@ -36,64 +36,6 @@
         "content",
         "tool"
       ]
-    },
-    {
-      "login": "",
-      "name": "Felix Nebel",
-      "avatar_url": "",
-      "profile": "",
-      "contributions": [
-        "design",
-        "ideas",
-        "content"
-      ]
-    },
-    {
-      "login": "",
-      "name": "Jan Werner",
-      "avatar_url": "",
-      "profile": "",
-      "contributions": [
-        "design",
-        "ideas",
-        "content",
-        "tool"
-      ]
-    },
-    {
-      "login": "",
-      "name": "Lukas Gruber",
-      "avatar_url": "",
-      "profile": "",
-      "contributions": [
-        "design",
-        "ideas",
-        "content"
-      ]
-    },
-    {
-      "login": "",
-      "name": "Leonhard Pelster",
-      "avatar_url": "",
-      "profile": "",
-      "contributions": [
-        "design",
-        "ideas",
-        "content",
-        "tutorial"
-      ]
-    },
-    {
-      "login": "",
-      "name": "Paula Neumann-Hillebrand",
-      "avatar_url": "",
-      "profile": "",
-      "contributions": [
-        "design",
-        "ideas",
-        "content",
-        "review"
-      ]
     }
   ]
 }
