@@ -1,8 +1,8 @@
-# InteractiveSignallingLaboratory - SCAD Folder
+# InteractiveSignallingLaboratory - 3Dmodels
 
 ## About
 
-This folder contains the OpenSCAD source files for the Interactive Signalling Laboratory project. OpenSCAD is a script-based 3D CAD modeler used to create precise 3D models for manufacturing and prototyping. The SCAD folder serves as the primary source for all 3D-printable components of the Interactive Signalling Laboratory.
+The 3D model repository serves as the primary source for all 3D-printable components of the Interactive Signalling Laboratory. The components are created in OpenSCAD. OpenSCAD is a script-based 3D CAD modeler used to create precise 3D models for manufacturing and prototyping.
 
 ### Structure
 
