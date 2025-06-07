@@ -1,0 +1,30 @@
+{
+    "title": "Interactive Signalling Laboratory - Track Elements",
+    "upload_type": "physicalobject", 
+    "description": "This archive contains the 3D printable models for the track elements of the Interactive Signalling Laboratory.",
+    "creators": [
+       {
+            "affiliation": "Stadler Signalling Deutschland GmbH",
+            "name": "Martin Scheidt",
+            "orcid": "0000-0002-9384-8945"
+       },
+       {
+            "affiliation": "Stadler Signalling Deutschland GmbH",
+            "name": "Julek Weck"
+       }
+    ],
+    "keywords": [
+        "railway",
+        "railroad",
+        "open educational resources",
+        "3D printing"
+    ],
+    "license": "CC-BY-4.0",
+    "language": ["eng", "ger"],
+    "access_right": "open", 
+    "communities": [
+        {
+            "identifier": "RailEduKit"
+        }
+    ]
+}
