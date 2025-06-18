@@ -9,9 +9,9 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
-// Include common components
-include <components/magnet_hole.scad>
-include <components/driving_direction_arrow.scad>
+// Include common parts
+include <../parts/magnet_hole.scad>
+include <../parts/driving_direction_arrow.scad>
 
 module route_clearing_symbol() {
 	union() {

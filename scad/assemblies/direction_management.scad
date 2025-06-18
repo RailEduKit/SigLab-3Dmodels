@@ -9,12 +9,13 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
-// include common components
-include <components/signal_box.scad>
+// include common parts
+include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
 use <locking_pin.scad> // used in "visualize_arrowBlock_in_body"
 
 // include external libraries
-use <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 
 // module bidirectional_arrow(){
 //     translate([-arrowline_length/2,-engraving_thickness/2,0])cube([arrowline_length,engraving_thickness,engraving_height]);
@@ -230,7 +231,7 @@ module arrow_block() {
 // }
 
 arrow_block();
-// translate([30,0,0]) direction_management_flipFlop();
+translate([30,0,0]) direction_management_flipFlop();
 // guide_cube();
 // direction_management_onePiece();
 // bidirectional_arrow();
