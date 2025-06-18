@@ -7,7 +7,9 @@
  */
 
 // Include configuration file
-include <../../config/global_variables.scad>
+include <../config/global_variables.scad>
+include <../config/colors.scad>
+
 
 module signal_lever(top_color = ASPECT_CLEAR, bottom_color = ASPECT_STOP) {
 	module handle() {

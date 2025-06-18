@@ -9,10 +9,10 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
-// include common components
-include <components/signal_box.scad>
-include <components/signal_lever.scad>
-include <components/driving_direction_arrow.scad>
+// include common parts
+include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
+include <../parts/driving_direction_arrow.scad>
 
 // include other parts
 use <locking_pin.scad> // used in visualize_colorBlock_in_body("block", "y");
@@ -65,12 +65,13 @@ module signal_lever_block() {
 		// locker pin hole
 		translate([ block_width / 2, -wall_thickness_y / 2 - 3 * move_tolerance, 0 ])
 		cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
+	
+		// symbol
+		translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, 0 ])
+		symbol_block();
+		translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, block_height - engraving_height ])
+		symbol_block();
 	}
-	// symbol
-	translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, 0 ])
-	symbol_block();
-	translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, block_height - engraving_height ])
-	symbol_block();
 }
 
 module visualize_colorBlock_in_body(state) {
@@ -101,5 +102,5 @@ module visualize_colorBlock_in_body(state) {
 
 body();
 translate([ -30, handle_depth, 0 ])
-signal_lever();
+signal_lever_block();
 // visualize_colorBlock_in_body("-y");
