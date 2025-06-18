@@ -6,6 +6,11 @@
  * Module: component/signal_box
  */
 
+
+// Include configuration file
+include <../config/global_variables.scad>
+include <../config/colors.scad>
+
 // include common components
 include <magnet_hole.scad>
 

@@ -9,10 +9,10 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
-// include common components
-include <components/signal_box.scad>
-include <components/signal_lever.scad>
-include <components/driving_direction_arrow.scad>
+// include common parts
+include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
+include <../parts/driving_direction_arrow.scad>
 
 // symbol_distant();
 module symbol_distant() {
@@ -69,18 +69,18 @@ module body() {
 
 // signal_lever(("distant"));
 module signal_lever_distant() {
-	// difference(){
-	signal_lever(bottom_color = ASPECT_APPROACH);
-	// symbol
-	translate([
-		signal_symbol_size + signal_symbol_side_space, signal_symbol_size + 4 * (block_depth - signal_symbol_size) / 5,
-		0
-	])
-	rotate([ 0, 0, 180 ])
-	symbol_distant();
-	translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, block_height - engraving_height ])
-	symbol_distant();
-	// }
+	difference(){
+		signal_lever(bottom_color = ASPECT_APPROACH);
+		// symbol
+		translate([
+			signal_symbol_size + signal_symbol_side_space, signal_symbol_size + 4 * (block_depth - signal_symbol_size) / 5,
+			0
+		])
+		rotate([ 0, 0, 180 ])
+		symbol_distant();
+		translate([ signal_symbol_side_space, 4 * (block_depth - signal_symbol_size) / 5, block_height - engraving_height ])
+		symbol_distant();
+	}
 }
 
 module visualize_colorBlock_in_body(state) {
