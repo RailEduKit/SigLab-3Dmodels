@@ -130,8 +130,8 @@ module template_outer_curve() {
 		difference() {
 			translate([ 0, -dsc_connector_width / 2, 0 ])
 			cube([ dtc_outer_radius, dsc_connector_width / 2, 2 * dtc_cutout_z_pos + dtc_cutout_height ]);
-#translate([ dtc_inner_radius + 12, -dsc_connector_width, dtc_cutout_z_pos ])                                          \
-    cube([ dsc_connector_height, dsc_connector_width, dsc_depth ]);
+			translate([ dtc_inner_radius + 12, -dsc_connector_width, dtc_cutout_z_pos ])                                          \
+    		cube([ dsc_connector_height, dsc_connector_width, dsc_depth ]);
 			translate([ dtc_outer_radius - 1, -dsc_connector_width, dtc_cutout_z_pos + dtch_z_pos ])
 			cube([ 2 * thin_line, dsc_connector_width, thin_line ]);
 			// trim template to relevant size
