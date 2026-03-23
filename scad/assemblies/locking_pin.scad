@@ -46,8 +46,7 @@ module locking_pin() {
 }
 
 echo("lever_height+2*rounding: ", lever_height + 2 * rounding);
-/* echo("z_pos_axis-handle_height/2+move_tolerance+2*rounding: ",
-     z_pos_axis - handle_height / 2 + move_tolerance + 2 * rounding); */
+
 
 up(locker_height) xrot(180) //position for the creation of picture
 locking_pin();

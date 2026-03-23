@@ -14,6 +14,7 @@ include <../config/global_variables.scad>
 
 // include other parts
 include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
 use <../assemblies/locking_pin.scad> 
 use <../assemblies/signal_box_block.scad>
 use <../assemblies/signal_lever_block.scad>

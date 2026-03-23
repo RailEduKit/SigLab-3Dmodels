@@ -266,30 +266,6 @@ nozzle_diameter = 0.4;
     rounding = 0.5;
 }
 {/***************distant and block signal***************/
-
-
-
-    /* CAN BE DELETED??  
-    // Locking Part specifications
-    lock_lever_depth = 9.5;
-    lock_lever_thickness = 2.5;
-    lock_lever_height = 10;
-    foot_width = 2.5; */
-
-    // color_block specifications
-    // parts/signal_box.scad don't need this variables
-
-/*     block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
-    block_height = 13.5; 
-    handle_depth = 10+wall_thickness_y;
-    handle_height = 3; */
-
-    // can be removed?: overhang = block_height/2-2*move_tolerance; // the circle has to be flattend at one side with move_tolerance
-    
-
-/*     //Symbol Specifications
-    signal_symbol_side_space = 4;
-    signal_symbol_size = block_width-2*signal_symbol_side_space; */
 }
 
 {/***************drill_template_straight***************/
@@ -362,11 +338,6 @@ nozzle_diameter = 0.4;
 
 
 {/***************direction_management***************/
-    // has to stay global. Box as well as lever uses the variables. Both objects are created in assemblies. So the variable can't be included, otherwise both objects are printed
-    // That is because in assemblies every object should be printed. 
-/*     arrow_block_height = 9-engraving_height;
-    overlap_cube_depth = arrow_block_height/2;
-    arrow_block_depth = block_depth - overlap_cube_depth; */
 }
 
 {/***************number_plate***************/
@@ -390,9 +361,6 @@ nozzle_diameter = 0.4;
 }
 
 {/***************train integrity***************/
-
-
-    
 }
 
 {/***************switch locker***************/

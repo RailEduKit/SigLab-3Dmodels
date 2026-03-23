@@ -24,9 +24,9 @@ use <../assemblies/locking_pin.scad>
          union(){
             translate([0,-body_depth/2,-z_pos_axis]) direction_management_box();
             if(state == "-y"){
-                //z=-arrow_block_height/2-wall_thickness_z if(state== "-y"){
+                //z=-arrow_block_height()/2-wall_thickness_z if(state== "-y"){
                  rotate([0,0,0]) translate([wall_thickness_x + move_tolerance,
-                 -(arrow_block_depth+overlap_cube_depth),-arrow_block_height/2-wall_thickness_z+wall_thickness_z])
+                 -(arrow_block_depth+overlap_cube_depth),-arrow_block_height()/2-wall_thickness_z+wall_thickness_z])
                  direction_management_lever(); // translate y = -body_depth/2 + wall_thickness_y+3*move_tolerance
                  if (locker == true) {
                     translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis])
@@ -37,22 +37,22 @@ use <../assemblies/locking_pin.scad>
                  translate([0,-overlap_cube_depth*(2/3),-(overlap_cube_depth)/4]) 
                  rotate([-45,0,0])
                  translate([wall_thickness_x + move_tolerance,
-                 -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
+                 -arrow_block_depth,-arrow_block_height()/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
              }
              if(state == "z"){
                  down(overlap_cube_depth/2) rotate([-90,0,0]) translate([wall_thickness_x + move_tolerance,
-                 -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
+                 -arrow_block_depth,-arrow_block_height()/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
              }
 
             if(state== "yz"){
                  translate([0,overlap_cube_depth*(2/3),-(overlap_cube_depth)/4]) 
                  rotate([-135,0,0])
                  translate([wall_thickness_x + move_tolerance,
-                 -arrow_block_depth,-arrow_block_height/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
+                 -arrow_block_depth,-arrow_block_height()/2-wall_thickness_z+wall_thickness_z]) direction_management_lever();
             }
              if(state== "y"){
                  rotate([-180,0,0]) translate([wall_thickness_x + move_tolerance, -body_depth/2 +
-                 wall_thickness_y+3*move_tolerance,-arrow_block_height/2-wall_thickness_z+wall_thickness_z])
+                 wall_thickness_y+3*move_tolerance,-arrow_block_height()/2-wall_thickness_z+wall_thickness_z])
                  direction_management_lever(); 
                  if (locker == true) {
                     translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis])

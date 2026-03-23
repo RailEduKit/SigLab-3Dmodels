@@ -14,6 +14,7 @@ include <../config/global_variables.scad>
 
 // use common parts
 include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
 use <../assemblies/signal_box_distant.scad>
 use <../assemblies/signal_lever_distant.scad>
 
