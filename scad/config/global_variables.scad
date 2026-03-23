@@ -278,17 +278,18 @@ nozzle_diameter = 0.4;
 
     // color_block specifications
     // parts/signal_box.scad don't need this variables
-    block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
+
+/*     block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
     block_height = 13.5; 
     handle_depth = 10+wall_thickness_y;
-    handle_height = 3;
+    handle_height = 3; */
+
     // can be removed?: overhang = block_height/2-2*move_tolerance; // the circle has to be flattend at one side with move_tolerance
     
 
-    //Symbol Specifications
+/*     //Symbol Specifications
     signal_symbol_side_space = 4;
-    signal_symbol_size = block_width-2*signal_symbol_side_space;
-    signal_triangle_height = (sqrt(3)*signal_symbol_size)/2;
+    signal_symbol_size = block_width-2*signal_symbol_side_space; */
 }
 
 {/***************drill_template_straight***************/
@@ -363,9 +364,9 @@ nozzle_diameter = 0.4;
 {/***************direction_management***************/
     // has to stay global. Box as well as lever uses the variables. Both objects are created in assemblies. So the variable can't be included, otherwise both objects are printed
     // That is because in assemblies every object should be printed. 
-    arrow_block_height = 9-engraving_height;
+/*     arrow_block_height = 9-engraving_height;
     overlap_cube_depth = arrow_block_height/2;
-    arrow_block_depth = block_depth - overlap_cube_depth;
+    arrow_block_depth = block_depth - overlap_cube_depth; */
 }
 
 {/***************number_plate***************/
@@ -375,8 +376,9 @@ nozzle_diameter = 0.4;
     np_diameter = rail_well_spacing-2*3;
     np_height = 1;
     number_height = 0.6;
+/*  om_pin variables are defined in track_indicator flexible   
     np_pin_diameter = om_pin_diameter;
-    np_pin_height = om_pin_height;
+    np_pin_height = om_pin_height; */
     frame_width = 180;
     frame_depth = 180;
     step_size = np_diameter+2*move_tolerance;

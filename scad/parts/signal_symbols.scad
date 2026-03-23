@@ -9,6 +9,10 @@
  // Include configuration file
 include <../config/global_variables.scad>
 
+//Symbol Specifications
+signal_symbol_side_space = 4;
+signal_symbol_size = block_width-2*signal_symbol_side_space;
+
 module symbol_block(engraving_thickness=engraving_thickness) {
 	difference() {
 		cube([ signal_symbol_size, signal_symbol_size, engraving_height ]);
