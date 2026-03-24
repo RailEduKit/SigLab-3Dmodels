@@ -70,3 +70,5 @@ module cavity_cube_signal_box() {
 	translate([ wall_thickness_x, wall_thickness_y, wall_thickness_z ])
 	cube([ body_width - 2 * wall_thickness_x, body_depth - 2 * wall_thickness_y, body_height - wall_thickness_z ]);
 }
+
+//signal_box();

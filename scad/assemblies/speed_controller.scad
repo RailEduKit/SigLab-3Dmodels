@@ -18,7 +18,7 @@ sc_diameter = 20;
 sc_height = 30;
 
 magnet_height = 10;
-magnet_diameter = 6;
+magnet_diameter = 8;
 
 module joystick(cyl_height, cyl_d_bottom, cyl_d_top, sphere_d){
     intersect_height = sphere_d/2 - sqrt(pow(sphere_d/2,2)-pow(cyl_d_top/2,2));
@@ -31,7 +31,7 @@ module joystick(cyl_height, cyl_d_bottom, cyl_d_top, sphere_d){
 
 
 module speed_controller(){
-    joystick(cyl_height = 20, cyl_d_bottom = 8, cyl_d_top = 8*1.5, sphere_d = 10*2.5);
+    joystick(cyl_height = 20, cyl_d_bottom = 10, cyl_d_top = 12, sphere_d = 10*2.5);
 }
 
 speed_controller();

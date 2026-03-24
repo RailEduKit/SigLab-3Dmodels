@@ -105,10 +105,7 @@ nozzle_diameter = 0.4;
     curve_length_middle_radius = (2*PI*curve_middle_radius*curve_angle)/360;
 }
 {/***************magnet specifications***************/
-    magnet_thickness = 3;
-    magnet_diameter = 5;
-    magnet_distance_to_middle = 7.5;
-    magnet_z = rail_height/2;
+
 }
 {/***************engraving specifications***************/
     engraving_height = 2;//(block_height-handle_height)/2;
