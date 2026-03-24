@@ -14,6 +14,7 @@ include <../config/colors.scad>
 include <../parts/signal_box.scad>
 include <../parts/signal_lever.scad> // for the lever_space_cubes
 use <direction_management_lever.scad>
+use <locking_pin.scad>
 
 // include external libraries
 include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
@@ -78,15 +79,15 @@ module direction_management_box() {
 		// locker pin hole
 		difference() {
 			translate([ body_width / 2, body_depth - wall_thickness_y / 2, 0 ])
-			cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
+			cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
 			translate([ wall_thickness_x + move_tolerance, body_depth - wall_thickness_y, 0 ])
-			cube([ block_width, locker_width, locker_height ]);
+			cube([ block_width, locker_width(), locker_height() ]);
 		}
 		difference() {
 			translate([ body_width / 2, wall_thickness_y / 2, 0 ])
-			cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
-			translate([ wall_thickness_x + move_tolerance, -locker_width + wall_thickness_y, 0 ])
-			cube([ block_width, locker_width, locker_height ]);
+			cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
+			translate([ wall_thickness_x + move_tolerance, -locker_width() + wall_thickness_y, 0 ])
+			cube([ block_width, locker_width(), locker_height() ]);
 		}
 	}
 }

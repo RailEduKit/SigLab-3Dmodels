@@ -29,7 +29,7 @@ module route_signal(aspect) {
 		rotate([0,0,180])
 		translate([ 0, -body_depth / 2, -z_pos_axis ])
 		for (y = [ body_depth * (1 / 6), body_depth / 2, body_depth * (5 / 6) ]) {
-			translate([ body_width * (1 / 3), y, locker_height])
+			translate([ body_width * (1 / 3), y, locker_height()])
 			rotate([ 180, 0, 90 ])
 			locking_pin();
 		}

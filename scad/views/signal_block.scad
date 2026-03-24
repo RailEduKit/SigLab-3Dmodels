@@ -46,7 +46,7 @@ module signal_block(aspect, locker = false) {
 		])
 		signal_lever_block();
 		if (locker == true) {
-			translate([ body_width / 2, (body_depth - wall_thickness_y) / 2, locker_height - 0.5 - z_pos_axis ])
+			translate([ body_width / 2, (body_depth - wall_thickness_y) / 2, locker_height() - 0.5 - z_pos_axis ])
 			rotate([ 180, 0, 90 ])
 			locking_pin();
 		}

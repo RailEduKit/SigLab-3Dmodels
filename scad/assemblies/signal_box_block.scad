@@ -16,6 +16,7 @@ include <../config/global_variables.scad>
 include <../parts/signal_box.scad>
 include <../parts/signal_lever.scad>
 include <../parts/driving_direction_arrow.scad>
+use <locking_pin.scad>
 
 module signal_box_block() {
 	color(BASE_COLOR)
@@ -31,9 +32,9 @@ module signal_box_block() {
 		// locker pin hole
 		difference() {
 			translate([ body_width / 2, body_depth - wall_thickness_y / 2, 0 ])
-			cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
+			cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
 			translate([ wall_thickness_x + move_tolerance, body_depth - wall_thickness_y, 0 ])
-			cube([ block_width, locker_width, locker_height ]);
+			cube([ block_width, locker_width(), locker_height() ]);
 		}
 	}
 	translate([ body_width - wall_thickness_x + attach_arrow_wall_distance, body_depth / 2, body_height ])

@@ -6,6 +6,8 @@
  * Module: component/signal_box
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // include is needed, because the locking_pin file uses the BOSL library
 
 // Include configuration file
 include <../config/global_variables.scad>
@@ -13,13 +15,14 @@ include <../config/colors.scad>
 
 // include common components
 include <magnet_hole.scad>
+use <../assemblies/locking_pin.scad>
 
 block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
 
 // body specifications
 axis_diameter = 2; //maybe use the same material as lever anchor
 wall_thickness_x = (body_width-block_width)/2-move_tolerance;//5;
-wall_thickness_y = lever_thickness_switch;
+wall_thickness_y = lever_thickness_switch();
 wall_thickness_z = 2;
 z_pos_axis = 10; // the block_height=13.5 lies a bit heigher, previous: block_height/2+wall_thickness_z
 
@@ -71,4 +74,4 @@ module cavity_cube_signal_box() {
 	cube([ body_width - 2 * wall_thickness_x, body_depth - 2 * wall_thickness_y, body_height - wall_thickness_z ]);
 }
 
-//signal_box();
+// signal_box();

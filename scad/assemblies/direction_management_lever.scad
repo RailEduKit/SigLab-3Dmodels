@@ -16,6 +16,7 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 // include common parts
 include <../parts/signal_box.scad>
 include <../parts/signal_lever.scad>
+use <locking_pin.scad>
 
 function arrow_block_height() = 9-engraving_height;
 function overlap_cube_depth() = arrow_block_height()/2;
@@ -55,13 +56,13 @@ module direction_management_lever() {
 		cylinder(h = block_width, d = axis_diameter);
 		// locker pin hole
 		translate([ block_width / 2, -wall_thickness_y / 2 - 3 * move_tolerance, 0 ])
-		cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
+		cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
 	}
 	// arrows
-	translate([ block_width / 2, block_depth / 2 + (locker_width) / 2 - 4.5, arrow_block_height() ])
+	translate([ block_width / 2, block_depth / 2 + (locker_width()) / 2 - 4.5, arrow_block_height() ])
 	rotate([ 0, 0, -90 ])
 	onedirect_arrow();
-	translate([ block_width / 2, block_depth / 2 + (locker_width) / 2 - 4.5, -engraving_height ])
+	translate([ block_width / 2, block_depth / 2 + (locker_width()) / 2 - 4.5, -engraving_height ])
 	rotate([ 0, 0, -90 ])
 	onedirect_arrow();
 }

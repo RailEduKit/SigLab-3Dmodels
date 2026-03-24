@@ -16,6 +16,7 @@ include <../config/global_variables.scad>
 include <../parts/signal_box.scad>
 include <../parts/signal_lever.scad>
 include <../parts/signal_symbols.scad>
+use <locking_pin.scad>
 
 module signal_lever_block() {
 	difference() {
@@ -23,13 +24,13 @@ module signal_lever_block() {
 		// locker pin hole
 		color(ASPECT_STOP)
 		translate([ block_width / 2, -wall_thickness_y / 2 - 3 * move_tolerance, 0 ])
-		cylinder(h = (block_height- handle_height)/2, d = locker_width + 2 * move_tolerance);
+		cylinder(h = (block_height- handle_height)/2, d = locker_width() + 2 * move_tolerance);
 		color(BASE_COLOR)
 		translate([ block_width / 2, -wall_thickness_y / 2 - 3 * move_tolerance, (block_height- handle_height)/2 ])
-		cylinder(h = handle_height, d = locker_width + 2 * move_tolerance);
+		cylinder(h = handle_height, d = locker_width() + 2 * move_tolerance);
 		color(ASPECT_CLEAR)
 		translate([ block_width / 2, -wall_thickness_y / 2 - 3 * move_tolerance, (block_height + handle_height)/2 ])
-		cylinder(h = block_height, d = locker_width + 2 * move_tolerance);
+		cylinder(h = block_height, d = locker_width() + 2 * move_tolerance);
 
 	
 		// symbol

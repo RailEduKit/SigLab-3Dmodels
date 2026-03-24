@@ -29,7 +29,7 @@ use <../assemblies/locking_pin.scad>
                  -(arrow_block_depth+overlap_cube_depth),-arrow_block_height()/2-wall_thickness_z+wall_thickness_z])
                  direction_management_lever(); // translate y = -body_depth/2 + wall_thickness_y+3*move_tolerance
                  if (locker == true) {
-                    translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis])
+                    translate([body_width/2,-(body_depth-wall_thickness_y)/2,locker_height()-0.5-z_pos_axis])
                     rotate([180,0,90]) locking_pin();
                  }
              }
@@ -55,7 +55,7 @@ use <../assemblies/locking_pin.scad>
                  wall_thickness_y+3*move_tolerance,-arrow_block_height()/2-wall_thickness_z+wall_thickness_z])
                  direction_management_lever(); 
                  if (locker == true) {
-                    translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height-0.5-z_pos_axis])
+                    translate([body_width/2,(body_depth-wall_thickness_y)/2,locker_height()-0.5-z_pos_axis])
                     rotate([180,0,90]) locking_pin();
                  }
              }
@@ -69,7 +69,7 @@ use <../assemblies/locking_pin.scad>
 
 /*  module visualize_onePiece_with_locker(){
      direction_management_onePiece();
-     translate([body_width*(1/2),body_depth*(1/6),locker_height-0.5+wall_thickness_z]) rotate([180,0,90])
+     translate([body_width*(1/2),body_depth*(1/6),locker_height()-0.5+wall_thickness_z]) rotate([180,0,90])
      locking_pin();
  } */
 

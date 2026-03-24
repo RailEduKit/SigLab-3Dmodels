@@ -256,11 +256,7 @@ nozzle_diameter = 0.4;
 }
 
 {/***************locking_pin***************/
-    locker_width = 14;
-    locker_height = 25;
-    lever_height = 10;
-    lever_thickness_switch = 4;
-    rounding = 0.5;
+    
 }
 {/***************distant and block signal***************/
 }
