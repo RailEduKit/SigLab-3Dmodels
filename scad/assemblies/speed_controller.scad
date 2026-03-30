@@ -31,6 +31,7 @@ module joystick(cyl_height, cyl_d_bottom, cyl_d_top, sphere_d){
 
 
 module speed_controller(){
+    color(BASE_COLOR)
     joystick(cyl_height = 20, cyl_d_bottom = 10, cyl_d_top = 12, sphere_d = 10*2.5);
 }
 
