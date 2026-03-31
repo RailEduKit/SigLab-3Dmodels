@@ -314,7 +314,7 @@ echo("dtc_outer_radius: ", dtc_outer_radius - (dtc_inner_radius - 65));
 // translate([10+ht_scope, 10, 0]) curve_with_drill_holes();
 
 // curve_shape();
-template_outer_curve();
+//template_outer_curve();
 
 // translate([100,0,0]) template_outer_curve();
 //template_inner_curve();
