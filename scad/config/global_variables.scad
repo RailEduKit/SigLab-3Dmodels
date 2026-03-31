@@ -6,63 +6,6 @@
  * Module: config/global_variables.scad
  */
 
-/* 
-++++++++++++++++++++++++ Start of New Structure +++++++++++++++++++++++++++++++++++
-
-the structure should orientate on the file structure
-but some variables have to stand on the top of the structure
-
-
- */
-
-{// assemblies
-    {// balise
-            
-    }
-    {// checkbox_route
-        
-    }
-    {// clearing_point_block
-
-    }
-    {// clearing_point_route
-
-    }
-    {// direction_management_box
-
-    }
-    {// direction_management_lever
-
-    }
-    {// locking_pin
-
-    }
-    {// overlap_measure
-
-    }
-    {// position_indicator_number
-
-    }
-    {
-        
-    }
-}
-{// jigs
-
-
-}
-
-
-
-
-
-
-
-
-
-/* 
-++++++++++++++++++++++++ End of New Structure +++++++++++++++++++++++++++++++++++
- */
 
 /*************** resolution ***************/
 // number of fragments; default 0;
@@ -104,8 +47,6 @@ nozzle_diameter = 0.4;
     curve_angle = 45.7; // degree
     curve_length_middle_radius = (2*PI*curve_middle_radius*curve_angle)/360;
 }
-{/***************magnet specifications***************/
-}
 {/***************engraving specifications***************/
     engraving_height = 2;//(block_height-handle_height)/2;
     engraving_thickness = 1.5;
@@ -113,48 +54,4 @@ nozzle_diameter = 0.4;
     fine_line = 0.2;
     thin_line = 0.8;
     regular_line = 1;
-}
-{/***************basis_component-roundedBox***************/
-}
-{/***************overlap_measure***************/    
-}
-{/***************straight***************/
-}
-{/***************curve***************/
-}
-{/***************switch_blade***************/
-}
-{/***************switch_body***************/
-}
-{/***************locking_pin***************/
-}
-{/***************distant and block signal***************/
-}
-
-{/***************drill_template_straight***************/
-
-}
-
-{/***************drill_template_curve***************/
-
-}
-{/***************drill_template_switch***************/
-    // all needed values in "drill_template_curve" and "drill_template_straight"
-}
-
-{/***************magnet_rod***************/
-}
-{/***************direction_management***************/
-}
-{/***************number_plate***************/
-}
-{/***************balise***************/
-}
-{/***************train integrity***************/
-}
-{/***************switch locker***************/
-}
-{/***************route_indicator_straight***************/
-}
-{/***************route_indicator_curve***************/
 }
