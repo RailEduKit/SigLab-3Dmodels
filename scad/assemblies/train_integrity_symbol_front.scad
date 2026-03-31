@@ -31,13 +31,13 @@ module train_integrity_symbol_front() {
 	union() {
 		translate(
 		    [ (1 / 12) * shield_width + headlight_d / 2, (shield_depth + (1 / 6) * shield_width + headlight_d) / 2, 0 ])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 		translate([
 			(11 / 12) * shield_width - headlight_d / 2, (shield_depth + (1 / 6) * shield_width + headlight_d) / 2, 0
 		])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 		translate([ (1 / 2) * shield_width, (shield_depth - (1 / 6) * shield_width - headlight_d) / 2, 0 ])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 	}
 }
 

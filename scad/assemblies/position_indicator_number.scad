@@ -9,6 +9,9 @@
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
+include <position_indicator_plate.scad>
+
+
 module frame() {
 	difference() {
 		cube([ frame_width, frame_depth, 2 ], center = true);

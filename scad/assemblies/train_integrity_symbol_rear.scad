@@ -26,11 +26,11 @@ module triangle() {
 	cylinder_diameter = 0.1;
 	hull() {
 		translate([ cylinder_diameter / 2, cylinder_diameter / 2, 0 ])
-		cylinder(d = cylinder_diameter, h = number_height);
+		cylinder(d = cylinder_diameter, h = symbol_height);
 		translate([ cylinder_diameter / 2, shield_depth - cylinder_diameter / 2, 0 ])
-		cylinder(d = cylinder_diameter, h = number_height);
+		cylinder(d = cylinder_diameter, h = symbol_height);
 		translate([ (shield_width - cylinder_diameter) / 2, (shield_depth - cylinder_diameter) / 2, 0 ])
-		cylinder(d = cylinder_diameter, h = number_height);
+		cylinder(d = cylinder_diameter, h = symbol_height);
 	}
 }
 
@@ -38,7 +38,7 @@ module train_integrity_symbol_rear() {
 	color(ASPECT_STOP) union(){
 		translate([ -shield_width / 2, -(shield_depth) / 2 - coupling_radius + 1, -shield_thickness ])
 		triangle();
-		translate([ shield_width / 2, -(shield_depth) / 2 - coupling_radius + 1, -shield_thickness + number_height ])
+		translate([ shield_width / 2, -(shield_depth) / 2 - coupling_radius + 1, -shield_thickness + symbol_height ])
 		rotate([ 0, 180, 0 ])
 		triangle();
 	}

@@ -347,8 +347,8 @@ module pin(base_width, base_depth, base_height) {
 }
 
 
-track_indicator_flexible(straight_length - 2*om_dovetail_depth());
+/* track_indicator_flexible(straight_length - 2*om_dovetail_depth());
 translate([custom_width_base+10, 0 ,0])
-track_indicator_flexible(curve_length_middle_radius - straight_length - om_dovetail_depth());
+track_indicator_flexible(curve_length_middle_radius - straight_length - om_dovetail_depth()); */
 
 echo("custom_width_base", custom_width_base);

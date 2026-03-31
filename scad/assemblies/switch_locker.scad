@@ -15,6 +15,34 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
+
+//switch locker = sl
+sl_width = rail_height + 2*wall_thickness;
+sl_depth = 27 + wall_thickness;
+sl_height = 0.6;
+
+sl_lock_height = rail_groove_depth + sl_height + move_tolerance;
+
+sl_barrier_width = sl_width;
+sl_barrier_depth = 17.5 + wall_thickness;
+sl_barrier_height = rail_height+ move_tolerance + sl_height;
+
+sl_wedge_width = 2;
+sl_wedge_depth = 3;
+sl_wedge_short = 2; // alternative depth
+sl_wedge_height = 9;
+
+brio_handle_diameter = rail_height;
+brio_handle_height = sl_barrier_height - sl_height;
+brio_handle_depth = 15 + move_tolerance;
+handle_curve_h = 2;
+brio_axis_diameter = 7;
+
+sl_handle_width = 2;
+sl_handle_depth = sl_depth;
+sl_handle_height = 10;
+
+
 module wedge(y_value) {
     hull(){
         translate([0,0,-sl_wedge_height+nozzle_diameter/2])

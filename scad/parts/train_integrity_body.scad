@@ -25,6 +25,8 @@ inlay_thickness    = 0.45;
 shield_thickness   = 2; // the shield has to be at least 2mm thick. Otherwise the front symbol will be printed badly
 inlay_radius       = 10.5/2;
 
+symbol_height 	   = 0.6;
+
 module train_integrity_body() {
 	color(BASE_COLOR) union(){
 	difference() { // coupling

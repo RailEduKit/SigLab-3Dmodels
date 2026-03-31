@@ -9,6 +9,9 @@
 include <../config/global_variables.scad>
 include <../parts/magnet_hole.scad>
 
+//magnet rod = mr
+mr_diameter = 20;
+mr_height = 100;
 
 
 module mag_hole() {

@@ -9,6 +9,27 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
+// Configuration for the mechanical switch of BRIO
+//blade specification
+blade_thickness = 2.5;
+blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
+blade_length = 46;
+blade_width  = 19;
+
+//lever anchor specification
+lever_hole_size = 2.6;
+lever_anchor_posX = blade_width*1/5;
+lever_anchor_posY = blade_length*0.8111;
+
+//pin specification
+wall_thickness = 1.5;
+pin_female_diameter = 7.5; //pin_diameter+move_tolerance+wall_thickness;
+pin_diameter = pin_female_diameter - move_tolerance - wall_thickness;//om_pin_diameter+move_tolerance+wall_thickness;
+pin_height = rail_thickness_track+move_tolerance;
+y_pos_first_pin = pin_female_diameter/2+1;
+y_pos_second_pin = 30.75;//(blade_length*2/3);
+overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
+
 module switch_blade(thickness) {
 	union() {
 		difference() {

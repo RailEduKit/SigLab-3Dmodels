@@ -31,13 +31,13 @@ module train_integrity_rear(){
         train_integrity_body_rear();
         // create space for white triangles
         translate([ -shield_width / 2, -(shield_depth) / 2 - coupling_radius + 1, -shield_thickness ])
-        cube([ shield_width, shield_depth, number_height ]);
+        cube([ shield_width, shield_depth, symbol_height ]);
     }
     difference(){
         // create white triangles
         color(INDICATOR_COLOR)
         translate([ -shield_width / 2, -(shield_depth) / 2 - coupling_radius + 1, -shield_thickness ])
-        cube([ shield_width, shield_depth, number_height ]);
+        cube([ shield_width, shield_depth, symbol_height ]);
         train_integrity_symbol_rear();
     }
     train_integrity_symbol_rear();

@@ -17,6 +17,22 @@ include <../parts/pin_hole.scad>
 include <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
 use <../assemblies/switch_blade.scad>
 
+//holes_for_blade
+pivot_center_x = rail_width/2;
+pivot_center_y= s_ph1_ypos;
+
+//switchblade_space -> sbs
+sbs_gap_to_wood = 1.5;
+sbs_width = rail_width;
+sbs_radius = blade_length+2*sbs_gap_to_wood;
+sbs_height = rail_height-rail_well_height;
+sbs_xpos = -rail_well_width-2;
+sbs_ypos = pivot_center_y - y_pos_first_pin-sbs_gap_to_wood;
+
+
+
+
+
 // Length of the straight track, or auto to use the best fit for the requested curve radius.
 straight_size =
     straight_length; // 145; // [auto:auto, 51:xsmall, 102:small, 152:medium, 203:large, 254:xlarge, 305:xxlarge]

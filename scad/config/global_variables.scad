@@ -199,60 +199,10 @@ nozzle_diameter = 0.4;
 
 
 {/***************switch_blade***************/
-    // Configuration for the mechanical switch of BRIO
-    //blade specification
-    blade_thickness = 2.5;
-    blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
-    blade_length = 46;
-    blade_width  = 19;
 
-    //lever anchor specification
-    lever_hole_size = 2.6;
-    lever_anchor_posX = blade_width*1/5;
-    lever_anchor_posY = blade_length*0.8111;
-
-    //pin specification
-    wall_thickness = 1.5;
-    pin_female_diameter = 7.5; //pin_diameter+move_tolerance+wall_thickness;
-    pin_diameter = pin_female_diameter - move_tolerance - wall_thickness;//om_pin_diameter+move_tolerance+wall_thickness;
-    pin_height = rail_thickness_track+move_tolerance;
-    y_pos_first_pin = pin_female_diameter/2+1;
-    y_pos_second_pin = 30.75;//(blade_length*2/3);
-    overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug?
-
-    
-/*     //blade specification
-    blade_thickness = 2.5;
-    blade_cover_thicknes = 0.6; //attention: female blade is thinner -> effect on lever_anchor pins?
-    blade_length = 46;
-    blade_width  = 19;
-
-    //lever anchor specification
-    lever_hole_size = 2.6;
-    lever_anchor_posX = blade_width*1/5;
-    lever_anchor_posY = blade_length*0.8111;
-
-    //pin specification
-    wall_thickness = 1.5;
-    pin_female_diameter = pin_diameter+move_tolerance+wall_thickness;
-    pin_diameter = om_pin_diameter+move_tolerance+wall_thickness;
-    pin_height = rail_thickness_track+move_tolerance;
-    y_pos_first_pin = pin_female_diameter/2+1;
-    y_pos_second_pin = (blade_length*2/3);
-    overlap = blade_thickness-blade_cover_thicknes; // height of pin_hole, otherwise the pin_hole doesn't stand on the blade -> bug? */
 }
 {/***************switch_body***************/
-    //holes_for_blade
-    pivot_center_x = rail_width/2;
-    pivot_center_y= s_ph1_ypos;
-    
-    //switchblade_space -> sbs
-    sbs_gap_to_wood = 1.5;
-    sbs_width = rail_width;
-    sbs_radius = blade_length+2*sbs_gap_to_wood;
-    sbs_height = rail_height-rail_well_height;
-    sbs_xpos = -rail_well_width-2;
-    sbs_ypos = pivot_center_y - y_pos_first_pin-sbs_gap_to_wood;
+
 }
 
 {/***************locking_pin***************/
@@ -322,9 +272,7 @@ nozzle_diameter = 0.4;
 }
 
 {/***************magnet_rod***************/
-    //magnet rod = mr
-    mr_diameter = 20;
-    mr_height = 100;
+
     
 }
 
@@ -334,20 +282,7 @@ nozzle_diameter = 0.4;
 }
 
 {/***************number_plate***************/
-    // om oin variables now in parts/track_indicator_flexible
-    
-    // number_plate = np
-    np_diameter = rail_well_spacing-2*3;
-    np_height = 1;
-    number_height = 0.6;
-/*  om_pin variables are defined in track_indicator flexible   
-    np_pin_diameter = om_pin_diameter;
-    np_pin_height = om_pin_height; */
-    frame_width = 180;
-    frame_depth = 180;
-    step_size = np_diameter+2*move_tolerance;
-    x_start = -(frame_width/2-np_diameter/2-1);
-    y_start = -(frame_depth/2-np_diameter/2-1);
+
 }
 
 {/***************balise***************/
@@ -357,31 +292,7 @@ nozzle_diameter = 0.4;
 }
 
 {/***************switch locker***************/
-    //switch locker = sl
-    sl_width = rail_height + 2*wall_thickness;
-    sl_depth = 27 + wall_thickness;
-    sl_height = 0.6;
 
-    sl_lock_height = rail_groove_depth + sl_height + move_tolerance;
-    
-    sl_barrier_width = sl_width;
-    sl_barrier_depth = 17.5 + wall_thickness;
-    sl_barrier_height = rail_height+ move_tolerance + sl_height;
-
-    sl_wedge_width = 2;
-    sl_wedge_depth = 3;
-    sl_wedge_short = 2; // alternative depth
-    sl_wedge_height = 9;
-
-    brio_handle_diameter = rail_height;
-    brio_handle_height = sl_barrier_height - sl_height;
-    brio_handle_depth = 15 + move_tolerance;
-    handle_curve_h = 2;
-    brio_axis_diameter = 7;
-
-    sl_handle_width = 2;
-    sl_handle_depth = sl_depth;
-    sl_handle_height = 10;
 }
 
 {/***************route_indicator_straight***************/
