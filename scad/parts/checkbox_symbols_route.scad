@@ -12,6 +12,7 @@ include <BOSL2/std.scad> // include is needed, because the locking_pin file uses
 // Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
+include <../parts/signal_box
 use <../assemblies/locking_pin.scad>
 
 //road Checkbox -> rc

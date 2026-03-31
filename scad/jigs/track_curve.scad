@@ -6,6 +6,8 @@
  * Module: track_curve
  */
 
+
+
 // Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
@@ -13,9 +15,44 @@ include <../config/colors.scad>
 // include common parts
 include <../parts/magnet_hole.scad>
 include <../parts/pin_hole.scad>
+use <track_straight.scad>
 
 // Include external libraries
 include <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
+
+// curve = c
+// pin hole 1 = ph1
+c_alpha = (s_ph1_ypos() * 360)/(2*PI*curve_middle_radius);
+c_ph1_ypos = sin(c_alpha) * curve_middle_radius;
+c_ph1_xpos = curve_outer_radius - cos(c_alpha) * curve_middle_radius;
+// pin hole 2 = ph2
+c_beta = curve_angle/2;
+c_ph2_ypos = sin(c_beta) * curve_middle_radius;
+c_ph2_xpos = curve_outer_radius - cos(c_beta) * curve_middle_radius;
+// pin hole 3 = ph3
+c_gamma = curve_angle - c_alpha;
+c_ph3_ypos = sin(c_gamma) * curve_middle_radius;
+c_ph3_xpos = curve_outer_radius - cos(c_gamma) * curve_middle_radius;
+
+c_mh_zpos = rail_height/2;
+// magnet hole 4 = mh1
+c_mh4_xpos = 0.1;
+c_mh4_ypos = 7.7;
+c_mh4_zrot = -2;
+// magnet hole 5 = mh1
+c_mh5_xpos = 40.3;
+c_mh5_ypos = 7.5;
+c_mh5_zrot = -2.4;
+// magnet hole 6 = mh1
+c_mh6_xpos = 61;
+c_mh6_ypos = 152;
+c_mh6_zrot = -43.7;
+// magnet hole 7 = mh1
+c_mh7_xpos = 89.05;
+c_mh7_ypos = 123.35;
+c_mh7_zrot = -43.3;
+
+
 
 /* [parameters] */
 

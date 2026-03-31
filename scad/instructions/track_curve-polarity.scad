@@ -6,6 +6,9 @@
  * Module: track_curve_polarity
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 

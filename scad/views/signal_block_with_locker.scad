@@ -13,6 +13,7 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 include <../config/global_variables.scad>
 
 // include other parts
+include <../parts/signal_box.scad>
 use <signal_block.scad>
 
 right(body_width) zrot(180) //position for the creation of picture

@@ -17,6 +17,19 @@ include <../parts/pin_hole.scad>
 // include external libraries
 include <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
 
+//straight = s
+// pin hole 1 = ph1
+s_ph_xpos = rail_width/2;
+function s_ph1_ypos() = 30;
+s_ph2_ypos = straight_length/2;
+s_ph3_ypos = straight_length-s_ph1_ypos();
+
+// magnet hole = mh
+s_mh_xpos = rail_width;
+s_mh_zpos = rail_height/2;
+s_mh_ypos1 = 7.5;
+s_mh_ypos2 = straight_length-s_mh_ypos1;
+
 /* [parameters] */
 
 //// Connector to place on the base end of the piece.

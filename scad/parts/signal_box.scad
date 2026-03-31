@@ -17,6 +17,12 @@ include <../config/colors.scad>
 include <magnet_hole.scad>
 use <../assemblies/locking_pin.scad>
 
+body_width = 30;
+body_depth = 50;
+body_height = 13.5; 
+track_arc_inner_radius = 182;
+sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
+
 block_width = 20; //material constraint //body_width-2*wall_thickness_x-move_tolerance;
 
 // body specifications

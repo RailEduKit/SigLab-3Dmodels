@@ -13,6 +13,7 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 include <../config/global_variables.scad>
 
 // include common parts
+include <../parts/signal_box.scad>
 use <direction_management.scad>
 
 right(0.5*body_width+1*10) direction_management("-y");

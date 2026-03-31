@@ -11,6 +11,9 @@ include <../config/global_variables.scad>
 include <../config/colors.scad>
 include <../parts/clearing_point_body.scad>
 
+// include common parts
+include <../parts/signal_box.scad>
+
 polarity_width = 5;
 polarity_height = 5;
 

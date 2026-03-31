@@ -13,8 +13,10 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 include <../config/global_variables.scad>
 
 // use common parts
+include <../parts/signal_box.scad>
 use <../assemblies/checkbox_route.scad>
 use <polarity_indicator.scad>
+
 
 module checkbox_route_polarity(){
     translate([ body_width, body_depth / 2, -z_pos_axis ])

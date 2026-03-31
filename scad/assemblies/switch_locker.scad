@@ -17,14 +17,15 @@ include <../config/colors.scad>
 
 
 //switch locker = sl
-sl_width = rail_height + 2*wall_thickness;
-sl_depth = 27 + wall_thickness;
+wall_depth_switch = 1.5;
+sl_width = rail_height + 2*wall_depth_switch;
+sl_depth = 27 + wall_depth_switch;
 sl_height = 0.6;
 
 sl_lock_height = rail_groove_depth + sl_height + move_tolerance;
 
 sl_barrier_width = sl_width;
-sl_barrier_depth = 17.5 + wall_thickness;
+sl_barrier_depth = 17.5 + wall_depth_switch;
 sl_barrier_height = rail_height+ move_tolerance + sl_height;
 
 sl_wedge_width = 2;
@@ -82,11 +83,11 @@ module barrier() {
         difference(){
             cube([sl_barrier_width, sl_barrier_depth, sl_barrier_height]);
             //TODO cut the cube to gain more flexibilaty while installation
-            translate([wall_thickness,wall_thickness,0])
+            translate([wall_depth_switch,wall_depth_switch,0])
             brio_switch_handle();
         }
         // gap for better movement
-        //translate([0,wall_thickness+handle_curve_h,0])
+        //translate([0,wall_depth_switch+handle_curve_h,0])
         //cube([sl_barrier_width,2,sl_barrier_height]);
     }
 

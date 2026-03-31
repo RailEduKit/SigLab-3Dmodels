@@ -15,7 +15,7 @@ include <../parts/pin_hole.scad>
 
 // include external libraries
 include <trains/tracklib.scad>; // Import tracklib from dependency dotscad/trains.git
-use <../assemblies/switch_blade.scad>
+use <switch_blade.scad>
 
 //holes_for_blade
 pivot_center_x = rail_width/2;
@@ -24,10 +24,10 @@ pivot_center_y= s_ph1_ypos;
 //switchblade_space -> sbs
 sbs_gap_to_wood = 1.5;
 sbs_width = rail_width;
-sbs_radius = blade_length+2*sbs_gap_to_wood;
+sbs_radius = blade_length()+2*sbs_gap_to_wood;
 sbs_height = rail_height-rail_well_height;
 sbs_xpos = -rail_well_width-2;
-sbs_ypos = pivot_center_y - y_pos_first_pin-sbs_gap_to_wood;
+sbs_ypos = pivot_center_y - y_pos_first_pin()-sbs_gap_to_wood;
 
 
 
@@ -181,7 +181,7 @@ module rail_chamfer() {
 // switchblade_space("female","female","none");
 module switchblade_space(left, straight, right) {
 	//    sbs_width = 40;
-	//    sbs_radius = blade_length+7;
+	//    sbs_radius = blade_length()+7;
 	//    sbs_height = wood_height()-wood_well_height();
 	//    sbs_xpos = wood_width()-width-wood_well_width();
 	//    sbs_ypos = 22;
@@ -259,26 +259,26 @@ module holes_for_blade(left, straight, right) {
 
 	module pivot_hole() {
 		translate([ pivot_center_x, pivot_center_y, 0 ])
-		cylinder(h = wood_height(), d = pin_female_diameter + 1);
+		cylinder(h = wood_height(), d = pin_female_diameter() + 1);
 	}
 
 	// pivot_area
 	module area_length() {
 		a = 70;
-		outer_r = lever_anchor_posY + 3;
-		inner_r = y_pos_second_pin - (pin_female_diameter - 2);
+		outer_r = lever_anchor_posY() + 3;
+		inner_r = y_pos_second_pin() - (pin_female_diameter() - 2);
 		difference() {
-			translate([ pivot_center_x, pivot_center_y - pin_diameter, 0 ])
+			translate([ pivot_center_x, pivot_center_y - pin_diameter(), 0 ])
 			rotate([ 0, 0, 90 - 35 ])
 			rotate_extrude(angle = a) square([ outer_r, h ]);
-			translate([ pivot_center_x, pivot_center_y - pin_diameter, 0 ])
+			translate([ pivot_center_x, pivot_center_y - pin_diameter(), 0 ])
 			rotate([ 0, 0, 90 - 35 - 0.1 ])
 			rotate_extrude(angle = a + 0.2) square([ inner_r, h ]); // 0.1 and 0.2 because of a rendering bug
 		}
 	}
 	module curved_boundery() {
 		radius1 = curve_inner_radius + 5 + wood_well_spacing(); // to get a 3D object
-		radius2 = curve_inner_radius + wood_well_width() + wood_well_rim() + lever_anchor_posX;
+		radius2 = curve_inner_radius + wood_well_width() + wood_well_rim() + lever_anchor_posX();
 		difference() {
 			rotate_extrude(angle = 360) square([ radius1, h ]);
 			rotate_extrude(angle = 360) square([ radius2, h ]);
@@ -288,17 +288,17 @@ module holes_for_blade(left, straight, right) {
 		x_size = 14;
 		y_size = 140;
 		if (left != "none") {
-			xpos = wood_width() - x_size - wood_well_width() - wood_well_rim() - lever_anchor_posX - 0.5;
+			xpos = wood_width() - x_size - wood_well_width() - wood_well_rim() - lever_anchor_posX() - 0.5;
 			translate([ xpos, 0, 0 ])
 			cube([ x_size, y_size, h ]);
 		}
 		if (right != "none") {
-			xpos = wood_well_width() + wood_well_rim() + lever_anchor_posX + 0.5;
+			xpos = wood_well_width() + wood_well_rim() + lever_anchor_posX() + 0.5;
 			translate([ xpos, 0, 0 ])
 			cube([ x_size, y_size, h ]);
 		}
 		if (left != "none" && right != "none") {
-			xpos = wood_well_width() + wood_well_rim() + lever_anchor_posX + 0.5;
+			xpos = wood_well_width() + wood_well_rim() + lever_anchor_posX() + 0.5;
 			translate([ xpos, 0, 0 ])
 			cube([ x_size, y_size, h ]);
 		}
@@ -416,7 +416,7 @@ module visualize_blade_in_switch() {
 	//translate([ -pivot_center_x, -pivot_center_y, 0 ])
 	//switchblade_space("none", "female", "female");
 	rotate([ 0, 0, -16 ])
-	translate([ 0, -y_pos_first_pin, rail_well_height + 3 ])
+	translate([ 0, -y_pos_first_pin(), rail_well_height + 3 ])
 	rotate([ 0, 180, 0 ])
 	switch_female();
 }
@@ -424,7 +424,7 @@ module visualize_blade_in_switch() {
 // mill_projections("male","none","male","male",true,true,true); //right
 //mill_projections("male", "male", "male", "none", true, false, false); // left
 
-// echo(pin_female_diameter);
+// echo(pin_female_diameter());
 visualize_blade_in_switch();
 // render_track("male","none","female","female",true);
 // modified_switch("male","none","female","female",true,true);

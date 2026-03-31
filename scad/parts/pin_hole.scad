@@ -6,6 +6,8 @@
  * Module: component/pin_hole
  */
 
+use <../assemblies/position_indicator_plate.scad>
+
 module pin_hole() {
-	cylinder(h = rail_height, d = om_pin_diameter + move_tolerance);
+	cylinder(h = rail_height, d = np_pin_diameter() + move_tolerance);
 }

@@ -105,108 +105,28 @@ nozzle_diameter = 0.4;
     curve_length_middle_radius = (2*PI*curve_middle_radius*curve_angle)/360;
 }
 {/***************magnet specifications***************/
-
 }
 {/***************engraving specifications***************/
     engraving_height = 2;//(block_height-handle_height)/2;
     engraving_thickness = 1.5;
     
-  
     fine_line = 0.2;
     thin_line = 0.8;
     regular_line = 1;
 }
-
-
-
 {/***************basis_component-roundedBox***************/
-    body_width = 30;
-    body_depth = 50;
-    body_height = 13.5; 
-    track_arc_inner_radius = 182;
-    sagitta = 0.43; //DE: Pfeilhöhe -> 25mm Straighten round edge in the middle
 }
-
-
 {/***************overlap_measure***************/    
 }
-
 {/***************straight***************/
-    //straight = s
-    // pin hole 1 = ph1
-    s_ph_xpos = rail_width/2;
-    s_ph1_ypos = 30;
-    s_ph2_ypos = straight_length/2;
-    s_ph3_ypos = straight_length-s_ph1_ypos;
-    
-    // magnet hole = mh
-    s_mh_xpos = rail_width;
-    s_mh_zpos = rail_height/2;
-    s_mh_ypos1 = 7.5;
-    s_mh_ypos2 = straight_length-s_mh_ypos1;
-    
-    
 }
-
 {/***************curve***************/
-    
-
-    // curve = c
-    // pin hole 1 = ph1
-    c_alpha = (s_ph1_ypos * 360)/(2*PI*curve_middle_radius);
-    c_ph1_ypos = sin(c_alpha) * curve_middle_radius;
-    c_ph1_xpos = curve_outer_radius - cos(c_alpha) * curve_middle_radius;
-    // pin hole 2 = ph2
-    c_beta = curve_angle/2;
-    c_ph2_ypos = sin(c_beta) * curve_middle_radius;
-    c_ph2_xpos = curve_outer_radius - cos(c_beta) * curve_middle_radius;
-    // pin hole 3 = ph3
-    c_gamma = curve_angle - c_alpha;
-    c_ph3_ypos = sin(c_gamma) * curve_middle_radius;
-    c_ph3_xpos = curve_outer_radius - cos(c_gamma) * curve_middle_radius;
-
-    // echo("  ");
-    // echo("c_ph1_ypos", c_ph1_ypos);
-    // echo("c_ph1_xpos", c_ph1_xpos);
-    // echo("  ");
-    // echo("c_ph2_ypos", c_ph2_ypos);
-    // echo("c_ph2_xpos", c_ph2_xpos);
-    // echo("  ");
-    // echo("c_ph3_ypos", c_ph3_ypos);
-    // echo("c_ph3_xpos", c_ph3_xpos);
-    // echo("  ");
-
-    c_mh_zpos = rail_height/2;
-    // magnet hole 4 = mh1
-    c_mh4_xpos = 0.1;
-    c_mh4_ypos = 7.7;
-    c_mh4_zrot = -2;
-    // magnet hole 5 = mh1
-    c_mh5_xpos = 40.3;
-    c_mh5_ypos = 7.5;
-    c_mh5_zrot = -2.4;
-    // magnet hole 6 = mh1
-    c_mh6_xpos = 61;
-    c_mh6_ypos = 152;
-    c_mh6_zrot = -43.7;
-    // magnet hole 7 = mh1
-    c_mh7_xpos = 89.05;
-    c_mh7_ypos = 123.35;
-    c_mh7_zrot = -43.3;
-    
 }
-
-
-
 {/***************switch_blade***************/
-
 }
 {/***************switch_body***************/
-
 }
-
 {/***************locking_pin***************/
-    
 }
 {/***************distant and block signal***************/
 }
@@ -272,33 +192,18 @@ nozzle_diameter = 0.4;
 }
 
 {/***************magnet_rod***************/
-
-    
 }
-
-
-
 {/***************direction_management***************/
 }
-
 {/***************number_plate***************/
-
 }
-
 {/***************balise***************/
 }
-
 {/***************train integrity***************/
 }
-
 {/***************switch locker***************/
-
 }
-
 {/***************route_indicator_straight***************/
-    
 }
-
 {/***************route_indicator_curve***************/
-    
 }
