@@ -13,6 +13,8 @@ include <../config/colors.scad>
 // include common parts
 include <../parts/signal_box.scad>
 include <../parts/signal_lever.scad> // for the lever_space_cubes
+use <direction_management_lever.scad>
+use <locking_pin.scad>
 
 // include external libraries
 include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
@@ -21,7 +23,7 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 module I_axis(){
 	hull(){
 		cylinder(h = body_width, d = axis_diameter + move_tolerance);
-		right((3 / 2) * overlap_cube_depth) cylinder(h = body_width, d = axis_diameter + move_tolerance);
+		right((3 / 2) * overlap_cube_depth()) cylinder(h = body_width, d = axis_diameter + move_tolerance);
 	}
 }
 
@@ -29,8 +31,8 @@ module cavity_cube_direction_management() {
 	module guide_cube() {
 		diff() cuboid(
 		    [
-			    body_width - 2 * wall_thickness_x + 0.1, arrow_block_depth + 2.5 * move_tolerance,
-			    z_pos_axis - arrow_block_height / 2 - move_tolerance -
+			    body_width - 2 * wall_thickness_x + 0.1, arrow_block_depth() + 2.5 * move_tolerance,
+			    z_pos_axis - arrow_block_height() / 2 - move_tolerance -
 			    wall_thickness_z
 		    ],
 		    anchor = BOTTOM + LEFT + FWD, rounding = 2,
@@ -39,15 +41,15 @@ module cavity_cube_direction_management() {
 			// remove middle
 			tag("remove") position(TOP) cuboid(
 			    [
-				    8, arrow_block_depth + 2.5 * move_tolerance, z_pos_axis - arrow_block_height / 2 - move_tolerance -
+				    8, arrow_block_depth() + 2.5 * move_tolerance, z_pos_axis - arrow_block_height() / 2 - move_tolerance -
 				    wall_thickness_z
 			    ],
 			    anchor = TOP);
 			// add middle with rounding
 			tag("keep") position(BOTTOM) cuboid(
 			    [
-				    8, arrow_block_depth - engraving_height - move_tolerance,
-				    z_pos_axis - arrow_block_height / 2 - move_tolerance - wall_thickness_z -
+				    8, arrow_block_depth() - engraving_height - move_tolerance,
+				    z_pos_axis - arrow_block_height() / 2 - move_tolerance - wall_thickness_z -
 				    engraving_height
 			    ],
 			    anchor = BOTTOM, rounding = 2, edges = TOP + BACK);
@@ -77,15 +79,15 @@ module direction_management_box() {
 		// locker pin hole
 		difference() {
 			translate([ body_width / 2, body_depth - wall_thickness_y / 2, 0 ])
-			cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
+			cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
 			translate([ wall_thickness_x + move_tolerance, body_depth - wall_thickness_y, 0 ])
-			cube([ block_width, locker_width, locker_height ]);
+			cube([ block_width, locker_width(), locker_height() ]);
 		}
 		difference() {
 			translate([ body_width / 2, wall_thickness_y / 2, 0 ])
-			cylinder(h = locker_height, d = locker_width + 2 * move_tolerance);
-			translate([ wall_thickness_x + move_tolerance, -locker_width + wall_thickness_y, 0 ])
-			cube([ block_width, locker_width, locker_height ]);
+			cylinder(h = locker_height(), d = locker_width() + 2 * move_tolerance);
+			translate([ wall_thickness_x + move_tolerance, -locker_width() + wall_thickness_y, 0 ])
+			cube([ block_width, locker_width(), locker_height() ]);
 		}
 	}
 }

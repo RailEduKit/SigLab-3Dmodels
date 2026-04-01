@@ -8,9 +8,41 @@
 
 // this locker can be combined with the mechanical switch of BRIO https://www.brio.co.uk/en-GB/products/railway-toys/train-tracks/mechanical-switches-63334400
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
+
+
+//switch locker = sl
+wall_depth_switch = 1.5;
+sl_width = rail_height + 2*wall_depth_switch;
+sl_depth = 27 + wall_depth_switch;
+sl_height = 0.6;
+
+sl_lock_height = rail_groove_depth + sl_height + move_tolerance;
+
+sl_barrier_width = sl_width;
+sl_barrier_depth = 17.5 + wall_depth_switch;
+sl_barrier_height = rail_height+ move_tolerance + sl_height;
+
+sl_wedge_width = 2;
+sl_wedge_depth = 3;
+sl_wedge_short = 2; // alternative depth
+sl_wedge_height = 9;
+
+brio_handle_diameter = rail_height;
+brio_handle_height = sl_barrier_height - sl_height;
+brio_handle_depth = 15 + move_tolerance;
+handle_curve_h = 2;
+brio_axis_diameter = 7;
+
+sl_handle_width = 2;
+sl_handle_depth = sl_depth;
+sl_handle_height = 10;
+
 
 module wedge(y_value) {
     hull(){
@@ -51,11 +83,11 @@ module barrier() {
         difference(){
             cube([sl_barrier_width, sl_barrier_depth, sl_barrier_height]);
             //TODO cut the cube to gain more flexibilaty while installation
-            translate([wall_thickness,wall_thickness,0])
+            translate([wall_depth_switch,wall_depth_switch,0])
             brio_switch_handle();
         }
         // gap for better movement
-        //translate([0,wall_thickness+handle_curve_h,0])
+        //translate([0,wall_depth_switch+handle_curve_h,0])
         //cube([sl_barrier_width,2,sl_barrier_height]);
     }
 
@@ -98,7 +130,5 @@ module switch_locker() {
     }
 }
 
-
-//brio_switch_handle();
+up(sl_lock_height) back(sl_depth) right(sl_width/2) zrot(180) //position for the creation of picture
 switch_locker();
-//wedge(sl_wedge_depth);

@@ -6,17 +6,26 @@
  * Module: locking_pin
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
+// Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
-locking_pin();
+
+function locker_width() = 14;
+function locker_height() = 25;
+lever_height = 10;
+function lever_thickness_switch() = 4;
+rounding = 0.5;
 
 module grip_ring() {
 	height = 1.2;
 	depth = 1.2;
 	difference() {
-		cylinder(h = height, d = locker_width);
-		cylinder(h = height, d = locker_width - depth);
+		cylinder(h = height, d = locker_width());
+		cylinder(h = height, d = locker_width() - depth);
 	}
 }
 module locking_pin() {
@@ -24,14 +33,14 @@ module locking_pin() {
 	difference() {
 		minkowski() {
 			difference() {
-				cylinder(d = locker_width - 2 * rounding, h = locker_height - 2 * rounding);
+				cylinder(d = locker_width() - 2 * rounding, h = locker_height() - 2 * rounding);
 				rotate([ 0, 0, 90 ])
 				translate([
-					(-locker_width / 2), (-(lever_thickness_switch + move_tolerance) / 2 - rounding),
-					(locker_height - lever_height)
+					(-locker_width() / 2), (-(lever_thickness_switch() + move_tolerance) / 2 - rounding),
+					(locker_height() - lever_height)
 				])
 				cube([
-					(locker_width), (lever_thickness_switch + 2 * rounding + move_tolerance),
+					(locker_width()), (lever_thickness_switch() + 2 * rounding + move_tolerance),
 					(lever_height + 2 * rounding)
 				]);
 			};
@@ -43,7 +52,7 @@ module locking_pin() {
 }
 
 echo("lever_height+2*rounding: ", lever_height + 2 * rounding);
-echo("z_pos_axis-handle_height/2+move_tolerance+2*rounding: ",
-     z_pos_axis - handle_height / 2 + move_tolerance + 2 * rounding);
 
-// signal_locker();
+
+up(locker_height()) xrot(180) //position for the creation of picture
+locking_pin();

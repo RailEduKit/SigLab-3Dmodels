@@ -6,11 +6,34 @@
  * Module: position_indicator_plate
  */
 
+
+
+
+
+
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
 // use common parts
 use <position_indicator_number.scad>
+
+
+// number_plate = np
+np_diameter = rail_well_spacing-2*3;
+function np_height() = 1;
+number_height = 0.6;
+
+// om_pin variables are defined in track_indicator flexible   
+function np_pin_diameter() = 4.5;
+function np_pin_height() = 5;
+
+frame_width = 180;
+frame_depth = 180;
+step_size = np_diameter+2*move_tolerance;
+x_start = -(frame_width/2-np_diameter/2-1);
+y_start = -(frame_depth/2-np_diameter/2-1);
+
+
 
 module frame() {
 	difference() {
@@ -22,11 +45,11 @@ module frame() {
 module number_plate(number) {
 	color(BASE_COLOR) union(){
 		difference() {
-			cylinder(d = np_diameter, h = np_height);
+			cylinder(d = np_diameter, h = np_height());
 			piece_number(number);
 		}
-		translate([ 0, 0, np_height ])
-		cylinder(h = np_pin_height, d = np_pin_diameter);
+		translate([ 0, 0, np_height() ])
+		cylinder(h = np_pin_height(), d = np_pin_diameter());
 	}
 
 }

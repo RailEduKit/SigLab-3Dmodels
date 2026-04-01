@@ -6,6 +6,9 @@
  * Module: train_integrity_front
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 
@@ -26,4 +29,6 @@ module train_integrity_front(){
     train_integrity_symbol_front();
 }
 
+
+yrot(180)
 train_integrity_front();

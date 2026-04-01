@@ -7,10 +7,14 @@
  */
 
 include <../config/global_variables.scad>
+include <../parts/magnet_hole.scad>
 
-magnet_rod();
+//magnet rod = mr
+mr_diameter = 20;
+mr_height = 100;
 
-module magnet_hole() {
+
+module mag_hole() {
 	cylinder(h = magnet_thickness, d = magnet_diameter);
 }
 
@@ -24,9 +28,9 @@ module color_line() {
 module magnet_rod() {
 	difference() {
 		scale([ 1, 1, 1 ]) cylinder(d = mr_diameter, h = mr_height);
-		magnet_hole();
+		mag_hole();
 		translate([ 0, 0, mr_height - (magnet_thickness - move_tolerance) ])
-		magnet_hole();
+		mag_hole();
 		// color border line
 		scale([ 1, 0.5, 1 ]) translate([ 0, 0, 25 - fine_line ])
 		color_line();
@@ -34,3 +38,5 @@ module magnet_rod() {
 		color_line();
 	}
 }
+
+magnet_rod();

@@ -5,14 +5,19 @@
  *
  * Module: checkbox_symbols_route
  */
+// Include external libraries
+include <BOSL2/std.scad> // include is needed, because the locking_pin file uses the BOSL library
+
 
 // Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
+include <../parts/signal_box
+use <../assemblies/locking_pin.scad>
 
 //road Checkbox -> rc
 rc_symbol_side_space = 2;
-rc_symbol_size = body_width*(2/3)-locker_width/2-2*rc_symbol_side_space;
+rc_symbol_size = body_width*(2/3)-locker_width()/2-2*rc_symbol_side_space;
 straight_thickness = 0.8;
 rc_arrow_depth = 4;
 rc_arrowline_length = 4;
@@ -138,4 +143,4 @@ module flank_protection_symbol() {
 }
 
 
-color(BASE_COLOR) turnout_locking_symbol();
+// color(BASE_COLOR) turnout_locking_symbol();

@@ -16,7 +16,7 @@ include <BOSL2/joiners.scad> // Import joiners from dependency BelfrySCAD/BOSL2.
 
 
 // Include common parts
-use <track_indicator_straight.scad>
+include <../parts/track_indicator_straight.scad>
 use <overlap_pattern_straight.scad>
 
 module overlap_body_straight(){

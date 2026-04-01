@@ -10,6 +10,23 @@
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
+thinnest_layer     = 0.2;
+
+coupling_radius    = 13/2;
+coupling_depth     = 8;
+coupling_cut_pos   = coupling_radius*1/2;
+boogie_width       = 20;
+coupler_thickness  = 1.5;
+lipp_height        = 4;
+lipp_width         = coupler_thickness - move_tolerance;
+shield_width       = 20;
+shield_depth       = 25;
+inlay_thickness    = 0.45;
+shield_thickness   = 2; // the shield has to be at least 2mm thick. Otherwise the front symbol will be printed badly
+inlay_radius       = 10.5/2;
+
+symbol_height 	   = 0.6;
+
 module train_integrity_body() {
 	color(BASE_COLOR) union(){
 	difference() { // coupling

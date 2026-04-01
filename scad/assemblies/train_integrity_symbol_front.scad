@@ -10,6 +10,12 @@
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
+// include common parts
+include <../parts/train_integrity_body.scad> // access variables
+
+
+headlight_d = (1/3)*shield_width;
+
 /* PRINT INSTRUCTION
 To print the train integrity you have to export the symbol and the body seperately as STL.
 Then you have to select the body STL and the symbol STL and load them TOGETHER at the same time in Bambu Studio.
@@ -25,13 +31,13 @@ module train_integrity_symbol_front() {
 	union() {
 		translate(
 		    [ (1 / 12) * shield_width + headlight_d / 2, (shield_depth + (1 / 6) * shield_width + headlight_d) / 2, 0 ])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 		translate([
 			(11 / 12) * shield_width - headlight_d / 2, (shield_depth + (1 / 6) * shield_width + headlight_d) / 2, 0
 		])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 		translate([ (1 / 2) * shield_width, (shield_depth - (1 / 6) * shield_width - headlight_d) / 2, 0 ])
-		cylinder(d = headlight_d, h = number_height);
+		cylinder(d = headlight_d, h = symbol_height);
 	}
 }
 

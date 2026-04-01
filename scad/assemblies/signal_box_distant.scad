@@ -6,6 +6,9 @@
  * Module: signal_box_distant
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 
@@ -32,4 +35,5 @@ module signal_box_distant() {
 	driving_direction_arrow();
 }
 
+back(body_depth) right(body_width) zrot(180) //position for the creation of picture
 signal_box_distant();

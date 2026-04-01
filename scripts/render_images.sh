@@ -21,10 +21,13 @@ MAGICK_TRIM=true
 
 # Define views (output_name, translation x,y,z, rotation x,y,z, distance)
 VIEWS=(
-    "front,0,0,0,35.264,45,0,1"     # Standard isometric view (35.264° = arctan(1/sqrt(2)))
-    "back,0,0,0,35.264,-45,0,1"     # Opposite isometric view
-    "top,0,0,0,90,0,0,1"            # Top view
-    "bottom,0,0,0,-90,0,0,1"        # Bottom view
+    "isometric,0,0,0,50,0,50,1" # isometric view
+    "front,0,0,0,90,0,0,1"      # front view
+    "back,0,0,0,90,0,180,1"     # back view
+    "top,0,0,0,0,0,0,1"         # Top view
+    "bottom,0,0,0,180,0,0,1"    # Bottom view
+    "left,0,0,0,90,0,270,1"     # Top view
+    "right,0,0,0,90,0,90,1"     # Bottom view
 )
 
 # ===== Initialization Functions =====

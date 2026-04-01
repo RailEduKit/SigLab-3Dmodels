@@ -11,6 +11,9 @@ include <../config/global_variables.scad>
 include <../config/colors.scad>
 include <../parts/clearing_point_body.scad>
 
+// include common parts
+include <../parts/signal_box.scad>
+
 polarity_width = 5;
 polarity_height = 5;
 
@@ -56,4 +59,6 @@ module polarity_bars_clearing_point(){
     cube([zs_width, polarity_width, polarity_height]);
 }
 
-polarity_bars_curve();
+
+polarity_bars_straight();
+polarity_bars_signal_box();

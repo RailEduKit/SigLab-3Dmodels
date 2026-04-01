@@ -10,6 +10,14 @@
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
+// include common parts
+include <../parts/signal_box.scad>
+
+block_depth = (body_depth-2*wall_thickness_y)/2-3*move_tolerance;
+block_height = 13.5; 
+handle_depth = 10+wall_thickness_y;
+handle_height = 3;
+
 
 module signal_lever(top_color = ASPECT_CLEAR, bottom_color = ASPECT_STOP) {
 	module handle() {

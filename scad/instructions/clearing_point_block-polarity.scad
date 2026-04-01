@@ -6,6 +6,9 @@
  * Module: clearing_point_block-polarity
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 include <../parts/clearing_point_body.scad>
@@ -15,7 +18,7 @@ use <../assemblies/clearing_point_block.scad>
 use <polarity_indicator.scad>
 
 module clearing_point_block_polarity(){
-    translate([0,zs_width,0]) rotate([0,0,-90])
+    right(zs_depth) zrot(90) //position for the creation of picture
     union(){
         clearing_point_block();
         polarity_bars_clearing_point();

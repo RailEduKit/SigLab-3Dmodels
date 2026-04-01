@@ -9,6 +9,16 @@
 // Include configuration file
 include <../config/global_variables.scad>
 
+// Include common parts
+use <position_indicator_plate.scad>
+
+balise_width = rail_well_spacing-2*3;
+balise_depth = 2* balise_width;
+balise_height = np_height();
+
+balise_pin_diameter = np_pin_diameter();
+balise_pin_height = np_pin_height();
+
 module balise() {
 	translate([ 0, 0, balise_height / 2 ])
 	cube([ balise_width, balise_depth, balise_height ], center = true);

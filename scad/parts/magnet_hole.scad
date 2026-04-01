@@ -6,6 +6,12 @@
  * Module: parts/magnet_hole
  */
 
+magnet_thickness = 3;
+magnet_diameter = 5;
+magnet_distance_to_middle = 7.5;
+magnet_z = rail_height/2;
+
+
 module magnet_hole() {
 	cylinder(h = magnet_thickness + move_tolerance, d = magnet_diameter + 0.1);
 	/*

@@ -7,6 +7,10 @@ include <config/global_variables.scad>
 use <assemblies/overlap_pattern_straight.scad>
 use <assemblies/overlap_body_straight.scad>
 use <assemblies/overlap_body_curve.scad>
+include <parts/track_indicator_curve.scad> // access variables
+include <parts/track_indicator_straight.scad> // access variables
+
+
 
 module pattern_rot(){
     left(600) union(){
@@ -44,6 +48,27 @@ module pattern_rot(){
     right(200) union(){
         right(ric_inner_radius + ris_width/2) zrot(180-curve_angle) overlap_body_curve_rot();
         right(ric_inner_radius + ris_width/2) zrot(180) overlap_body_curve_rot();
+    }
+
+    right(350) union(){
+        union(){
+            overlap_body_straight();
+            overlap_pattern_straight();
+        }
+        fwd(ris_length) union(){
+            overlap_body_straight();
+            overlap_pattern_straight();
+        }
+    }
+    right(450) union(){
+        union(){
+            overlap_body_straight();
+            overlap_pattern_straight();
+        }
+        zrot(180) union(){
+            overlap_body_straight();
+            overlap_pattern_straight();
+        }
     }
 }
 

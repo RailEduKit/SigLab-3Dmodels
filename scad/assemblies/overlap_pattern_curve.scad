@@ -15,8 +15,10 @@ include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
 include <BOSL2/joiners.scad> // Import joiners from dependency BelfrySCAD/BOSL2.git
 
 // Include common parts
-include <../parts/symmetrical_connector.scad>
+use <../parts/symmetrical_connector.scad>
 include <../parts/overlap_bar.scad>
+include <../parts/track_indicator_curve.scad> // access variables
+include <../parts/track_indicator_straight.scad> // access variables
 
 
 module negative_curve_indicator(frame){
@@ -75,5 +77,6 @@ module overlap_pattern_curve_onedirect(){
     color(BASE_COLOR) up(om_thickness) right(ric_inner_radius) bar_for_curve(); */
 }
 
-
+//negative_curve_indicator(bar_frame);
+right(curve_outer_radius) zrot(180-curve_angle) //position for the creation of picture
 overlap_pattern_curve_rot();

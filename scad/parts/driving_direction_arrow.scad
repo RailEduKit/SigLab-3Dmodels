@@ -10,7 +10,12 @@
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
-arrow_depth = 6.5;
+// include common parts
+include <../parts/signal_box.scad>
+
+attach_arrow_wall_distance = 0.8;
+attach_arrow_depth = wall_thickness_x-2*attach_arrow_wall_distance;
+attach_arrow_height = 1.2;
 
 module attach_arrow() {
 	hull() {
@@ -32,4 +37,6 @@ module driving_direction_arrow() {
 	color(INDICATOR_COLOR) cube([ 1.2, attach_arrow_depth, attach_arrow_height ]);
 }
 
-//attach_arrow();
+/* attach_arrow();
+
+translate([30,0,0]) driving_direction_arrow(); */

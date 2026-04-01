@@ -6,6 +6,9 @@
  * Module: clearing_point_route
  */
 
+// Include external libraries
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 
@@ -23,5 +26,5 @@ module clearing_point_route() {
 	rotate([ 0, 0, 90 ])
 	driving_direction_arrow();
 }
-
+right(zs_depth) zrot(90) //position for the creation of picture
 clearing_point_route();

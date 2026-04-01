@@ -6,10 +6,15 @@
  * Module: signal_distant
  */
 
+// Include external libraries (has to be included, bacuase use files need the library)
+include <BOSL2/std.scad> // Import std from dependency BelfrySCAD/BOSL2.git
+
 // Include configuration file
 include <../config/global_variables.scad>
 
 // use common parts
+include <../parts/signal_box.scad>
+include <../parts/signal_lever.scad>
 use <../assemblies/signal_box_distant.scad>
 use <../assemblies/signal_lever_distant.scad>
 
@@ -36,5 +41,5 @@ module signal_distant(aspect) {
 	}
 }
 
-
+right(body_width) zrot(180) //position for the creation of picture
 signal_distant("APPROACH");
