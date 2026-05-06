@@ -24,7 +24,7 @@ module joystick(cyl_height, cyl_d_bottom, cyl_d_top, sphere_d){
     intersect_height = sphere_d/2 - sqrt(pow(sphere_d/2,2)-pow(cyl_d_top/2,2));
     diff()
     cyl(h=cyl_height, d1 = cyl_d_bottom, d2= cyl_d_top, anchor = BOTTOM){
-        tag("remove") attach(BOTTOM) cyl(d= magnet_diameter, h=magnet_height);
+        # tag("remove") attach(BOTTOM) cyl(d= magnet_diameter, h=magnet_height, anchor = TOP);
         down(intersect_height) tag("keep") attach(TOP) sphere(d = sphere_d, anchor = BOTTOM);
     }
 }
