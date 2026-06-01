@@ -31,13 +31,16 @@ ris_length = straight_length;
 ris_rounding = om_track_guidance_width; //om_thickness/2 doesn't work at the track guidance
 
 
-module track_indicator_straight() {
+module track_indicator_straight(length = ris_length, connector = true) {
     diff()
-        cuboid([ris_width, ris_length, om_thickness], rounding = ris_rounding, edges = [TOP+LEFT, TOP+RIGHT, FRONT+LEFT, FRONT+RIGHT, BACK+LEFT, BACK+RIGHT]){
+        cuboid([ris_width, length, om_thickness], rounding = ris_rounding, edges = [TOP+LEFT, TOP+RIGHT, FRONT+LEFT, FRONT+RIGHT, BACK+LEFT, BACK+RIGHT]){
             //guidance
-            xflip_copy() position(BOTTOM+LEFT+FRONT) cuboid([om_track_guidance_width, ris_length, om_track_guidance_height], anchor= LEFT+TOP+FRONT, rounding= ris_rounding, edges = [LEFT+FRONT, LEFT+BACK]);
+            xflip_copy() position(BOTTOM+LEFT+FRONT) cuboid([om_track_guidance_width, length, om_track_guidance_height], anchor= LEFT+TOP+FRONT, rounding= ris_rounding, edges = [LEFT+FRONT, LEFT+BACK]);
             // dovetail
-            zrot_copies(n=2) attach(FRONT) symmetrical_connector();
+            if (connector == true) {
+                zrot_copies(n=2) attach(FRONT) symmetrical_connector();
+            }
+            
         }
 }
 

@@ -8,20 +8,22 @@
 
 
 
+// Include external libraries
+include <BOSL2/std.scad>
 
-
-
+// Include configuration file
 include <../config/global_variables.scad>
 include <../config/colors.scad>
 
 // use common parts
+include <../parts/track_indicator_straight.scad>
 use <position_indicator_number.scad>
 
 
 // number_plate = np
-np_diameter = rail_well_spacing-2*3;
+np_diameter = ris_width;
 function np_height() = 1;
-number_height = 0.6;
+function number_height() = 0.6;
 
 // om_pin variables are defined in track_indicator flexible   
 function np_pin_diameter() = 4.5;
@@ -29,9 +31,9 @@ function np_pin_height() = 5;
 
 frame_width = 180;
 frame_depth = 180;
-step_size = np_diameter+2*move_tolerance;
-x_start = -(frame_width/2-np_diameter/2-1);
-y_start = -(frame_depth/2-np_diameter/2-1);
+function step_size() = np_diameter+4*move_tolerance;
+function x_start() = -(frame_width/2-np_diameter/2-1);
+function y_start() = -(frame_depth/2-np_diameter/2-1);
 
 
 
@@ -45,16 +47,17 @@ module frame() {
 module number_plate(number) {
 	color(BASE_COLOR) union(){
 		difference() {
-			cylinder(d = np_diameter, h = np_height());
+			down(om_thickness/2)track_indicator_straight(length = ris_width, connector = false);
 			piece_number(number);
 		}
-		translate([ 0, 0, np_height() ])
-		cylinder(h = np_pin_height(), d = np_pin_diameter());
+		//translate([ 0, 0, np_height() ])
+		//cylinder(h = np_pin_height(), d = np_pin_diameter());
 	}
 
 }
 
 module position_indicator_plate() {
+	
 	/* counter = 0;
 	for(x = [-(frame_width/2-np_diameter/2-1): np_diameter+2*move_tolerance: (frame_width/2-np_diameter/2-1)]){
 	    for(y= [-(frame_depth/2-np_diameter/2-1): np_diameter+2*move_tolerance: (frame_depth/2-np_diameter/2-1)]){
@@ -64,126 +67,19 @@ module position_indicator_plate() {
 	} */
 	// generated with number_plates_creation.jl
 	// still slow with rendering.
-	translate([ x_start + 0 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(1);
-	translate([ x_start + 0 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(2);
-	translate([ x_start + 0 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(3);
-	translate([ x_start + 0 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(4);
-	translate([ x_start + 0 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(5);
-	translate([ x_start + 1 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(6);
-	translate([ x_start + 1 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(7);
-	translate([ x_start + 1 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(8);
-	translate([ x_start + 1 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(9);
-	translate([ x_start + 1 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(10);
-	translate([ x_start + 2 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(11);
-	translate([ x_start + 2 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(12);
-	translate([ x_start + 2 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(13);
-	translate([ x_start + 2 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(14);
-	translate([ x_start + 2 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(15);
-	translate([ x_start + 3 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(16);
-	translate([ x_start + 3 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(17);
-	translate([ x_start + 3 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(18);
-	translate([ x_start + 3 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(19);
-	translate([ x_start + 3 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(20);
-	translate([ x_start + 4 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(21);
-	translate([ x_start + 4 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(22);
-	translate([ x_start + 4 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(23);
-	translate([ x_start + 4 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(24);
-	translate([ x_start + 4 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(25);
-	translate([ x_start + 5 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(26);
-	translate([ x_start + 5 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(27);
-	translate([ x_start + 5 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(28);
-	translate([ x_start + 5 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(29);
-	translate([ x_start + 5 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(30);
-	translate([ x_start + 6 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(31);
-	translate([ x_start + 6 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(32);
-	translate([ x_start + 6 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(33);
-	translate([ x_start + 6 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(34);
-	translate([ x_start + 6 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(35);
-	translate([ x_start + 7 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(36);
-	translate([ x_start + 7 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(37);
-	translate([ x_start + 7 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(38);
-	translate([ x_start + 7 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(39);
-	translate([ x_start + 7 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(40);
-	translate([ x_start + 8 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(41);
-	translate([ x_start + 8 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(42);
-	translate([ x_start + 8 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(43);
-	translate([ x_start + 8 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(44);
-	translate([ x_start + 8 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(45);
-	translate([ x_start + 9 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(46);
-	translate([ x_start + 9 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(47);
-	translate([ x_start + 9 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(48);
-	translate([ x_start + 9 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(49);
-	translate([ x_start + 9 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(50);
-	translate([ x_start + 10 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(51);
-	translate([ x_start + 10 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(52);
-	translate([ x_start + 10 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(53);
-	translate([ x_start + 10 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(54);
-	translate([ x_start + 10 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(55);
-	translate([ x_start + 11 * step_size, y_start + 0.0 * step_size, 0 ])
-	number_plate(56);
-	translate([ x_start + 11 * step_size, y_start + 1.0 * step_size, 0 ])
-	number_plate(57);
-	translate([ x_start + 11 * step_size, y_start + 2.0 * step_size, 0 ])
-	number_plate(58);
-	translate([ x_start + 11 * step_size, y_start + 3.0 * step_size, 0 ])
-	number_plate(59);
-	translate([ x_start + 11 * step_size, y_start + 4.0 * step_size, 0 ])
-	number_plate(60);
+	translate([x_start()+0*step_size(),y_start()+0.0*step_size(),0])number_plate(0);
+	translate([x_start()+0*step_size(),y_start()+1.0*step_size(),0])number_plate(5);
+	translate([x_start()+0*step_size(),y_start()+2.0*step_size(),0])number_plate(10);
+	translate([x_start()+1*step_size(),y_start()+0.0*step_size(),0])number_plate(15);
+	translate([x_start()+1*step_size(),y_start()+1.0*step_size(),0])number_plate(20);
+	translate([x_start()+1*step_size(),y_start()+2.0*step_size(),0])number_plate(25);
+	translate([x_start()+2*step_size(),y_start()+0.0*step_size(),0])number_plate(30);
+	translate([x_start()+2*step_size(),y_start()+1.0*step_size(),0])number_plate(35);
+	translate([x_start()+2*step_size(),y_start()+2.0*step_size(),0])number_plate(40);
+	translate([x_start()+3*step_size(),y_start()+0.0*step_size(),0])number_plate(45);
+	translate([x_start()+3*step_size(),y_start()+1.0*step_size(),0])number_plate(50);
+	translate([x_start()+3*step_size(),y_start()+2.0*step_size(),0])number_plate(55);
 }
 
+//number_plate(5);
 position_indicator_plate();

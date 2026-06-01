@@ -5,6 +5,8 @@
  *
  * Module: position_indicator
  */
+// Include external libraries
+include <BOSL2/std.scad>
 
 include <../config/global_variables.scad>
 include <../config/colors.scad>
